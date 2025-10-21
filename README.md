@@ -6,10 +6,11 @@
 
 ## Features
 
-- 📖 **9,600+ dictionary entries** from multiple sources
+- 📖 **14,900+ dictionary entries** from multiple sources
+- 📚 **Wikipedia integration** - 5,300+ entries from Ido Wikipedia
 - 🇫🇷 **French pivot translations** - includes data from French Wiktionary
 - 🔄 **Bidirectional translation** - switch between Ido→Esperanto and Esperanto→Ido
-- 🏷️ **Source badges** - see where each translation comes from (Wiktionary, pivot, etc.)
+- 🏷️ **Source badges** - see where each translation comes from (Wiktionary, Wikipedia, pivot, etc.)
 - 🔍 **Instant search** - search words in either direction
 - ℹ️ **Comprehensive metadata** - view detailed information about how the dictionary was built
 - 🎨 **Beautiful UI** - clean, modern interface with smooth animations
@@ -47,6 +48,7 @@ The dictionary data comes from [ido-esperanto-extractor](https://github.com/koma
 
 ### Sources
 - **Ido Wiktionary** - ~9,338 translations extracted from Ido Wiktionary dump
+- **Ido Wikipedia** - ~5,302 entries from Ido Wikipedia language links 📚
 - **French Wiktionary (pivot)** - ~1,010 translations via French intermediate language 🇫🇷
 - **Esperanto Wiktionary** - ~189 translations from Esperanto Wiktionary
 
@@ -60,10 +62,11 @@ Pivot translation uses an intermediate language (like French or English) to crea
 Then we can infer: Ido "hundo" → Esperanto "hundo" through the French "pivot"
 
 ### Statistics
-- **Total unique Ido words:** ~9,600
-- **Total translations:** ~10,500+
+- **Total unique Ido words:** ~14,900
+- **Total translations:** ~15,800+
 - **Source breakdown:**
   - 📕 Ido Wiktionary: 9,338 translations
+  - 📚 Ido Wikipedia: 5,302 entries
   - 🇫🇷 French Wiktionary (pivot): 1,010 translations  
   - 📗 Esperanto Wiktionary: 189 translations
 
