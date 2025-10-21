@@ -21,6 +21,7 @@ header {
     text-align: center;
     margin-bottom: 40px;
     color: white;
+    position: relative;
 }
 
 header h1 {
@@ -32,6 +33,61 @@ header h1 {
 .subtitle {
     font-size: 1.2rem;
     opacity: 0.9;
+    margin-bottom: 15px;
+}
+
+.info-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+.info-button:hover,
+.info-button:focus {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.8);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.direction-switcher {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.direction-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid transparent;
+    color: #667eea;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.direction-btn:hover,
+.direction-btn:focus {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    outline: none;
+}
+
+.direction-btn.active {
+    background: white;
+    border-color: #667eea;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
 }
 
 .search-container {
@@ -86,14 +142,14 @@ header h1 {
     background-color: #f8f9fa;
 }
 
-.ido-word {
+.source-word {
     font-size: 1.3rem;
     font-weight: bold;
     color: #667eea;
     margin-bottom: 5px;
 }
 
-.esperanto-words {
+.target-words {
     font-size: 1.1rem;
     color: #764ba2;
     margin-bottom: 8px;
@@ -103,6 +159,53 @@ header h1 {
     font-size: 0.9rem;
     color: #888;
     font-style: italic;
+}
+
+.sources {
+    margin-top: 8px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.source-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-fr {
+    background: linear-gradient(135deg, #0055A4 0%, #EF4135 100%);
+    color: white;
+}
+
+.badge-en {
+    background: linear-gradient(135deg, #012169 0%, #C8102E 100%);
+    color: white;
+}
+
+.badge-io {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.badge-eo {
+    background: linear-gradient(135deg, #009B3A 0%, #00703C 100%);
+    color: white;
+}
+
+.badge-wiki {
+    background: linear-gradient(135deg, #999 0%, #666 100%);
+    color: white;
+}
+
+.badge-default {
+    background: #e0e0e0;
+    color: #666;
 }
 
 .no-results {
@@ -160,5 +263,160 @@ footer a {
 
 .results::-webkit-scrollbar-thumb:hover {
     background: #764ba2;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #667eea;
+    font-size: 1.5rem;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    transition: color 0.2s;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #667eea;
+    outline: none;
+}
+
+.modal-body {
+    padding: 20px;
+    color: #333;
+}
+
+.modal-body h3 {
+    color: #667eea;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.modal-body h3:first-child {
+    margin-top: 0;
+}
+
+.modal-body h4 {
+    color: #764ba2;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.modal-body ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.modal-body li {
+    margin-bottom: 8px;
+}
+
+.modal-body p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.modal-body a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.modal-body a:hover {
+    text-decoration: underline;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.info-item {
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.info-item strong {
+    color: #667eea;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .direction-switcher {
+        flex-direction: column;
+    }
+    
+    .direction-btn {
+        width: 100%;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
 }
 
