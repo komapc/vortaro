@@ -6,28 +6,68 @@
 
 ## Features
 
-- 📖 **7,500+ dictionary entries** from Wiktionary
-- 🔍 **Instant search** - search Ido or Esperanto words
-- 🎨 **Beautiful UI** - clean, modern interface
+- 📖 **9,600+ dictionary entries** from multiple sources
+- 🇫🇷 **French pivot translations** - includes data from French Wiktionary
+- 🔄 **Bidirectional translation** - switch between Ido→Esperanto and Esperanto→Ido
+- 🏷️ **Source badges** - see where each translation comes from (Wiktionary, pivot, etc.)
+- 🔍 **Instant search** - search words in either direction
+- ℹ️ **Comprehensive metadata** - view detailed information about how the dictionary was built
+- 🎨 **Beautiful UI** - clean, modern interface with smooth animations
 - ⚡ **Fast** - all data loaded client-side, no backend needed
 - 📱 **Responsive** - works on mobile and desktop
 - 💾 **Offline-ready** - dictionary data loaded once
+- ♿ **Accessible** - full keyboard navigation and ARIA support
 
 ## How It Works
 
 This is a **simple static website** that:
-1. Loads dictionary JSON data from the extractor
-2. Provides instant search through all entries
-3. No Apertium translation - just dictionary lookup
-4. Pure HTML/CSS/JavaScript - no build step needed
+1. Loads dictionary JSON data (~7,500 entries) from the extractor
+2. Provides instant bidirectional search (Ido⇄Esperanto)
+3. Displays comprehensive metadata about dictionary sources
+4. No Apertium translation - just dictionary lookup
+5. Pure HTML/CSS/JavaScript - no build step needed
+6. Client-side only - no server required
+
+### Key Features Explained
+
+**Bidirectional Search:**
+- Switch between Ido→Esperanto and Esperanto→Ido modes
+- Search is direction-aware for more accurate results
+- Real-time filtering as you type
+
+**About Modal:**
+- View detailed dictionary statistics
+- See source information (Wiktionary dumps, Wikipedia)
+- Understand merge statistics and data provenance
+- Links to related projects
 
 ## Dictionary Data
 
-The dictionary data comes from [ido-esperanto-extractor](https://github.com/komapc/ido-esperanto-extractor) which extracts and processes data from:
-- Ido Wiktionary
-- Esperanto Wiktionary
-- Ido Wikipedia
-- Wikidata
+The dictionary data comes from [ido-esperanto-extractor](https://github.com/komapc/ido-esperanto-extractor) which extracts and processes data from multiple sources:
+
+### Sources
+- **Ido Wiktionary** - ~9,338 translations extracted from Ido Wiktionary dump
+- **French Wiktionary (pivot)** - ~1,010 translations via French intermediate language 🇫🇷
+- **Esperanto Wiktionary** - ~189 translations from Esperanto Wiktionary
+
+### What is Pivot Translation?
+Pivot translation uses an intermediate language (like French or English) to create translations between Ido and Esperanto when direct translations aren't available.
+
+**Example:** If we know that:
+- Ido "hundo" → French "chien"
+- French "chien" → Esperanto "hundo"
+
+Then we can infer: Ido "hundo" → Esperanto "hundo" through the French "pivot"
+
+### Statistics
+- **Total unique Ido words:** ~9,600
+- **Total translations:** ~10,500+
+- **Source breakdown:**
+  - 📕 Ido Wiktionary: 9,338 translations
+  - 🇫🇷 French Wiktionary (pivot): 1,010 translations  
+  - 📗 Esperanto Wiktionary: 189 translations
+
+The dictionary is automatically updated when new dumps are processed by the extractor.
 
 ## Development
 
@@ -45,7 +85,12 @@ open index.html
 To update the dictionary data:
 ```bash
 # Copy latest dictionary from extractor
-cp path/to/dictionary_merged_enhanced.json dictionary.json
+cp path/to/ido-esperanto-extractor/output/dictionary_merged_enhanced.json dictionary.json
+
+# The dictionary.json file includes:
+# - All word entries with Esperanto translations
+# - Morphology information where available
+# - Metadata about sources and extraction dates
 ```
 
 ## File Structure

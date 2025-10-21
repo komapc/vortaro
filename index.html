@@ -11,15 +11,38 @@
         <header>
             <h1>📖 Vortaro</h1>
             <p class="subtitle">Ido ↔ Esperanto Dictionary</p>
+            <button class="info-button" id="infoButton" aria-label="About this dictionary" tabindex="0">ℹ️ About</button>
         </header>
+
+        <div class="direction-switcher">
+            <button 
+                class="direction-btn active" 
+                id="idoToEoBtn" 
+                data-direction="io-eo"
+                aria-label="Search Ido to Esperanto"
+                tabindex="0"
+            >
+                Ido → Esperanto
+            </button>
+            <button 
+                class="direction-btn" 
+                id="eoToIdoBtn" 
+                data-direction="eo-io"
+                aria-label="Search Esperanto to Ido"
+                tabindex="0"
+            >
+                Esperanto → Ido
+            </button>
+        </div>
 
         <div class="search-container">
             <input 
                 type="text" 
                 id="searchInput" 
-                placeholder="Search Ido or Esperanto..." 
+                placeholder="Search Ido words..." 
                 autofocus
                 autocomplete="off"
+                aria-label="Search dictionary"
             />
             <div class="search-info" id="searchInfo"></div>
         </div>
@@ -32,6 +55,19 @@
                 • <span id="wordCount">Loading...</span> entries
             </p>
         </footer>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal" id="aboutModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">About Vortaro</h2>
+                <button class="close-button" id="closeModal" aria-label="Close modal" tabindex="0">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <p class="loading">Loading dictionary information...</p>
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>
