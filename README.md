@@ -11,7 +11,7 @@
 - 🇫🇷 **French pivot translations** - includes data from French Wiktionary
 - 🔄 **Single-button direction toggle** - one-click switch between Ido→Esperanto and Esperanto→Ido
 - 🎲 **Random word** - discover new words with random selection
-- 🏷️ **Source badges** - see where each translation comes from (Wiktionary, Wikipedia, pivot, etc.)
+- 🏷️ **Clickable source links** - click badges to visit source pages (Wiktionary, Wikipedia, etc.) in new tab
 - 🌐 **Ido/Esperanto interface** - UI in Ido language with Esperanto accessibility
 - ⚖️ **License information** - clear attribution to Wiktionary and Wikipedia sources (CC BY-SA 3.0)
 - 🔍 **Instant search** - search words in either direction

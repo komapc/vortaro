@@ -73,12 +73,18 @@ function displayResults(results, searchTerm) {
     searchInfo.textContent = `${results.length} rezulto${results.length !== 1 ? 'i' : ''}`;
     
     const html = results.map(entry => {
-        // Generate source badges
+        // Generate source badges with links
         const sourceBadges = entry.sources && entry.sources.length > 0
             ? entry.sources.map(source => {
                 const badgeClass = getBadgeClass(source);
                 const badgeText = getBadgeText(source);
-                return `<span class="source-badge ${badgeClass}" title="${source}">${badgeText}</span>`;
+                const url = getSourceUrl(source, entry.ido, entry.esperanto[0]);
+                
+                if (url) {
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="source-badge ${badgeClass}" title="Vidar ${source} en nova fenestro">${badgeText}</a>`;
+                } else {
+                    return `<span class="source-badge ${badgeClass}" title="${source}">${badgeText}</span>`;
+                }
             }).join(' ')
             : '';
         
@@ -138,6 +144,44 @@ function getBadgeText(source) {
     if (source.includes('eo_wiktionary') || source === 'wikt_eo') return '📗 EO';
     if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki') return '📚 WIKI';
     return source.substring(0, 8);
+}
+
+// Get source URL for linking
+function getSourceUrl(source, idoWord, esperantoWord) {
+    // Encode words for URLs
+    const encodeWord = (word) => encodeURIComponent(word || '');
+    
+    // Ido Wiktionary
+    if (source.includes('io_wiktionary') || source === 'wikt_io') {
+        return `https://io.wiktionary.org/wiki/${encodeWord(idoWord)}`;
+    }
+    
+    // Esperanto Wiktionary
+    if (source.includes('eo_wiktionary') || source === 'wikt_eo') {
+        return esperantoWord 
+            ? `https://eo.wiktionary.org/wiki/${encodeWord(esperantoWord)}`
+            : null;
+    }
+    
+    // Ido Wikipedia
+    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki') {
+        // Capitalize first letter for Wikipedia
+        const capitalizedWord = idoWord.charAt(0).toUpperCase() + idoWord.slice(1);
+        return `https://io.wikipedia.org/wiki/${encodeWord(capitalizedWord)}`;
+    }
+    
+    // French Wiktionary (pivot or direct)
+    if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) {
+        return `https://fr.wiktionary.org/wiki/${encodeWord(idoWord)}`;
+    }
+    
+    // English Wiktionary (pivot or direct)
+    if (source.includes('en_wiktionary') || source.includes('pivot_en')) {
+        return `https://en.wiktionary.org/wiki/${encodeWord(idoWord)}`;
+    }
+    
+    // No URL available for this source
+    return null;
 }
 
 // Highlight matching text
