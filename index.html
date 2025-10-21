@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="io">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vortaro - Ido-Esperanto Dictionary</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📖 Vortaro</h1>
+            <p class="subtitle">Ido ↔ Esperanto Dictionary</p>
+        </header>
+
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Search Ido or Esperanto..." 
+                autofocus
+                autocomplete="off"
+            />
+            <div class="search-info" id="searchInfo"></div>
+        </div>
+
+        <div id="results" class="results"></div>
+
+        <footer>
+            <p>
+                Data from <a href="https://github.com/komapc/ido-esperanto-extractor" target="_blank">ido-esperanto-extractor</a>
+                • <span id="wordCount">Loading...</span> entries
+            </p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
