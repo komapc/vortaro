@@ -173,8 +173,8 @@ function toggleDirection() {
     // Update placeholder
     const searchInput = document.getElementById('searchInput');
     searchInput.placeholder = currentDirection === 'io-eo' 
-        ? 'Serchez vorti Ido...' 
-        : 'Serchez vorti Esperanto...';
+        ? 'Serchez en Ido...' 
+        : 'Serchez en Esperanto...';
     
     // Re-run search if there's a query
     if (searchInput.value.trim()) {
