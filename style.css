@@ -56,38 +56,71 @@ header h1 {
     transform: translateY(-2px);
 }
 
-.direction-switcher {
+.search-header {
     display: flex;
     gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    align-items: center;
 }
 
-.direction-btn {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid transparent;
-    color: #667eea;
-    padding: 12px 24px;
+.direction-toggle {
+    flex: 1;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    padding: 12px 20px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
     transition: all 0.3s;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.direction-btn:hover,
-.direction-btn:focus {
-    background: white;
+.direction-toggle:hover,
+.direction-toggle:focus {
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
     outline: none;
 }
 
-.direction-btn.active {
-    background: white;
-    border-color: #667eea;
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+.toggle-text {
+    flex: 1;
+    text-align: center;
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    transition: transform 0.3s;
+}
+
+.direction-toggle:hover .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.random-btn {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #667eea;
+    color: #667eea;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    line-height: 1;
+}
+
+.random-btn:hover,
+.random-btn:focus {
+    background: #667eea;
+    transform: translateY(-2px) rotate(20deg);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    outline: none;
 }
 
 .search-container {
@@ -402,12 +435,20 @@ footer a {
 
 /* Responsive design */
 @media (max-width: 600px) {
-    .direction-switcher {
-        flex-direction: column;
+    .search-header {
+        flex-direction: row;
+        gap: 8px;
     }
     
-    .direction-btn {
-        width: 100%;
+    .direction-toggle {
+        flex: 1;
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+    
+    .random-btn {
+        padding: 10px 14px;
+        font-size: 1.2rem;
     }
     
     header h1 {

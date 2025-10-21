@@ -9,8 +9,11 @@
 - 📖 **14,900+ dictionary entries** from multiple sources
 - 📚 **Wikipedia integration** - 5,300+ entries from Ido Wikipedia
 - 🇫🇷 **French pivot translations** - includes data from French Wiktionary
-- 🔄 **Bidirectional translation** - switch between Ido→Esperanto and Esperanto→Ido
+- 🔄 **Single-button direction toggle** - one-click switch between Ido→Esperanto and Esperanto→Ido
+- 🎲 **Random word** - discover new words with random selection
 - 🏷️ **Source badges** - see where each translation comes from (Wiktionary, Wikipedia, pivot, etc.)
+- 🌐 **Ido/Esperanto interface** - UI in Ido language with Esperanto accessibility
+- ⚖️ **License information** - clear attribution to Wiktionary and Wikipedia sources (CC BY-SA 3.0)
 - 🔍 **Instant search** - search words in either direction
 - ℹ️ **Comprehensive metadata** - view detailed information about how the dictionary was built
 - 🎨 **Beautiful UI** - clean, modern interface with smooth animations
