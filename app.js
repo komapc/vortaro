@@ -7,7 +7,7 @@ let currentDirection = 'io-eo'; // 'io-eo' or 'eo-io'
 // Load dictionary data
 async function loadDictionary() {
     try {
-        const response = await fetch('dictionary_big.json');
+        const response = await fetch('dictionary_with_wikipedia.json');
         const data = await response.json();
         
         // Extract and store metadata
@@ -126,7 +126,7 @@ function getBadgeClass(source) {
     if (source.includes('en_wiktionary') || source.includes('pivot_en')) return 'badge-en';
     if (source.includes('io_wiktionary') || source === 'wikt_io') return 'badge-io';
     if (source.includes('eo_wiktionary') || source === 'wikt_eo') return 'badge-eo';
-    if (source.includes('wikipedia') || source === 'wiki') return 'badge-wiki';
+    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki') return 'badge-wiki';
     return 'badge-default';
 }
 
@@ -136,7 +136,7 @@ function getBadgeText(source) {
     if (source.includes('en_wiktionary') || source.includes('pivot_en')) return '🇬🇧 EN';
     if (source.includes('io_wiktionary') || source === 'wikt_io') return '📕 IO';
     if (source.includes('eo_wiktionary') || source === 'wikt_eo') return '📗 EO';
-    if (source.includes('wikipedia') || source === 'wiki') return '📚 Wiki';
+    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki') return '📚 WIKI';
     return source.substring(0, 8);
 }
 
