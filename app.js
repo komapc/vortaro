@@ -25,7 +25,7 @@ async function loadDictionary() {
         
         // Update word count
         const totalEntries = metadata?.total_unique_ido_words || allEntries.length;
-        document.getElementById('wordCount').textContent = `${totalEntries.toLocaleString()} words`;
+        document.getElementById('wordCount').textContent = `${totalEntries.toLocaleString()} vorti`;
         
         // Show empty state
         showEmptyState();
@@ -65,12 +65,12 @@ function displayResults(results, searchTerm) {
     const searchInfo = document.getElementById('searchInfo');
     
     if (results.length === 0) {
-        resultsContainer.innerHTML = '<div class="no-results">No results found for "' + searchTerm + '"</div>';
-        searchInfo.textContent = '0 results';
+        resultsContainer.innerHTML = '<div class="no-results">Nula rezulti por "' + searchTerm + '"</div>';
+        searchInfo.textContent = '0 rezulti';
         return;
     }
     
-    searchInfo.textContent = `${results.length} result${results.length !== 1 ? 's' : ''}`;
+    searchInfo.textContent = `${results.length} rezulto${results.length !== 1 ? 'i' : ''}`;
     
     const html = results.map(entry => {
         // Generate source badges
@@ -88,11 +88,11 @@ function displayResults(results, searchTerm) {
                 <div class="result-item">
                     <div class="source-word">${highlightMatch(entry.ido, searchTerm)}</div>
                     <div class="target-words">
-                        → ${entry.esperanto.map(word => word).join(', ') || '<em>no translation</em>'}
+                        → ${entry.esperanto.map(word => word).join(', ') || '<em>nula traduko</em>'}
                     </div>
                     ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
                     ${entry.morfologio.length > 0 ? 
-                        `<div class="morfologio">Morphology: ${entry.morfologio.join(' + ')}</div>` : 
+                        `<div class="morfologio">Morfologio: ${entry.morfologio.join(' + ')}</div>` : 
                         ''
                     }
                 </div>
@@ -109,7 +109,7 @@ function displayResults(results, searchTerm) {
                     </div>
                     ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
                     ${entry.morfologio.length > 0 ? 
-                        `<div class="morfologio">Morphology: ${entry.morfologio.join(' + ')}</div>` : 
+                        `<div class="morfologio">Morfologio: ${entry.morfologio.join(' + ')}</div>` : 
                         ''
                     }
                 </div>
@@ -155,35 +155,47 @@ function showEmptyState() {
     resultsContainer.innerHTML = `
         <div class="empty-state">
             <div class="empty-state-icon">🔍</div>
-            <p>Start typing to search the dictionary...</p>
+            <p>Komencez skribar por serchar en la vortaro...</p>
         </div>
     `;
 }
 
-// Switch translation direction
-function switchDirection(direction) {
-    currentDirection = direction;
+// Toggle translation direction
+function toggleDirection() {
+    currentDirection = currentDirection === 'io-eo' ? 'eo-io' : 'io-eo';
     
-    // Update button states
-    document.querySelectorAll('.direction-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    
-    const activeBtn = document.querySelector(`[data-direction="${direction}"]`);
-    if (activeBtn) {
-        activeBtn.classList.add('active');
-    }
+    // Update button
+    const toggleBtn = document.getElementById('directionToggle');
+    const toggleText = toggleBtn.querySelector('.toggle-text');
+    toggleBtn.setAttribute('data-direction', currentDirection);
+    toggleText.textContent = currentDirection === 'io-eo' ? 'Ido → Esperanto' : 'Esperanto → Ido';
     
     // Update placeholder
     const searchInput = document.getElementById('searchInput');
-    searchInput.placeholder = direction === 'io-eo' 
-        ? 'Search Ido words...' 
-        : 'Search Esperanto words...';
+    searchInput.placeholder = currentDirection === 'io-eo' 
+        ? 'Serchez vorti Ido...' 
+        : 'Serchez vorti Esperanto...';
     
     // Re-run search if there's a query
     if (searchInput.value.trim()) {
         search(searchInput.value);
     }
+}
+
+// Show random word
+function showRandomWord() {
+    if (allEntries.length === 0) return;
+    
+    const randomIndex = Math.floor(Math.random() * allEntries.length);
+    const randomEntry = allEntries[randomIndex];
+    
+    // Set search input to random word
+    const searchInput = document.getElementById('searchInput');
+    searchInput.value = currentDirection === 'io-eo' ? randomEntry.ido : 
+                        (randomEntry.esperanto[0] || randomEntry.ido);
+    
+    // Trigger search
+    search(searchInput.value);
 }
 
 // Show about modal with metadata
@@ -202,56 +214,56 @@ function showAboutModal() {
         const totalSources = Object.values(sourceStats).reduce((a, b) => a + b, 0);
         
         modalBody.innerHTML = `
-            <h3>📚 Dictionary Information</h3>
+            <h3>📚 Informo pri la Vortaro</h3>
             <div class="info-grid">
                 <div class="info-item">
-                    <strong>Total Words:</strong> ${(metadata.total_unique_ido_words || 0).toLocaleString()}
+                    <strong>Tota vorti:</strong> ${(metadata.total_unique_ido_words || 0).toLocaleString()}
                 </div>
                 <div class="info-item">
-                    <strong>Last Updated:</strong> ${lastUpdate}
+                    <strong>Latest actualizuro:</strong> ${lastUpdate}
                 </div>
                 <div class="info-item">
-                    <strong>Total Translations:</strong> ${totalSources.toLocaleString()}
+                    <strong>Tota traduki:</strong> ${totalSources.toLocaleString()}
                 </div>
             </div>
             
-            <h3>🔨 How It Was Built</h3>
-            <p>This dictionary was automatically extracted and compiled from multiple sources using the <strong>ONE BIG BIDIX</strong> pipeline:</p>
+            <h3>🔨 Quale ol kreesis</h3>
+            <p>Ca vortaro automatale extraktesis e kompilesis de multa fonti per la <strong>ONE BIG BIDIX</strong> pipelino:</p>
             
-            <h4>📊 Translation Sources</h4>
+            <h4>📊 Fonti di traduki</h4>
             <ul>
-                ${sourceStats.io_wiktionary ? `<li>📕 <strong>Ido Wiktionary:</strong> ${sourceStats.io_wiktionary.toLocaleString()} translations</li>` : ''}
-                ${sourceStats.fr_wiktionary_meaning ? `<li>🇫🇷 <strong>French Wiktionary</strong> (pivot): ${sourceStats.fr_wiktionary_meaning.toLocaleString()} translations</li>` : ''}
-                ${sourceStats.eo_wiktionary ? `<li>📗 <strong>Esperanto Wiktionary:</strong> ${sourceStats.eo_wiktionary.toLocaleString()} translations</li>` : ''}
+                ${sourceStats.io_wiktionary ? `<li>📕 <strong>Ido Wiktionary:</strong> ${sourceStats.io_wiktionary.toLocaleString()} traduki</li>` : ''}
+                ${sourceStats.io_wikipedia ? `<li>📚 <strong>Ido Wikipedia:</strong> ${sourceStats.io_wikipedia.toLocaleString()} vorti</li>` : ''}
+                ${sourceStats.fr_wiktionary_meaning ? `<li>🇫🇷 <strong>Franca Wiktionary</strong> (pivoto): ${sourceStats.fr_wiktionary_meaning.toLocaleString()} traduki</li>` : ''}
+                ${sourceStats.eo_wiktionary ? `<li>📗 <strong>Esperanto Wiktionary:</strong> ${sourceStats.eo_wiktionary.toLocaleString()} traduki</li>` : ''}
             </ul>
             
-            <h4>🌍 What is Pivot Translation?</h4>
-            <p>Pivot translation uses an intermediate language (like French or English) to create translations between Ido and Esperanto when direct translations aren't available.</p>
-            <p><strong>Example:</strong> If we know Ido→French and French→Esperanto, we can infer Ido→Esperanto through the French "pivot".</p>
+            <h4>🌍 Quo esas pivot-traduko?</h4>
+            <p>Pivot-traduko uzas interjacanta linguo (komente Franca o Angla) por krear traduki inter Ido e Esperanto kande rekta traduki ne disponesas.</p>
+            <p><strong>Exemplo:</strong> Se ni savas Ido→Franca e Franca→Esperanto, ni povas infercar Ido→Esperanto tra la Franca "pivoto".</p>
             
-            ${metadata.conversion_info ? `
-                <h4>✨ Special Features</h4>
-                <ul>
-                    ${metadata.conversion_info.includes_french_pivot ? '<li>🇫🇷 Includes French pivot translations</li>' : ''}
-                    ${metadata.conversion_info.includes_english_pivot ? '<li>🇬🇧 Includes English pivot translations</li>' : ''}
-                    ${metadata.conversion_info.includes_wikipedia ? '<li>📚 Includes Wikipedia language links</li>' : ''}
-                    ${metadata.conversion_info.includes_wiktionary ? '<li>📖 Includes Wiktionary data</li>' : ''}
-                </ul>
-            ` : ''}
-            
-            <h3>🛠️ Tools & Project</h3>
-            <p>The dictionary is extracted using the <a href="https://github.com/komapc/ido-esperanto-extractor" target="_blank">ido-esperanto-extractor</a> pipeline, which processes Wiktionary dumps and Wikipedia data to create comprehensive bilingual dictionaries.</p>
-            
-            <p><strong>Related Projects:</strong></p>
+            <h3>⚖️ Licenco e Fonti</h3>
+            <p>La datumi en ca vortaro venas de diversa fonti kun diversa licenco:</p>
             <ul>
-                <li><a href="https://github.com/komapc/ido-epo-translator" target="_blank">ido-epo-translator</a> - Full machine translation system</li>
-                <li><a href="https://github.com/komapc/apertium-ido-epo" target="_blank">apertium-ido-epo</a> - Apertium language pair</li>
+                <li><strong>Wiktionary datumi:</strong> <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA 3.0</a></li>
+                <li><strong>Wikipedia datumi:</strong> <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA 3.0</a></li>
+                <li><strong>Ca softwaro:</strong> Libera e apertkoda</li>
+            </ul>
+            <p><small>Atribuciono mustas donesez a <a href="https://io.wiktionary.org" target="_blank">Ido Wiktionary</a>, <a href="https://eo.wiktionary.org" target="_blank">Esperanto Wiktionary</a>, <a href="https://io.wikipedia.org" target="_blank">Ido Wikipedia</a>, e <a href="https://fr.wiktionary.org" target="_blank">Franca Wiktionary</a>.</small></p>
+            
+            <h3>🛠️ Utensili & Projekto</h3>
+            <p>La vortaro extraktesas per <a href="https://github.com/komapc/ido-esperanto-extractor" target="_blank">ido-esperanto-extractor</a>, qua procesas Wiktionary-dumps e Wikipedia-datumi por krear kompleta dulingva vortari.</p>
+            
+            <p><strong>Relatanta projekti:</strong></p>
+            <ul>
+                <li><a href="https://github.com/komapc/ido-epo-translator" target="_blank">ido-epo-translator</a> - Kompleta traduk-sistemo</li>
+                <li><a href="https://github.com/komapc/apertium-ido-epo" target="_blank">apertium-ido-epo</a> - Apertium linguo-paro</li>
             </ul>
         `;
     } else {
         modalBody.innerHTML = `
-            <p>Dictionary metadata not available.</p>
-            <p>This dictionary provides bidirectional lookup between Ido and Esperanto words.</p>
+            <p>Vortaro-metadatumi ne disponesas.</p>
+            <p>Ca vortaro provizas dudireciona serchado inter Ido e Esperanto vorti.</p>
         `;
     }
     
@@ -271,21 +283,21 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
     search(e.target.value);
 });
 
-// Direction switcher
-document.getElementById('idoToEoBtn').addEventListener('click', () => switchDirection('io-eo'));
-document.getElementById('eoToIdoBtn').addEventListener('click', () => switchDirection('eo-io'));
-
-// Keyboard support for direction buttons
-document.getElementById('idoToEoBtn').addEventListener('keydown', (e) => {
+// Direction toggle
+document.getElementById('directionToggle').addEventListener('click', toggleDirection);
+document.getElementById('directionToggle').addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        switchDirection('io-eo');
+        toggleDirection();
     }
 });
-document.getElementById('eoToIdoBtn').addEventListener('keydown', (e) => {
+
+// Random word button
+document.getElementById('randomBtn').addEventListener('click', showRandomWord);
+document.getElementById('randomBtn').addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        switchDirection('eo-io');
+        showRandomWord();
     }
 });
 
