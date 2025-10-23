@@ -5,3 +5,19 @@
 .vscode/
 .idea/
 
+# Build outputs
+node_modules/
+dist/
+.vite/
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Logs
+*.log
+npm-debug.log*
+
