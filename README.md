@@ -25,7 +25,7 @@
 ## How It Works
 
 This is a **simple static website** that:
-1. Loads dictionary JSON data (~7,500 entries) from the extractor
+1. Loads dictionary JSON data (~14,500 entries) from the extractor
 2. Provides instant bidirectional search (Ido⇄Esperanto)
 3. Displays comprehensive metadata about dictionary sources
 4. No Apertium translation - just dictionary lookup
@@ -47,15 +47,24 @@ This is a **simple static website** that:
 
 ## Dictionary Data
 
-The dictionary data comes from [ido-esperanto-extractor](https://github.com/komapc/ido-esperanto-extractor) which extracts and processes data from multiple sources:
+The dictionary data is **automatically generated** by the extractor pipeline and accessed via symlink.
 
-### Sources
-- **Ido Wiktionary** - ~9,338 translations extracted from Ido Wiktionary dump
-- **Ido Wikipedia** - ~5,302 entries from Ido Wikipedia language links 📚
-- **French Wiktionary (pivot)** - ~1,010 translations via French intermediate language 🇫🇷
-- **Esperanto Wiktionary** - ~189 translations from Esperanto Wiktionary
+### How It Works
+
+**Zero-copy architecture:**
+- `dictionary.json` → symlink to `../extractor/output/vortaro.json`
+- No duplication, no manual copying
+- Automatically stays current when extractor runs
+- Single source of truth
+
+**Data Source:** The extractor processes multiple sources:
+- **Ido Wiktionary** - Direct IO→EO translations
+- **Ido Wikipedia** - Entries from Wikipedia language links 📚
+- **French Wiktionary (pivot)** - Via French intermediate language 🇫🇷
+- **Esperanto Wiktionary** - Reverse EO→IO translations
 
 ### What is Pivot Translation?
+
 Pivot translation uses an intermediate language (like French or English) to create translations between Ido and Esperanto when direct translations aren't available.
 
 **Example:** If we know that:
@@ -65,15 +74,13 @@ Pivot translation uses an intermediate language (like French or English) to crea
 Then we can infer: Ido "hundo" → Esperanto "hundo" through the French "pivot"
 
 ### Statistics
-- **Total unique Ido words:** ~14,900
-- **Total translations:** ~15,800+
-- **Source breakdown:**
-  - 📕 Ido Wiktionary: 9,338 translations
-  - 📚 Ido Wikipedia: 5,302 entries
-  - 🇫🇷 French Wiktionary (pivot): 1,010 translations  
-  - 📗 Esperanto Wiktionary: 189 translations
 
-The dictionary is automatically updated when new dumps are processed by the extractor.
+Current dictionary (~14,500 words):
+- **Total unique Ido words:** 14,481
+- **Sources:** IO Wiktionary, Wikipedia, FR pivot, EO Wiktionary
+- **Format:** Optimized for web display with morphology and source tracking
+
+The dictionary **automatically updates** when the extractor pipeline runs.
 
 ## Development
 
@@ -88,16 +95,26 @@ cd vortaro
 open index.html
 ```
 
-To update the dictionary data:
-```bash
-# Copy latest dictionary from extractor
-cp path/to/ido-esperanto-extractor/output/dictionary_merged_enhanced.json dictionary.json
+### Updating the Dictionary
 
-# The dictionary.json file includes:
-# - All word entries with Esperanto translations
-# - Morphology information where available
-# - Metadata about sources and extraction dates
+**No manual steps needed!** The dictionary uses a symlink to the extractor output:
+
+```bash
+# dictionary.json is a symlink to:
+../extractor/output/vortaro.json
+
+# To update: Just run the extractor
+cd ../extractor
+python3 scripts/build_one_big_bidix_json.py  # Regenerates vortaro.json
+cd ../vortaro
+# dictionary.json automatically points to latest data ✨
 ```
+
+**Architecture Benefits:**
+- ✅ **No Python in vortaro** - Pure HTML/CSS/JS static site
+- ✅ **No duplication** - Single source of truth
+- ✅ **Auto-updates** - Run extractor, vortaro sees new data
+- ✅ **Clean separation** - Extractor = data processing, Vortaro = display
 
 ## File Structure
 
@@ -106,9 +123,11 @@ vortaro/
 ├── index.html           # Main HTML file
 ├── style.css            # Styling
 ├── app.js               # Search functionality
-├── dictionary.json      # Dictionary data (2.5MB)
-└── README.md           # This file
+├── dictionary.json      # Symlink to ../extractor/output/vortaro.json
+└── README.md            # This file
 ```
+
+**Note:** `dictionary.json` is a symbolic link, not a regular file. This ensures the vortaro always uses the latest extractor output without manual copying.
 
 ## Related Projects
 
