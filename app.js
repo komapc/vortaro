@@ -283,7 +283,7 @@ function showAboutModal() {
             <ul>
                 ${sourceStats.io_wiktionary ? `<li>📕 <strong>Ido Wiktionary:</strong> ${sourceStats.io_wiktionary.toLocaleString()} traduki</li>` : ''}
                 ${sourceStats.io_wikipedia ? `<li>📚 <strong>Ido Wikipedia:</strong> ${sourceStats.io_wikipedia.toLocaleString()} vorti</li>` : ''}
-                ${sourceStats.fr_wiktionary_meaning ? `<li>🇫🇷 <strong>Franca Wiktionary</strong> (pivoto): ${sourceStats.fr_wiktionary_meaning.toLocaleString()} traduki</li>` : ''}
+                ${sourceStats.fr_wiktionary_via ? `<li>🇫🇷 <strong>Franca Wiktionary</strong> (pivoto): ${sourceStats.fr_wiktionary_via.toLocaleString()} traduki</li>` : ''}
                 ${sourceStats.eo_wiktionary ? `<li>📗 <strong>Esperanto Wiktionary:</strong> ${sourceStats.eo_wiktionary.toLocaleString()} traduki</li>` : ''}
             </ul>
             
