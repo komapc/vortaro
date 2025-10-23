@@ -97,24 +97,38 @@ open index.html
 
 ### Updating the Dictionary
 
-**No manual steps needed!** The dictionary uses a symlink to the extractor output:
+**For GitHub Pages deployment:** The dictionary is committed as a regular file (GitHub Pages cannot resolve symlinks outside the repo).
+
+**For local development:** You can use a symlink to auto-update from extractor:
 
 ```bash
-# dictionary.json is a symlink to:
-../extractor/output/vortaro.json
+# Replace file with symlink (local only)
+cd vortaro
+rm dictionary.json
+ln -s ../extractor/output/vortaro.json dictionary.json
 
-# To update: Just run the extractor
+# Now updates automatically when extractor runs
 cd ../extractor
 python3 scripts/build_one_big_bidix_json.py  # Regenerates vortaro.json
 cd ../vortaro
 # dictionary.json automatically points to latest data ✨
 ```
 
+**For deployment:** Copy the actual file:
+```bash
+cd vortaro
+rm dictionary.json
+cp ../extractor/output/vortaro.json dictionary.json
+git add dictionary.json
+git commit -m "update: refresh dictionary data"
+git push origin main
+```
+
 **Architecture Benefits:**
 - ✅ **No Python in vortaro** - Pure HTML/CSS/JS static site
-- ✅ **No duplication** - Single source of truth
-- ✅ **Auto-updates** - Run extractor, vortaro sees new data
+- ✅ **Single source of truth** - Extractor generates, vortaro displays
 - ✅ **Clean separation** - Extractor = data processing, Vortaro = display
+- ✅ **Flexible** - Symlink for dev, real file for deployment
 
 ## File Structure
 
@@ -123,11 +137,13 @@ vortaro/
 ├── index.html           # Main HTML file
 ├── style.css            # Styling
 ├── app.js               # Search functionality
-├── dictionary.json      # Symlink to ../extractor/output/vortaro.json
+├── dictionary.json      # Dictionary data (real file for deployment, can be symlink locally)
 └── README.md            # This file
 ```
 
-**Note:** `dictionary.json` is a symbolic link, not a regular file. This ensures the vortaro always uses the latest extractor output without manual copying.
+**Note:** 
+- **Deployed version:** `dictionary.json` is a regular file (GitHub Pages requirement)
+- **Local development:** Can be a symlink to `../extractor/output/vortaro.json` for auto-updates
 
 ## Related Projects
 
