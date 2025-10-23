@@ -7,7 +7,7 @@ let currentDirection = 'io-eo'; // 'io-eo' or 'eo-io'
 // Load dictionary data
 async function loadDictionary() {
     try {
-        const response = await fetch('dictionary_with_wikipedia.json');
+        const response = await fetch('dictionary.json');
         const data = await response.json();
         
         // Extract and store metadata
