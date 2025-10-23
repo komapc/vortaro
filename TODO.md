@@ -9,6 +9,17 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
 
 ---
 
+## 🐛 Data Quality & Issues
+
+### Immediate:
+- [ ] **Source Attribution Missing**
+  - Test words like "apartenas" - no source is indicated
+  - Investigate why some entries lack source metadata
+  - Add source field to all dictionary entries
+  - Ensure data consistency across all entries
+
+---
+
 ## 💡 Suggested Improvements (Optional)
 
 ### High Value, Low Effort:
