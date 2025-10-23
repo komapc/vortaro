@@ -170,13 +170,18 @@ function getSourceUrl(source, idoWord, esperantoWord) {
         return `https://io.wikipedia.org/wiki/${encodeWord(capitalizedWord)}`;
     }
     
-    // French Wiktionary (pivot or direct)
-    if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) {
+    // Pivot translations - no link (we don't have intermediate language word)
+    if (source.includes('_meaning') || source.includes('pivot_')) {
+        return null;
+    }
+    
+    // French Wiktionary (direct only, not pivot)
+    if (source.includes('fr_wiktionary')) {
         return `https://fr.wiktionary.org/wiki/${encodeWord(idoWord)}`;
     }
     
-    // English Wiktionary (pivot or direct)
-    if (source.includes('en_wiktionary') || source.includes('pivot_en')) {
+    // English Wiktionary (direct only, not pivot)
+    if (source.includes('en_wiktionary')) {
         return `https://en.wiktionary.org/wiki/${encodeWord(idoWord)}`;
     }
     
