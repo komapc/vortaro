@@ -130,9 +130,9 @@ function displayResults(results, searchTerm) {
 function getBadgeClass(source) {
     if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) return 'badge-fr';
     if (source.includes('en_wiktionary') || source.includes('pivot_en')) return 'badge-en';
-    if (source.includes('io_wiktionary') || source === 'wikt_io') return 'badge-io';
+    if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') return 'badge-io';
     if (source.includes('eo_wiktionary') || source === 'wikt_eo') return 'badge-eo';
-    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki') return 'badge-wiki';
+    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') return 'badge-wiki';
     return 'badge-default';
 }
 
@@ -140,9 +140,9 @@ function getBadgeClass(source) {
 function getBadgeText(source) {
     if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) return '🇫🇷 FR';
     if (source.includes('en_wiktionary') || source.includes('pivot_en')) return '🇬🇧 EN';
-    if (source.includes('io_wiktionary') || source === 'wikt_io') return '📕 IO';
+    if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') return '📕 IO';
     if (source.includes('eo_wiktionary') || source === 'wikt_eo') return '📗 EO';
-    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki') return '📚 WIKI';
+    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') return '📚 WIKI';
     return source.substring(0, 8);
 }
 
@@ -152,7 +152,7 @@ function getSourceUrl(source, idoWord, esperantoWord) {
     const encodeWord = (word) => encodeURIComponent(word || '');
     
     // Ido Wiktionary
-    if (source.includes('io_wiktionary') || source === 'wikt_io') {
+    if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') {
         return `https://io.wiktionary.org/wiki/${encodeWord(idoWord)}`;
     }
     
@@ -164,7 +164,7 @@ function getSourceUrl(source, idoWord, esperantoWord) {
     }
     
     // Ido Wikipedia
-    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki') {
+    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') {
         // Capitalize first letter for Wikipedia
         const capitalizedWord = idoWord.charAt(0).toUpperCase() + idoWord.slice(1);
         return `https://io.wikipedia.org/wiki/${encodeWord(capitalizedWord)}`;
