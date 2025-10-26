@@ -12,11 +12,12 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
 ## 🐛 Data Quality & Issues
 
 ### Immediate:
-- [ ] **Source Attribution Missing**
-  - Test words like "apartenas" - no source is indicated
-  - Investigate why some entries lack source metadata
-  - Add source field to all dictionary entries
-  - Ensure data consistency across all entries
+- [x] **Source Attribution Missing** - FIXED
+  - ~~Test words like "apartenas" - no source is indicated~~
+  - ~~Investigate why some entries lack source metadata~~
+  - Issue was in URL generation for `fr_wiktionary_meaning` sources
+  - Fixed: Improved source URL handling for pivot translations
+  - All dictionary entries now have proper source attribution
 
 ---
 
@@ -24,12 +25,10 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
 
 ### High Value, Low Effort:
 
-- [ ] **Change Favicon**
-  - Replace default favicon with Ido-Esperanto themed icon
-  - Create custom favicon.ico file
-  - Add favicon link tags to index.html
-  - Consider using Ido/Esperanto language symbols or combined design
-  - Expected: More professional appearance and brand identity
+- [x] **Change Favicon** - COMPLETED
+  - ✅ Custom Ido-Esperanto themed favicon added (favicon.svg)
+  - ✅ Favicon link tags added to index.html
+  - ✅ Professional appearance with Ido star symbol
 
 - [ ] **Better Mobile Experience**
   - Improve touch targets (buttons, links)
