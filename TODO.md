@@ -15,9 +15,10 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
 - [x] **Source Attribution Missing** - FIXED
   - ~~Test words like "apartenas" - no source is indicated~~
   - ~~Investigate why some entries lack source metadata~~
-  - Issue was in URL generation for `fr_wiktionary_meaning` sources
-  - Fixed: Improved source URL handling for pivot translations
-  - All dictionary entries now have proper source attribution
+  - Issue was in URL generation for pivot translation sources
+  - Fixed: Added search links for pivot translations (fr_wiktionary_meaning, en_wiktionary_meaning)
+  - All dictionary entries now have proper source attribution with clickable links
+  - Pivot translations now show 🔍 icon and link to search pages
 
 ---
 
