@@ -83,9 +83,11 @@ function displayResults(results, searchTerm) {
                 // Create appropriate tooltip text
                 let tooltipText = source;
                 if (source === 'fr_wiktionary_meaning') {
-                    tooltipText = 'Franca Wiktionary (pivot-traduko)';
+                    tooltipText = 'Serchar en Franca Wiktionary (pivot-traduko)';
+                } else if (source === 'en_wiktionary_meaning') {
+                    tooltipText = 'Serchar en Angla Wiktionary (pivot-traduko)';
                 } else if (source.includes('_meaning')) {
-                    tooltipText = `${source} (pivot-traduko)`;
+                    tooltipText = `Serchar en ${source} (pivot-traduko)`;
                 } else if (url) {
                     tooltipText = `Vidar ${source} en nova fenestro`;
                 }
@@ -148,7 +150,8 @@ function getBadgeClass(source) {
 
 // Get badge display text for source
 function getBadgeText(source) {
-    if (source === 'fr_wiktionary_meaning') return '🇫🇷 FR*';
+    if (source === 'fr_wiktionary_meaning') return '🇫🇷 FR🔍';
+    if (source === 'en_wiktionary_meaning') return '🇬🇧 EN🔍';
     if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) return '🇫🇷 FR';
     if (source.includes('en_wiktionary') || source.includes('pivot_en')) return '🇬🇧 EN';
     if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') return '📕 IO';
@@ -181,19 +184,26 @@ function getSourceUrl(source, idoWord, esperantoWord) {
         return `https://io.wikipedia.org/wiki/${encodeWord(capitalizedWord)}`;
     }
     
-    // French Wiktionary (direct only, not pivot)
+    // French Wiktionary (direct entries)
     if (source.includes('fr_wiktionary') && !source.includes('_meaning')) {
         return `https://fr.wiktionary.org/wiki/${encodeWord(idoWord)}`;
     }
     
-    // English Wiktionary (direct only, not pivot)
+    // French Wiktionary (pivot translations via meaning)
+    if (source === 'fr_wiktionary_meaning' || source.includes('pivot_fr')) {
+        // Link to search for the Ido word in French Wiktionary
+        return `https://fr.wiktionary.org/wiki/Spécial:Recherche/${encodeWord(idoWord)}`;
+    }
+    
+    // English Wiktionary (direct entries)
     if (source.includes('en_wiktionary') && !source.includes('_meaning')) {
         return `https://en.wiktionary.org/wiki/${encodeWord(idoWord)}`;
     }
     
-    // Pivot translations - no link (we don't have intermediate language word)
-    if (source.includes('_meaning') || source.includes('pivot_')) {
-        return null;
+    // English Wiktionary (pivot translations via meaning)
+    if (source === 'en_wiktionary_meaning' || source.includes('pivot_en')) {
+        // Link to search for the Ido word in English Wiktionary
+        return `https://en.wiktionary.org/wiki/Special:Search/${encodeWord(idoWord)}`;
     }
     
     // No URL available for this source
