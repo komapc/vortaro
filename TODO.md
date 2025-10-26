@@ -27,9 +27,11 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
 ### High Value, Low Effort:
 
 - [x] **Change Favicon** - COMPLETED
-  - ✅ Custom Ido-Esperanto themed favicon added (favicon.svg)
-  - ✅ Favicon link tags added to index.html
+  - ✅ Custom Ido-Esperanto themed favicon added (favicon.svg + favicon.png)
+  - ✅ Favicon link tags added to index.html with proper browser compatibility
   - ✅ Professional appearance with Ido star symbol
+  - ✅ PNG format added for better browser compatibility (32x32px)
+  - ✅ SVG format maintained as fallback for modern browsers
 
 - [ ] **Better Mobile Experience**
   - Improve touch targets (buttons, links)

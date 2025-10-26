@@ -138,6 +138,8 @@ vortaro/
 ├── style.css            # Styling
 ├── app.js               # Search functionality
 ├── dictionary.json      # Dictionary data (real file for deployment, can be symlink locally)
+├── favicon.png          # Favicon (PNG format for browser compatibility)
+├── favicon.svg          # Favicon (SVG format for modern browsers)
 └── README.md            # This file
 ```
 
