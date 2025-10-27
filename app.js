@@ -11,10 +11,10 @@ let touchEndX = 0;
 let touchEndY = 0;
 
 // Filters state
-let activeFilters = {
+const activeFilters = {
     sources: new Set()
 };
-let availableSources = new Set();
+const availableSources = new Set();
 
 // Load dictionary data
 async function loadDictionary() {
@@ -303,7 +303,9 @@ function setupFilterEventListeners() {
 
 // Generate part of speech badges
 function generatePosBadges(morfologio) {
-    if (!morfologio || morfologio.length === 0) return '';
+    if (!morfologio || morfologio.length === 0) {
+        return '';
+    }
 
     const posBadges = morfologio.map(morph => {
         const pos = extractPartOfSpeech(morph);
@@ -321,14 +323,30 @@ function generatePosBadges(morfologio) {
 // Extract part of speech from morfologio string
 function extractPartOfSpeech(morph) {
     // Common patterns in morfologio: "o__n" (noun), "ar__v" (verb), "a__adj" (adjective), etc.
-    if (morph.includes('__n') || morph.includes('o__')) return 'noun';
-    if (morph.includes('__v') || morph.includes('ar__') || morph.includes('ir__') || morph.includes('or__')) return 'verb';
-    if (morph.includes('__adj') || morph.includes('a__')) return 'adjective';
-    if (morph.includes('__adv') || morph.includes('e__')) return 'adverb';
-    if (morph.includes('__prep')) return 'preposition';
-    if (morph.includes('__conj')) return 'conjunction';
-    if (morph.includes('__pron')) return 'pronoun';
-    if (morph.includes('__interj')) return 'interjection';
+    if (morph.includes('__n') || morph.includes('o__')) {
+        return 'noun';
+    }
+    if (morph.includes('__v') || morph.includes('ar__') || morph.includes('ir__') || morph.includes('or__')) {
+        return 'verb';
+    }
+    if (morph.includes('__adj') || morph.includes('a__')) {
+        return 'adjective';
+    }
+    if (morph.includes('__adv') || morph.includes('e__')) {
+        return 'adverb';
+    }
+    if (morph.includes('__prep')) {
+        return 'preposition';
+    }
+    if (morph.includes('__conj')) {
+        return 'conjunction';
+    }
+    if (morph.includes('__pron')) {
+        return 'pronoun';
+    }
+    if (morph.includes('__interj')) {
+        return 'interjection';
+    }
     return null;
 }
 
@@ -364,23 +382,23 @@ function getPartOfSpeechText(pos) {
 
 // Get badge CSS class for source
 function getBadgeClass(source) {
-    if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) return 'badge-fr';
-    if (source.includes('en_wiktionary') || source.includes('pivot_en')) return 'badge-en';
-    if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') return 'badge-io';
-    if (source.includes('eo_wiktionary') || source === 'wikt_eo') return 'badge-eo';
-    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') return 'badge-wiki';
+    if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) {return 'badge-fr';}
+    if (source.includes('en_wiktionary') || source.includes('pivot_en')) {return 'badge-en';}
+    if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') {return 'badge-io';}
+    if (source.includes('eo_wiktionary') || source === 'wikt_eo') {return 'badge-eo';}
+    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') {return 'badge-wiki';}
     return 'badge-default';
 }
 
 // Get badge display text for source
 function getBadgeText(source) {
-    if (source === 'fr_wiktionary_meaning') return '🇫🇷 FR🔍';
-    if (source === 'en_wiktionary_meaning') return '🇬🇧 EN🔍';
-    if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) return '🇫🇷 FR';
-    if (source.includes('en_wiktionary') || source.includes('pivot_en')) return '🇬🇧 EN';
-    if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') return '📕 IO';
-    if (source.includes('eo_wiktionary') || source === 'wikt_eo') return '📗 EO';
-    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') return '📚 WIKI';
+    if (source === 'fr_wiktionary_meaning') {return '🇫🇷 FR🔍';}
+    if (source === 'en_wiktionary_meaning') {return '🇬🇧 EN🔍';}
+    if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) {return '🇫🇷 FR';}
+    if (source.includes('en_wiktionary') || source.includes('pivot_en')) {return '🇬🇧 EN';}
+    if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') {return '📕 IO';}
+    if (source.includes('eo_wiktionary') || source === 'wikt_eo') {return '📗 EO';}
+    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') {return '📚 WIKI';}
     return source.substring(0, 8);
 }
 
@@ -478,7 +496,7 @@ function toggleDirection() {
 
 // Show random word
 function showRandomWord() {
-    if (allEntries.length === 0) return;
+    if (allEntries.length === 0) {return;}
 
     const randomIndex = Math.floor(Math.random() * allEntries.length);
     const randomEntry = allEntries[randomIndex];
