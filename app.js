@@ -4,17 +4,23 @@ let allEntries = [];
 let metadata = null;
 let currentDirection = 'io-eo'; // 'io-eo' or 'eo-io'
 
+// Touch/swipe handling
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
 // Load dictionary data
 async function loadDictionary() {
     try {
         const response = await fetch('dictionary.json');
         const data = await response.json();
-        
+
         // Extract and store metadata
         metadata = data.metadata || null;
         delete data.metadata;
         dictionary = data;
-        
+
         // Create searchable entries array with bidirectional support and source info
         allEntries = Object.entries(dictionary).map(([idoWord, entryData]) => ({
             ido: idoWord,
@@ -22,16 +28,16 @@ async function loadDictionary() {
             morfologio: entryData.morfologio || [],
             sources: entryData.sources || []
         }));
-        
+
         // Update word count
         const totalEntries = metadata?.total_unique_ido_words || allEntries.length;
         document.getElementById('wordCount').textContent = `${totalEntries.toLocaleString()} vorti`;
-        
+
         // Show empty state
         showEmptyState();
     } catch (error) {
         console.error('Error loading dictionary:', error);
-        document.getElementById('results').innerHTML = 
+        document.getElementById('results').innerHTML =
             '<div class="no-results">Error loading dictionary. Please try again later.</div>';
     }
 }
@@ -39,12 +45,12 @@ async function loadDictionary() {
 // Search function
 function search(query) {
     const searchTerm = query.toLowerCase().trim();
-    
+
     if (!searchTerm) {
         showEmptyState();
         return;
     }
-    
+
     // Search based on current direction
     const results = allEntries.filter(entry => {
         if (currentDirection === 'io-eo') {
@@ -55,7 +61,7 @@ function search(query) {
             return entry.esperanto.some(eoWord => eoWord.toLowerCase().includes(searchTerm));
         }
     });
-    
+
     displayResults(results, searchTerm);
 }
 
@@ -63,15 +69,15 @@ function search(query) {
 function displayResults(results, searchTerm) {
     const resultsContainer = document.getElementById('results');
     const searchInfo = document.getElementById('searchInfo');
-    
+
     if (results.length === 0) {
         resultsContainer.innerHTML = '<div class="no-results">Nula rezulti por "' + searchTerm + '"</div>';
         searchInfo.textContent = '0 rezulti';
         return;
     }
-    
+
     searchInfo.textContent = `${results.length} rezulto${results.length !== 1 ? 'i' : ''}`;
-    
+
     const html = results.map(entry => {
         // Generate source badges with links
         const sourceBadges = entry.sources && entry.sources.length > 0
@@ -79,7 +85,7 @@ function displayResults(results, searchTerm) {
                 const badgeClass = getBadgeClass(source);
                 const badgeText = getBadgeText(source);
                 const url = getSourceUrl(source, entry.ido, entry.esperanto[0]);
-                
+
                 // Create appropriate tooltip text
                 let tooltipText = source;
                 if (source === 'fr_wiktionary_meaning') {
@@ -91,7 +97,7 @@ function displayResults(results, searchTerm) {
                 } else if (url) {
                     tooltipText = `Vidar ${source} en nova fenestro`;
                 }
-                
+
                 if (url) {
                     return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="source-badge ${badgeClass}" title="${tooltipText}">${badgeText}</a>`;
                 } else {
@@ -99,7 +105,7 @@ function displayResults(results, searchTerm) {
                 }
             }).join(' ')
             : '';
-        
+
         if (currentDirection === 'io-eo') {
             // Ido → Esperanto
             return `
@@ -108,11 +114,12 @@ function displayResults(results, searchTerm) {
                     <div class="target-words">
                         → ${entry.esperanto.map(word => word).join(', ') || '<em>nula traduko</em>'}
                     </div>
+                    ${generatePosBadges(entry.morfologio)}
                     ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
-                    ${entry.morfologio.length > 0 ? 
-                        `<div class="morfologio">Morfologio: ${entry.morfologio.join(' + ')}</div>` : 
-                        ''
-                    }
+                    ${entry.morfologio.length > 0 ?
+                    `<div class="morfologio">Morfologio: ${entry.morfologio.join(' + ')}</div>` :
+                    ''
+                }
                 </div>
             `;
         } else {
@@ -125,17 +132,79 @@ function displayResults(results, searchTerm) {
                     <div class="source-word">
                         → ${entry.ido}
                     </div>
+                    ${generatePosBadges(entry.morfologio)}
                     ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
-                    ${entry.morfologio.length > 0 ? 
-                        `<div class="morfologio">Morfologio: ${entry.morfologio.join(' + ')}</div>` : 
-                        ''
-                    }
+                    ${entry.morfologio.length > 0 ?
+                    `<div class="morfologio">Morfologio: ${entry.morfologio.join(' + ')}</div>` :
+                    ''
+                }
                 </div>
             `;
         }
     }).join('');
-    
+
     resultsContainer.innerHTML = html;
+}
+
+// Generate part of speech badges
+function generatePosBadges(morfologio) {
+    if (!morfologio || morfologio.length === 0) return '';
+
+    const posBadges = morfologio.map(morph => {
+        const pos = extractPartOfSpeech(morph);
+        if (pos) {
+            const posClass = getPartOfSpeechClass(pos);
+            const posText = getPartOfSpeechText(pos);
+            return `<span class="pos-badge ${posClass}" title="${pos}">${posText}</span>`;
+        }
+        return '';
+    }).filter(badge => badge).join(' ');
+
+    return posBadges ? `<div class="pos-badges">${posBadges}</div>` : '';
+}
+
+// Extract part of speech from morfologio string
+function extractPartOfSpeech(morph) {
+    // Common patterns in morfologio: "o__n" (noun), "ar__v" (verb), "a__adj" (adjective), etc.
+    if (morph.includes('__n') || morph.includes('o__')) return 'noun';
+    if (morph.includes('__v') || morph.includes('ar__') || morph.includes('ir__') || morph.includes('or__')) return 'verb';
+    if (morph.includes('__adj') || morph.includes('a__')) return 'adjective';
+    if (morph.includes('__adv') || morph.includes('e__')) return 'adverb';
+    if (morph.includes('__prep')) return 'preposition';
+    if (morph.includes('__conj')) return 'conjunction';
+    if (morph.includes('__pron')) return 'pronoun';
+    if (morph.includes('__interj')) return 'interjection';
+    return null;
+}
+
+// Get CSS class for part of speech
+function getPartOfSpeechClass(pos) {
+    const posMap = {
+        'noun': 'pos-noun',
+        'verb': 'pos-verb',
+        'adjective': 'pos-adj',
+        'adverb': 'pos-adv',
+        'preposition': 'pos-prep',
+        'conjunction': 'pos-conj',
+        'pronoun': 'pos-pron',
+        'interjection': 'pos-interj'
+    };
+    return posMap[pos] || 'pos-badge';
+}
+
+// Get display text for part of speech
+function getPartOfSpeechText(pos) {
+    const posMap = {
+        'noun': 'n',
+        'verb': 'v',
+        'adjective': 'adj',
+        'adverb': 'adv',
+        'preposition': 'prep',
+        'conjunction': 'conj',
+        'pronoun': 'pron',
+        'interjection': 'interj'
+    };
+    return posMap[pos] || pos;
 }
 
 // Get badge CSS class for source
@@ -164,48 +233,48 @@ function getBadgeText(source) {
 function getSourceUrl(source, idoWord, esperantoWord) {
     // Encode words for URLs
     const encodeWord = (word) => encodeURIComponent(word || '');
-    
+
     // Ido Wiktionary
     if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') {
         return `https://io.wiktionary.org/wiki/${encodeWord(idoWord)}`;
     }
-    
+
     // Esperanto Wiktionary
     if (source.includes('eo_wiktionary') || source === 'wikt_eo') {
-        return esperantoWord 
+        return esperantoWord
             ? `https://eo.wiktionary.org/wiki/${encodeWord(esperantoWord)}`
             : null;
     }
-    
+
     // Ido Wikipedia
     if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') {
         // Capitalize first letter for Wikipedia
         const capitalizedWord = idoWord.charAt(0).toUpperCase() + idoWord.slice(1);
         return `https://io.wikipedia.org/wiki/${encodeWord(capitalizedWord)}`;
     }
-    
+
     // French Wiktionary (direct entries)
     if (source.includes('fr_wiktionary') && !source.includes('_meaning')) {
         return `https://fr.wiktionary.org/wiki/${encodeWord(idoWord)}`;
     }
-    
+
     // French Wiktionary (pivot translations via meaning)
     if (source === 'fr_wiktionary_meaning' || source.includes('pivot_fr')) {
         // Link to search for the Ido word in French Wiktionary
         return `https://fr.wiktionary.org/wiki/Spécial:Recherche/${encodeWord(idoWord)}`;
     }
-    
+
     // English Wiktionary (direct entries)
     if (source.includes('en_wiktionary') && !source.includes('_meaning')) {
         return `https://en.wiktionary.org/wiki/${encodeWord(idoWord)}`;
     }
-    
+
     // English Wiktionary (pivot translations via meaning)
     if (source === 'en_wiktionary_meaning' || source.includes('pivot_en')) {
         // Link to search for the Ido word in English Wiktionary
         return `https://en.wiktionary.org/wiki/Special:Search/${encodeWord(idoWord)}`;
     }
-    
+
     // No URL available for this source
     return null;
 }
@@ -220,7 +289,7 @@ function highlightMatch(text, query) {
 function showEmptyState() {
     const resultsContainer = document.getElementById('results');
     const searchInfo = document.getElementById('searchInfo');
-    
+
     searchInfo.textContent = '';
     resultsContainer.innerHTML = `
         <div class="empty-state">
@@ -233,19 +302,19 @@ function showEmptyState() {
 // Toggle translation direction
 function toggleDirection() {
     currentDirection = currentDirection === 'io-eo' ? 'eo-io' : 'io-eo';
-    
+
     // Update button
     const toggleBtn = document.getElementById('directionToggle');
     const toggleText = toggleBtn.querySelector('.toggle-text');
     toggleBtn.setAttribute('data-direction', currentDirection);
     toggleText.textContent = currentDirection === 'io-eo' ? 'Ido → Esperanto' : 'Esperanto → Ido';
-    
+
     // Update placeholder
     const searchInput = document.getElementById('searchInput');
-    searchInput.placeholder = currentDirection === 'io-eo' 
-        ? 'Serchez en Ido...' 
+    searchInput.placeholder = currentDirection === 'io-eo'
+        ? 'Serchez en Ido...'
         : 'Serchez en Esperanto...';
-    
+
     // Re-run search if there's a query
     if (searchInput.value.trim()) {
         search(searchInput.value);
@@ -255,15 +324,15 @@ function toggleDirection() {
 // Show random word
 function showRandomWord() {
     if (allEntries.length === 0) return;
-    
+
     const randomIndex = Math.floor(Math.random() * allEntries.length);
     const randomEntry = allEntries[randomIndex];
-    
+
     // Set search input to random word
     const searchInput = document.getElementById('searchInput');
-    searchInput.value = currentDirection === 'io-eo' ? randomEntry.ido : 
-                        (randomEntry.esperanto[0] || randomEntry.ido);
-    
+    searchInput.value = currentDirection === 'io-eo' ? randomEntry.ido :
+        (randomEntry.esperanto[0] || randomEntry.ido);
+
     // Trigger search
     search(searchInput.value);
 }
@@ -272,17 +341,17 @@ function showRandomWord() {
 function showAboutModal() {
     const modal = document.getElementById('aboutModal');
     const modalBody = document.getElementById('modalBody');
-    
+
     if (metadata) {
         const lastUpdate = new Date(metadata.last_updated).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
         });
-        
+
         const sourceStats = metadata.source_stats || {};
         const totalSources = Object.values(sourceStats).reduce((a, b) => a + b, 0);
-        
+
         modalBody.innerHTML = `
             <h3>📚 Informo pri la Vortaro</h3>
             <div class="info-grid">
@@ -336,7 +405,7 @@ function showAboutModal() {
             <p>Ca vortaro provizas dudireciona serchado inter Ido e Esperanto vorti.</p>
         `;
     }
-    
+
     modal.style.display = 'flex';
     modal.setAttribute('aria-hidden', 'false');
 }
@@ -403,6 +472,70 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Swipe detection functions
+function handleTouchStart(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+}
+
+function handleTouchEnd(e) {
+    touchEndX = e.changedTouches[0].clientX;
+    touchEndY = e.changedTouches[0].clientY;
+    handleSwipe();
+}
+
+function handleSwipe() {
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    const minSwipeDistance = 50;
+
+    // Only trigger swipe if horizontal movement is greater than vertical
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+        if (deltaX > 0) {
+            // Swipe right - switch to Ido → Esperanto
+            if (currentDirection !== 'io-eo') {
+                toggleDirection();
+            }
+        } else {
+            // Swipe left - switch to Esperanto → Ido
+            if (currentDirection !== 'eo-io') {
+                toggleDirection();
+            }
+        }
+    }
+}
+
+// Initialize PullToRefresh
+function initializePullToRefresh() {
+    if (typeof PullToRefresh !== 'undefined') {
+        PullToRefresh.init({
+            mainElement: '#results',
+            onRefresh() {
+                return loadDictionary();
+            },
+            instructionsPullToRefresh: 'Tirez por aktualizar',
+            instructionsReleaseToRefresh: 'Liberez por aktualizar',
+            instructionsRefreshing: 'Aktualizante...',
+            distThreshold: 60,
+            distMax: 80,
+            distReload: 50,
+            bodyOffset: 20,
+            iconArrow: '↓',
+            iconRefreshing: '↻',
+            shouldPullToRefresh() {
+                return !window.scrollY;
+            }
+        });
+    }
+}
+
+// Add touch event listeners for swipe detection
+document.addEventListener('touchstart', handleTouchStart, { passive: true });
+document.addEventListener('touchend', handleTouchEnd, { passive: true });
+
 // Initialize
-loadDictionary();
+loadDictionary().then(() => {
+    // Initialize PullToRefresh after dictionary is loaded
+    initializePullToRefresh();
+});
 
