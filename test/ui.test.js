@@ -2,7 +2,7 @@
  * Tests for UI interactions and mobile features
  */
 
-import { fireEvent } from '@testing-library/dom';
+const { fireEvent } = require('@testing-library/dom');
 
 describe('UI Interactions', () => {
     beforeEach(() => {
