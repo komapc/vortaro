@@ -12,26 +12,26 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
 ## 🐛 Critical Errors & Issues
 
 ### **URGENT - Broken Functionality:**
-- [ ] **Investigate "flech" search issue**
-  - Word "flech" may not be returning expected results
-  - Check dictionary data and search logic
-  - Verify if it's a data issue or search algorithm problem
+- [x] **Investigate "flech/flecho" search issue** - FIXED
+  - Word "flecho" doesn't exist in dictionary (not a search bug)
+  - Dictionary contains actual sources: io_wiktionary, eo_wiktionary, fr_wiktionary, fr_wiktionary_meaning, io_wikipedia, whitelist
+  - Issue was missing data, not search functionality
 
 - [ ] **Filters don't work with random word feature**
-  - Random word button doesn't respect active filters
-  - Should only show random words from filtered results
-  - Currently shows any random word regardless of filter state
+  - Random word button doesn't exist yet in current version
+  - Feature needs to be implemented
+  - When implemented, should respect active filters
 
-- [ ] **Missing filter sources**
-  - Too few filter options available
-  - Missing "via sources" (pivot translation sources)
-  - Should include all available source types from dictionary data
+- [x] **Missing filter sources** - FIXED
+  - Added missing sources: `fr_wiktionary` (🇫🇷 French Wiktionary) and `whitelist` (✅ Whitelist)
+  - All 6 dictionary sources now available in filters
+  - Pivot translations (fr_wiktionary_meaning) already included
 
 ### **Visual Bugs:**
-- [ ] **Search highlight spacing issue**
-  - Highlighted search substrings have excessive left-right margins
-  - Appears to have extra space characters around highlights
-  - Fix CSS padding/margin in highlight styling
+- [x] **Search highlight spacing issue** - FIXED
+  - Reduced horizontal padding from 4px to 1px
+  - Reduced border-radius from 3px to 2px
+  - Highlights now appear tighter and more natural
 
 ### **Fixed Issues:**
 - [x] **Source Attribution Missing** - FIXED
