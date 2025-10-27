@@ -10,6 +10,9 @@
     <link rel="shortcut icon" href="favicon.png">
     <link rel="stylesheet" href="style.css">
 
+    <!-- PullToRefresh.js -->
+    <script src="https://cdn.jsdelivr.net/npm/pulltorefreshjs@0.1.22/dist/index.umd.min.js"></script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DMH4HKHLLS"></script>
     <script>
@@ -45,9 +48,7 @@
             <div class="search-info" id="searchInfo"></div>
         </div>
 
-        <div id="results" class="results pull-to-refresh">
-            <div class="pull-indicator" id="pullIndicator">↓</div>
-        </div>
+        <div id="results" class="results"></div>
 
         <footer>
             <p>

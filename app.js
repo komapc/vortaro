@@ -10,12 +10,6 @@ let touchStartY = 0;
 let touchEndX = 0;
 let touchEndY = 0;
 
-// Pull to refresh
-let pullStartY = 0;
-let pullCurrentY = 0;
-let isPulling = false;
-let isRefreshing = false;
-
 // Load dictionary data
 async function loadDictionary() {
     try {
@@ -511,79 +505,37 @@ function handleSwipe() {
     }
 }
 
-// Pull to refresh functions
-function handlePullStart(e) {
-    if (window.scrollY === 0) {
-        pullStartY = e.touches[0].clientY;
-        isPulling = true;
+// Initialize PullToRefresh
+function initializePullToRefresh() {
+    if (typeof PullToRefresh !== 'undefined') {
+        PullToRefresh.init({
+            mainElement: '#results',
+            onRefresh() {
+                return loadDictionary();
+            },
+            instructionsPullToRefresh: 'Tirez por aktualizar',
+            instructionsReleaseToRefresh: 'Liberez por aktualizar',
+            instructionsRefreshing: 'Aktualizante...',
+            distThreshold: 60,
+            distMax: 80,
+            distReload: 50,
+            bodyOffset: 20,
+            iconArrow: '↓',
+            iconRefreshing: '↻',
+            shouldPullToRefresh() {
+                return !window.scrollY;
+            }
+        });
     }
-}
-
-function handlePullMove(e) {
-    if (!isPulling || isRefreshing) return;
-
-    pullCurrentY = e.touches[0].clientY;
-    const pullDistance = pullCurrentY - pullStartY;
-
-    if (pullDistance > 0 && window.scrollY === 0) {
-        e.preventDefault();
-        const pullIndicator = document.getElementById('pullIndicator');
-
-        if (pullDistance > 60) {
-            pullIndicator.textContent = '↻';
-            pullIndicator.classList.add('visible');
-        } else {
-            pullIndicator.textContent = '↓';
-            pullIndicator.classList.add('visible');
-        }
-
-        // Add some visual feedback
-        pullIndicator.style.transform = `translateX(-50%) translateY(${Math.min(pullDistance / 2, 30)}px)`;
-    }
-}
-
-function handlePullEnd(e) {
-    if (!isPulling) return;
-
-    const pullDistance = pullCurrentY - pullStartY;
-    const pullIndicator = document.getElementById('pullIndicator');
-
-    if (pullDistance > 60 && !isRefreshing) {
-        // Trigger refresh
-        isRefreshing = true;
-        pullIndicator.textContent = '↻';
-        pullIndicator.classList.add('refreshing');
-
-        // Simulate refresh (reload dictionary)
-        setTimeout(() => {
-            loadDictionary().then(() => {
-                isRefreshing = false;
-                pullIndicator.classList.remove('visible', 'refreshing');
-                pullIndicator.style.transform = 'translateX(-50%)';
-                pullIndicator.textContent = '↓';
-            });
-        }, 1000);
-    } else {
-        // Reset pull indicator
-        pullIndicator.classList.remove('visible');
-        pullIndicator.style.transform = 'translateX(-50%)';
-    }
-
-    isPulling = false;
-    pullStartY = 0;
-    pullCurrentY = 0;
 }
 
 // Add touch event listeners for swipe detection
 document.addEventListener('touchstart', handleTouchStart, { passive: true });
 document.addEventListener('touchend', handleTouchEnd, { passive: true });
 
-// Add touch event listeners for pull to refresh
-const resultsContainer = document.getElementById('results');
-resultsContainer.addEventListener('touchstart', handlePullStart, { passive: false });
-resultsContainer.addEventListener('touchmove', handlePullMove, { passive: false });
-resultsContainer.addEventListener('touchend', handlePullEnd, { passive: true });
-
 // Initialize
-loadDictionary();
+loadDictionary().then(() => {
+    // Initialize PullToRefresh after dictionary is loaded
+    initializePullToRefresh();
+});
 
