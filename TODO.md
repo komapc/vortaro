@@ -1,6 +1,6 @@
 # TODO - Vortaro (Dictionary Viewer)
 
-**Last Updated:** October 23, 2025
+**Last Updated:** October 27, 2025
 
 ## 🎯 Current Status
 
@@ -9,9 +9,31 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
 
 ---
 
-## 🐛 Data Quality & Issues
+## 🐛 Critical Errors & Issues
 
-### Immediate:
+### **URGENT - Broken Functionality:**
+- [ ] **Investigate "flech" search issue**
+  - Word "flech" may not be returning expected results
+  - Check dictionary data and search logic
+  - Verify if it's a data issue or search algorithm problem
+
+- [ ] **Filters don't work with random word feature**
+  - Random word button doesn't respect active filters
+  - Should only show random words from filtered results
+  - Currently shows any random word regardless of filter state
+
+- [ ] **Missing filter sources**
+  - Too few filter options available
+  - Missing "via sources" (pivot translation sources)
+  - Should include all available source types from dictionary data
+
+### **Visual Bugs:**
+- [ ] **Search highlight spacing issue**
+  - Highlighted search substrings have excessive left-right margins
+  - Appears to have extra space characters around highlights
+  - Fix CSS padding/margin in highlight styling
+
+### **Fixed Issues:**
 - [x] **Source Attribution Missing** - FIXED
   - ~~Test words like "apartenas" - no source is indicated~~
   - ~~Investigate why some entries lack source metadata~~
