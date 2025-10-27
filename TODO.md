@@ -35,8 +35,7 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
 
 
 
-- [ ] **Advanced Filters**
-  - Filter by source (Wiktionary, Wikipedia, FR pivot)
+
 
 ### Lower Priority:
 - [ ] **Collaboration**
