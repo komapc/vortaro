@@ -17,10 +17,11 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
   - Dictionary contains actual sources: io_wiktionary, eo_wiktionary, fr_wiktionary, fr_wiktionary_meaning, io_wikipedia, whitelist
   - Issue was missing data, not search functionality
 
-- [ ] **Filters don't work with random word feature**
-  - Random word button doesn't exist yet in current version
-  - Feature needs to be implemented
-  - When implemented, should respect active filters
+- [x] **Filters don't work with random word feature** - FIXED
+  - Implemented random word functionality
+  - Random button now shows a random dictionary entry
+  - Respects active source filters
+  - Shows "(hazarda)" indicator in search info
 
 - [x] **Missing filter sources** - FIXED
   - Added missing sources: `fr_wiktionary` (🇫🇷 French Wiktionary) and `whitelist` (✅ Whitelist)
