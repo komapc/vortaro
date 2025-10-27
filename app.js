@@ -382,23 +382,23 @@ function getPartOfSpeechText(pos) {
 
 // Get badge CSS class for source
 function getBadgeClass(source) {
-    if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) {return 'badge-fr';}
-    if (source.includes('en_wiktionary') || source.includes('pivot_en')) {return 'badge-en';}
-    if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') {return 'badge-io';}
-    if (source.includes('eo_wiktionary') || source === 'wikt_eo') {return 'badge-eo';}
-    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') {return 'badge-wiki';}
+    if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) { return 'badge-fr'; }
+    if (source.includes('en_wiktionary') || source.includes('pivot_en')) { return 'badge-en'; }
+    if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') { return 'badge-io'; }
+    if (source.includes('eo_wiktionary') || source === 'wikt_eo') { return 'badge-eo'; }
+    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') { return 'badge-wiki'; }
     return 'badge-default';
 }
 
 // Get badge display text for source
 function getBadgeText(source) {
-    if (source === 'fr_wiktionary_meaning') {return '🇫🇷 FR🔍';}
-    if (source === 'en_wiktionary_meaning') {return '🇬🇧 EN🔍';}
-    if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) {return '🇫🇷 FR';}
-    if (source.includes('en_wiktionary') || source.includes('pivot_en')) {return '🇬🇧 EN';}
-    if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') {return '📕 IO';}
-    if (source.includes('eo_wiktionary') || source === 'wikt_eo') {return '📗 EO';}
-    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') {return '📚 WIKI';}
+    if (source === 'fr_wiktionary_meaning') { return '🇫🇷 FR🔍'; }
+    if (source === 'en_wiktionary_meaning') { return '🇬🇧 EN🔍'; }
+    if (source.includes('fr_wiktionary') || source.includes('pivot_fr')) { return '🇫🇷 FR'; }
+    if (source.includes('en_wiktionary') || source.includes('pivot_en')) { return '🇬🇧 EN'; }
+    if (source.includes('io_wiktionary') || source === 'wikt_io' || source === 'IO') { return '📕 IO'; }
+    if (source.includes('eo_wiktionary') || source === 'wikt_eo') { return '📗 EO'; }
+    if (source.includes('io_wikipedia') || source.includes('wikipedia') || source === 'wiki' || source === 'WIKI') { return '📚 WIKI'; }
     return source.substring(0, 8);
 }
 
@@ -496,10 +496,25 @@ function toggleDirection() {
 
 // Show random word
 function showRandomWord() {
-    if (allEntries.length === 0) {return;}
+    if (allEntries.length === 0) {
+        return;
+    }
 
-    const randomIndex = Math.floor(Math.random() * allEntries.length);
-    const randomEntry = allEntries[randomIndex];
+    // Get filtered entries if filters are active
+    let availableEntries = allEntries;
+    if (activeFilters.sources.size > 0) {
+        availableEntries = applyFilters(allEntries);
+    }
+
+    if (availableEntries.length === 0) {
+        document.getElementById('results').innerHTML = '<div class="no-results">Nula vorti kun ca filtri</div>';
+        document.getElementById('searchInfo').textContent = '0 rezulti';
+        return;
+    }
+
+    // Pick random entry from available (filtered) entries
+    const randomIndex = Math.floor(Math.random() * availableEntries.length);
+    const randomEntry = availableEntries[randomIndex];
 
     // Set search input to random word
     const searchInput = document.getElementById('searchInput');
