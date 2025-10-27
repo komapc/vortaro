@@ -6,21 +6,43 @@
 
 ## Features
 
+### **📖 Dictionary & Search**
 - 📖 **14,900+ dictionary entries** from multiple sources
 - 📚 **Wikipedia integration** - 5,300+ entries from Ido Wikipedia
 - 🇫🇷 **French pivot translations** - includes data from French Wiktionary
-- 🔄 **Single-button direction toggle** - one-click switch between Ido→Esperanto and Esperanto→Ido
-- 🎲 **Random word** - discover new words with random selection
-- 🏷️ **Clickable source links** - click badges to visit source pages (Wiktionary, Wikipedia, etc.) in new tab
+- 🔍 **Instant bidirectional search** - search words in either direction
+- 🎲 **Random word discovery** - discover new words with random selection
+- 🏷️ **Part of speech badges** - color-coded grammatical information (noun, verb, adj, etc.)
+
+### **🎛️ Advanced Filtering**
+- 🔽 **Source filters** - filter results by dictionary source:
+  - 📕 Ido Wiktionary
+  - 📗 Esperanto Wiktionary  
+  - 🇫🇷 French Wiktionary (pivot)
+  - 🇬🇧 English Wiktionary (pivot)
+  - 📚 Wikipedia entries
+- 🏷️ **Active filter indicators** - see how many filters are applied
+- 🧹 **Clear filters** - reset all filters with one click
+
+### **📱 Mobile Experience**
+- 👆 **Swipe controls** - swipe left/right to switch translation direction
+- ↻ **Pull-to-refresh** - pull down to refresh dictionary data
+- 🎯 **Enhanced touch targets** - optimized for mobile interaction
+- 📱 **Responsive design** - perfect on phones, tablets, and desktop
+- 🔄 **Direction toggle** - one-click switch between Ido→Esperanto and Esperanto→Ido
+
+### **🎨 User Interface**
+- 🏷️ **Clickable source links** - click badges to visit source pages in new tab
 - 🌐 **Ido/Esperanto interface** - UI in Ido language with Esperanto accessibility
 - ⚖️ **License information** - clear attribution to Wiktionary and Wikipedia sources (CC BY-SA 3.0)
-- 🔍 **Instant search** - search words in either direction
 - ℹ️ **Comprehensive metadata** - view detailed information about how the dictionary was built
 - 🎨 **Beautiful UI** - clean, modern interface with smooth animations
-- ⚡ **Fast** - all data loaded client-side, no backend needed
-- 📱 **Responsive** - works on mobile and desktop
-- 💾 **Offline-ready** - dictionary data loaded once
 - ♿ **Accessible** - full keyboard navigation and ARIA support
+
+### **⚡ Performance**
+- ⚡ **Fast** - all data loaded client-side, no backend needed
+- 💾 **Offline-ready** - dictionary data loaded once
+- 🚀 **Optimized filtering** - efficient search and filter algorithms
 
 ## How It Works
 
@@ -31,6 +53,30 @@ This is a **simple static website** that:
 4. No Apertium translation - just dictionary lookup
 5. Pure HTML/CSS/JavaScript - no build step needed
 6. Client-side only - no server required
+
+## Mobile Features
+
+### **👆 Swipe Controls**
+- **Swipe right** → Switch to Ido → Esperanto
+- **Swipe left** → Switch to Esperanto → Ido
+- Works anywhere on the screen (doesn't interfere with scrolling)
+
+### **↻ Pull-to-Refresh**
+- **Pull down** at the top of results to refresh dictionary data
+- Visual feedback with animated indicator
+- Uses professional PullToRefresh.js library for smooth experience
+
+### **🔽 Advanced Filtering**
+- **Collapsible filter panel** - tap "🔽 Filtri" to expand/collapse
+- **Source filtering** - check/uncheck sources to filter results
+- **Real-time updates** - results filter instantly as you select
+- **Filter count badge** - shows how many filters are active
+- **Clear all** - "Vakuigar" button to reset filters
+
+### **🎯 Touch Optimization**
+- **44px+ touch targets** - all buttons meet accessibility guidelines
+- **Enhanced spacing** - better mobile layout and padding
+- **Responsive grid** - filter options adapt to screen size
 
 ### Key Features Explained
 

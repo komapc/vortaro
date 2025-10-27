@@ -1,0 +1,47 @@
+{
+    "name": "vortaro",
+    "version": "1.0.0",
+    "description": "Ido-Esperanto Dictionary - Client-side dictionary lookup",
+    "main": "app.js",
+    "scripts": {
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage",
+        "lint": "eslint app.js",
+        "serve": "python3 -m http.server 8000"
+    },
+    "keywords": [
+        "ido",
+        "esperanto",
+        "dictionary",
+        "translation",
+        "wiktionary"
+    ],
+    "author": "komapc",
+    "license": "MIT",
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0",
+        "eslint": "^8.57.0",
+        "@testing-library/jest-dom": "^6.1.4",
+        "@testing-library/dom": "^9.3.3"
+    },
+    "jest": {
+        "testEnvironment": "jsdom",
+        "setupFilesAfterEnv": [
+            "<rootDir>/test/setup.js"
+        ],
+        "testMatch": [
+            "<rootDir>/test/**/*.test.js"
+        ],
+        "collectCoverageFrom": [
+            "app.js",
+            "!node_modules/**"
+        ],
+        "coverageReporters": [
+            "text",
+            "lcov",
+            "html"
+        ]
+    }
+}
