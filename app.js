@@ -182,9 +182,11 @@ function populateSourceFilters() {
     const sourceInfo = {
         'io_wiktionary': { icon: '📕', label: 'Ido Wiktionary' },
         'eo_wiktionary': { icon: '📗', label: 'Esperanto Wiktionary' },
+        'fr_wiktionary': { icon: '🇫🇷', label: 'French Wiktionary' },
         'fr_wiktionary_meaning': { icon: '🇫🇷', label: 'French Wiktionary (pivot)' },
         'en_wiktionary_meaning': { icon: '🇬🇧', label: 'English Wiktionary (pivot)' },
         'io_wikipedia': { icon: '📚', label: 'Ido Wikipedia' },
+        'whitelist': { icon: '✅', label: 'Whitelist' },
         'wiki': { icon: '📚', label: 'Wikipedia' },
         'WIKI': { icon: '📚', label: 'Wikipedia' }
     };
@@ -435,7 +437,7 @@ function getSourceUrl(source, idoWord, esperantoWord) {
 // Highlight matching text
 function highlightMatch(text, query) {
     const regex = new RegExp(`(${query})`, 'gi');
-    return text.replace(regex, '<mark style="background-color: #fff3cd; padding: 2px 4px; border-radius: 3px;">$1</mark>');
+    return text.replace(regex, '<mark style="background-color: #fff3cd; padding: 2px 1px; border-radius: 2px;">$1</mark>');
 }
 
 // Show empty state
