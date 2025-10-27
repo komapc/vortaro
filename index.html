@@ -46,6 +46,28 @@
             <input type="text" id="searchInput" placeholder="Serchez en Ido..." autofocus autocomplete="off"
                 aria-label="Serchez en vortaro" />
             <div class="search-info" id="searchInfo"></div>
+
+            <!-- Filters Panel -->
+            <div class="filters-container">
+                <button class="filters-toggle" id="filtersToggle" aria-expanded="false">
+                    <span class="filters-icon">🔽</span>
+                    <span class="filters-text">Filtri</span>
+                    <span class="filters-count" id="filtersCount"></span>
+                </button>
+
+                <div class="filters-panel" id="filtersPanel" aria-hidden="true">
+                    <div class="filters-header">
+                        <h3>Filtrar segun fonti</h3>
+                        <button class="clear-filters" id="clearFilters">Vakuigar</button>
+                    </div>
+
+                    <div class="filter-group">
+                        <div class="filter-options" id="sourceFilters">
+                            <!-- Source filter checkboxes will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="results" class="results"></div>

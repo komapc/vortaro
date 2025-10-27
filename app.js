@@ -10,6 +10,12 @@ let touchStartY = 0;
 let touchEndX = 0;
 let touchEndY = 0;
 
+// Filters state
+let activeFilters = {
+    sources: new Set()
+};
+let availableSources = new Set();
+
 // Load dictionary data
 async function loadDictionary() {
     try {
@@ -33,6 +39,9 @@ async function loadDictionary() {
         const totalEntries = metadata?.total_unique_ido_words || allEntries.length;
         document.getElementById('wordCount').textContent = `${totalEntries.toLocaleString()} vorti`;
 
+        // Initialize filters
+        initializeFilters();
+
         // Show empty state
         showEmptyState();
     } catch (error) {
@@ -52,7 +61,7 @@ function search(query) {
     }
 
     // Search based on current direction
-    const results = allEntries.filter(entry => {
+    let results = allEntries.filter(entry => {
         if (currentDirection === 'io-eo') {
             // Ido → Esperanto: search only in Ido words
             return entry.ido.toLowerCase().includes(searchTerm);
@@ -61,6 +70,9 @@ function search(query) {
             return entry.esperanto.some(eoWord => eoWord.toLowerCase().includes(searchTerm));
         }
     });
+
+    // Apply source filters
+    results = applyFilters(results);
 
     displayResults(results, searchTerm);
 }
@@ -144,6 +156,147 @@ function displayResults(results, searchTerm) {
     }).join('');
 
     resultsContainer.innerHTML = html;
+}
+
+// Initialize filters
+function initializeFilters() {
+    // Extract all available sources from dictionary
+    allEntries.forEach(entry => {
+        entry.sources.forEach(source => {
+            availableSources.add(source);
+        });
+    });
+
+    // Populate source filter checkboxes
+    populateSourceFilters();
+
+    // Add event listeners
+    setupFilterEventListeners();
+}
+
+// Populate source filter checkboxes
+function populateSourceFilters() {
+    const sourceFiltersContainer = document.getElementById('sourceFilters');
+
+    // Define source display info
+    const sourceInfo = {
+        'io_wiktionary': { icon: '📕', label: 'Ido Wiktionary' },
+        'eo_wiktionary': { icon: '📗', label: 'Esperanto Wiktionary' },
+        'fr_wiktionary_meaning': { icon: '🇫🇷', label: 'French Wiktionary (pivot)' },
+        'en_wiktionary_meaning': { icon: '🇬🇧', label: 'English Wiktionary (pivot)' },
+        'io_wikipedia': { icon: '📚', label: 'Ido Wikipedia' },
+        'wiki': { icon: '📚', label: 'Wikipedia' },
+        'WIKI': { icon: '📚', label: 'Wikipedia' }
+    };
+
+    // Sort sources for consistent display
+    const sortedSources = Array.from(availableSources).sort();
+
+    sourceFiltersContainer.innerHTML = sortedSources.map(source => {
+        const info = sourceInfo[source] || { icon: '📄', label: source };
+        return `
+            <div class="filter-option">
+                <input type="checkbox" 
+                       class="filter-checkbox" 
+                       id="source-${source}" 
+                       value="${source}"
+                       data-filter-type="source">
+                <label for="source-${source}" class="filter-label">
+                    <span class="source-icon">${info.icon}</span>
+                    ${info.label}
+                </label>
+            </div>
+        `;
+    }).join('');
+}
+
+// Apply active filters to results
+function applyFilters(results) {
+    if (activeFilters.sources.size === 0) {
+        return results; // No source filters active
+    }
+
+    return results.filter(entry => {
+        // Check if entry has any of the selected sources
+        return entry.sources.some(source => activeFilters.sources.has(source));
+    });
+}
+
+// Toggle filters panel
+function toggleFiltersPanel() {
+    const toggle = document.getElementById('filtersToggle');
+    const panel = document.getElementById('filtersPanel');
+    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+
+    toggle.setAttribute('aria-expanded', !isExpanded);
+    panel.setAttribute('aria-hidden', isExpanded);
+}
+
+// Handle filter change
+function handleFilterChange(event) {
+    const checkbox = event.target;
+    const filterType = checkbox.dataset.filterType;
+    const value = checkbox.value;
+
+    if (filterType === 'source') {
+        if (checkbox.checked) {
+            activeFilters.sources.add(value);
+        } else {
+            activeFilters.sources.delete(value);
+        }
+    }
+
+    // Update filter count display
+    updateFilterCount();
+
+    // Re-run search with current query
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput.value.trim()) {
+        search(searchInput.value);
+    }
+}
+
+// Clear all filters
+function clearAllFilters() {
+    activeFilters.sources.clear();
+
+    // Uncheck all checkboxes
+    document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    // Update display
+    updateFilterCount();
+
+    // Re-run search
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput.value.trim()) {
+        search(searchInput.value);
+    }
+}
+
+// Update filter count badge
+function updateFilterCount() {
+    const countElement = document.getElementById('filtersCount');
+    const totalActive = activeFilters.sources.size;
+
+    if (totalActive > 0) {
+        countElement.textContent = totalActive;
+    } else {
+        countElement.textContent = '';
+    }
+}
+
+// Setup filter event listeners
+function setupFilterEventListeners() {
+    // Filters toggle
+    document.getElementById('filtersToggle').addEventListener('click', toggleFiltersPanel);
+
+    // Clear filters button
+    document.getElementById('clearFilters').addEventListener('click', clearAllFilters);
+
+    // Filter checkboxes (using event delegation)
+    document.getElementById('sourceFilters').addEventListener('change', handleFilterChange);
 }
 
 // Generate part of speech badges
