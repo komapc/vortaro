@@ -61,6 +61,12 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
 
 
 ### Lower Priority:
+- [ ] **Versioning**
+  - Display version number on the site
+  - Auto-increment version on every build
+  - Show version in footer or about section
+  - Track build/release history
+
 - [ ] **Collaboration**
   - Report errors/corrections
   - Suggest new translations
