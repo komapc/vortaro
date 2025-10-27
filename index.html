@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="io">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vortaro - Ido-Esperanto Dictionary</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- PullToRefresh.js -->
+    <script src="https://cdn.jsdelivr.net/npm/pulltorefreshjs@0.1.22/dist/index.umd.min.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DMH4HKHLLS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-DMH4HKHLLS');
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>📖 Vortaro</h1>
+            <button class="info-button" id="infoButton" aria-label="Pri ca vortaro" tabindex="0">ℹ️ Pri</button>
+        </header>
+
+        <div class="search-container">
+            <div class="search-header">
+                <button class="direction-toggle" id="directionToggle" data-direction="io-eo"
+                    aria-label="Chanjar direciono" tabindex="0" title="Kliktez por chanjar direciono">
+                    <span class="toggle-text">Ido → Esperanto</span>
+                    <span class="toggle-icon">⇄</span>
+                </button>
+                <button class="random-btn" id="randomBtn" aria-label="Hazarda vorto" tabindex="0"
+                    title="Montrez hazarda vorto">
+                    🎲
+                </button>
+            </div>
+            <input type="text" id="searchInput" placeholder="Serchez en Ido..." autofocus autocomplete="off"
+                aria-label="Serchez en vortaro" />
+            <div class="search-info" id="searchInfo"></div>
+
+            <!-- Filters Panel -->
+            <div class="filters-container">
+                <button class="filters-toggle" id="filtersToggle" aria-expanded="false">
+                    <span class="filters-icon">🔽</span>
+                    <span class="filters-text">Filtri</span>
+                    <span class="filters-count" id="filtersCount"></span>
+                </button>
+
+                <div class="filters-panel" id="filtersPanel" aria-hidden="true">
+                    <div class="filters-header">
+                        <h3>Filtrar segun fonti</h3>
+                        <button class="clear-filters" id="clearFilters">Vakuigar</button>
+                    </div>
+
+                    <div class="filter-group">
+                        <div class="filter-options" id="sourceFilters">
+                            <!-- Source filter checkboxes will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="results" class="results"></div>
+
+        <footer>
+            <p>
+                Datumi de <a href="https://github.com/komapc/ido-esperanto-extractor"
+                    target="_blank">ido-esperanto-extractor</a>
+                • <span id="wordCount">Kargante...</span> vorti
+            </p>
+        </footer>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal" id="aboutModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Pri Vortaro</h2>
+                <button class="close-button" id="closeModal" aria-label="Klozez" tabindex="0">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <p class="loading">Kargante informo...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

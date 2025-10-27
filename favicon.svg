@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Ido Star - Stylized representation -->
+  <polygon points="50,10 60,35 85,35 67,52 73,77 50,63 27,77 33,52 15,35 40,35" 
+           fill="#006699" 
+           stroke="#003366" 
+           stroke-width="2"/>
+  <!-- Inner detail -->
+  <polygon points="50,25 56,40 71,40 59,52 63,62 50,55 37,62 41,52 29,40 44,40" 
+           fill="#0099CC"/>
+</svg>
+
