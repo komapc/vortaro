@@ -33,14 +33,14 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
   - ✅ PNG format added for better browser compatibility (32x32px)
   - ✅ SVG format maintained as fallback for modern browsers
 
-- [ ] **Better Mobile Experience**
-  - Improve touch targets (buttons, links)
-  - Swipe to switch direction?
-  - Pull-to-refresh for updates?
+- [x] **Better Mobile Experience** - COMPLETED
+  - ✅ Improved touch targets (buttons, links) - Enhanced minimum touch target sizes for mobile
+  - ✅ Swipe to switch direction - Left/right swipe gestures toggle translation direction
+  - ✅ Pull-to-refresh for updates - Pull down gesture refreshes dictionary data
 
-- [ ] **Display Enhancements**
-  - Part of speech badges (noun, verb, adj, etc.)
-  - Show morphology info if available
+- [x] **Display Enhancements** - COMPLETED
+  - ✅ Part of speech badges (noun, verb, adj, etc.) - Color-coded POS badges from morfologio data
+  - ✅ Show morphology info if available - Already displayed in morfologio section
 
 - [ ] **Advanced Filters**
   - Filter by source (Wiktionary, Wikipedia, FR pivot)

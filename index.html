@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="io">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +9,18 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="shortcut icon" href="favicon.png">
     <link rel="stylesheet" href="style.css">
-    
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DMH4HKHLLS"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'G-DMH4HKHLLS');
+        gtag('config', 'G-DMH4HKHLLS');
     </script>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -28,43 +30,29 @@
 
         <div class="search-container">
             <div class="search-header">
-                <button 
-                    class="direction-toggle" 
-                    id="directionToggle" 
-                    data-direction="io-eo"
-                    aria-label="Chanjar direciono"
-                    tabindex="0"
-                    title="Kliktez por chanjar direciono"
-                >
+                <button class="direction-toggle" id="directionToggle" data-direction="io-eo"
+                    aria-label="Chanjar direciono" tabindex="0" title="Kliktez por chanjar direciono">
                     <span class="toggle-text">Ido → Esperanto</span>
                     <span class="toggle-icon">⇄</span>
                 </button>
-                <button 
-                    class="random-btn" 
-                    id="randomBtn"
-                    aria-label="Hazarda vorto"
-                    tabindex="0"
-                    title="Montrez hazarda vorto"
-                >
+                <button class="random-btn" id="randomBtn" aria-label="Hazarda vorto" tabindex="0"
+                    title="Montrez hazarda vorto">
                     🎲
                 </button>
             </div>
-            <input 
-                type="text" 
-                id="searchInput" 
-                placeholder="Serchez en Ido..." 
-                autofocus
-                autocomplete="off"
-                aria-label="Serchez en vortaro"
-            />
+            <input type="text" id="searchInput" placeholder="Serchez en Ido..." autofocus autocomplete="off"
+                aria-label="Serchez en vortaro" />
             <div class="search-info" id="searchInfo"></div>
         </div>
 
-        <div id="results" class="results"></div>
+        <div id="results" class="results pull-to-refresh">
+            <div class="pull-indicator" id="pullIndicator">↓</div>
+        </div>
 
         <footer>
             <p>
-                Datumi de <a href="https://github.com/komapc/ido-esperanto-extractor" target="_blank">ido-esperanto-extractor</a>
+                Datumi de <a href="https://github.com/komapc/ido-esperanto-extractor"
+                    target="_blank">ido-esperanto-extractor</a>
                 • <span id="wordCount">Kargante...</span> vorti
             </p>
         </footer>
@@ -85,5 +73,5 @@
 
     <script src="app.js"></script>
 </body>
-</html>
 
+</html>
