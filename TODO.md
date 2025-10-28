@@ -1,6 +1,6 @@
 # TODO - Vortaro (Dictionary Viewer)
 
-**Last Updated:** October 27, 2025
+**Last Updated:** October 28, 2025
 
 ## 🎯 Current Status
 
@@ -68,11 +68,12 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
   - ✅ Random word updates URL
   - ✅ Users can copy URL from address bar anytime
 
-- [ ] **Versioning**
-  - Display version number on the site
-  - Auto-increment version on every build
-  - Show version in footer or about section
-  - Track build/release history
+- [x] **Versioning** - COMPLETED
+  - ✅ Version number displayed in footer (v1.0.0)
+  - ✅ Version constant in app.js for easy updates
+  - ✅ Subtle styling with hover effect
+  - ✅ Synced with package.json version
+  - Version can be manually incremented when releasing updates
 
 - [ ] **Collaboration**
   - Report errors/corrections

@@ -1,3 +1,6 @@
+// Version
+const VERSION = '1.0.0';
+
 // Dictionary data
 let dictionary = {};
 let allEntries = [];
@@ -813,6 +816,14 @@ window.addEventListener('hashchange', () => {
     }
 });
 
+// Initialize version display
+function initializeVersion() {
+    const versionElement = document.getElementById('version');
+    if (versionElement) {
+        versionElement.textContent = `v${VERSION}`;
+    }
+}
+
 // Initialize
 loadDictionary().then(() => {
     // Initialize PullToRefresh after dictionary is loaded
@@ -820,5 +831,8 @@ loadDictionary().then(() => {
 
     // Handle initial URL hash
     handleInitialHash();
+
+    // Initialize version display
+    initializeVersion();
 });
 
