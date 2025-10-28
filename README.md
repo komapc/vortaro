@@ -1,6 +1,6 @@
 # Vortaro - Ido-Esperanto Dictionary
 
-**Vortaro** (Ido for "dictionary") is a simple, fast, client-side dictionary for looking up Ido and Esperanto words.
+**Vortaro** (Ido for "dictionary") is a simple client-side dictionary for looking up Ido and Esperanto words.
 
 **🌐 Live:** https://komapc.github.io/vortaro/
 
@@ -14,35 +14,7 @@
 - 🎲 **Random word discovery** - discover new words with random selection
 - 🏷️ **Part of speech badges** - color-coded grammatical information (noun, verb, adj, etc.)
 
-### **🎛️ Advanced Filtering**
-- 🔽 **Source filters** - filter results by dictionary source:
-  - 📕 Ido Wiktionary
-  - 📗 Esperanto Wiktionary  
-  - 🇫🇷 French Wiktionary (pivot)
-  - 🇬🇧 English Wiktionary (pivot)
-  - 📚 Wikipedia entries
-- 🏷️ **Active filter indicators** - see how many filters are applied
-- 🧹 **Clear filters** - reset all filters with one click
 
-### **📱 Mobile Experience**
-- 👆 **Swipe controls** - swipe left/right to switch translation direction
-- ↻ **Pull-to-refresh** - pull down to refresh dictionary data
-- 🎯 **Enhanced touch targets** - optimized for mobile interaction
-- 📱 **Responsive design** - perfect on phones, tablets, and desktop
-- 🔄 **Direction toggle** - one-click switch between Ido→Esperanto and Esperanto→Ido
-
-### **🎨 User Interface**
-- 🏷️ **Clickable source links** - click badges to visit source pages in new tab
-- 🌐 **Ido/Esperanto interface** - UI in Ido language with Esperanto accessibility
-- ⚖️ **License information** - clear attribution to Wiktionary and Wikipedia sources (CC BY-SA 3.0)
-- ℹ️ **Comprehensive metadata** - view detailed information about how the dictionary was built
-- 🎨 **Beautiful UI** - clean, modern interface with smooth animations
-- ♿ **Accessible** - full keyboard navigation and ARIA support
-
-### **⚡ Performance**
-- ⚡ **Fast** - all data loaded client-side, no backend needed
-- 💾 **Offline-ready** - dictionary data loaded once
-- 🚀 **Optimized filtering** - efficient search and filter algorithms
 
 ## How It Works
 
@@ -143,13 +115,6 @@ git add dictionary.json
 git commit -m "update: refresh dictionary data"
 git push origin main
 ```
-
-**Architecture Benefits:**
-- ✅ **No Python in vortaro** - Pure HTML/CSS/JS static site
-- ✅ **Single source of truth** - Extractor generates, vortaro displays
-- ✅ **Clean separation** - Extractor = data processing, Vortaro = display
-- ✅ **Flexible** - Symlink for dev, real file for deployment
-
 ## File Structure
 
 ```
