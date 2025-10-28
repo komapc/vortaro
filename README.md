@@ -54,32 +54,6 @@ This is a **simple static website** that:
 5. Pure HTML/CSS/JavaScript - no build step needed
 6. Client-side only - no server required
 
-## Mobile Features
-
-### **👆 Swipe Controls**
-- **Swipe right** → Switch to Ido → Esperanto
-- **Swipe left** → Switch to Esperanto → Ido
-- Works anywhere on the screen (doesn't interfere with scrolling)
-
-### **↻ Pull-to-Refresh**
-- **Pull down** at the top of results to refresh dictionary data
-- Visual feedback with animated indicator
-- Uses professional PullToRefresh.js library for smooth experience
-
-### **🔽 Advanced Filtering**
-- **Collapsible filter panel** - tap "🔽 Filtri" to expand/collapse
-- **Source filtering** - check/uncheck sources to filter results
-- **Real-time updates** - results filter instantly as you select
-- **Filter count badge** - shows how many filters are active
-- **Clear all** - "Vakuigar" button to reset filters
-
-### **🎯 Touch Optimization**
-- **44px+ touch targets** - all buttons meet accessibility guidelines
-- **Enhanced spacing** - better mobile layout and padding
-- **Responsive grid** - filter options adapt to screen size
-
-### Key Features Explained
-
 **Bidirectional Search:**
 - Switch between Ido→Esperanto and Esperanto→Ido modes
 - Search is direction-aware for more accurate results
