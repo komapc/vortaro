@@ -61,6 +61,13 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
 
 
 ### Lower Priority:
+- [x] **Unique URL per word** - COMPLETED
+  - ✅ URL hash updates as user types (e.g., `#hundo`)
+  - ✅ Direct links work: `index.html#hundo` loads with search
+  - ✅ Browser back/forward navigation supported
+  - ✅ Random word updates URL
+  - ✅ Users can copy URL from address bar anytime
+
 - [ ] **Versioning**
   - Display version number on the site
   - Auto-increment version on every build
