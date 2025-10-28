@@ -488,8 +488,14 @@ function toggleDirection() {
         ? 'Serchez en Ido...'
         : 'Serchez en Esperanto...';
 
+    // Update URL hash with new direction
+    const query = searchInput.value.trim();
+    if (query) {
+        window.history.replaceState(null, '', `#${currentDirection}:${encodeURIComponent(query)}`);
+    }
+
     // Re-run search if there's a query
-    if (searchInput.value.trim()) {
+    if (query) {
         search(searchInput.value);
     }
 }
@@ -518,11 +524,15 @@ function showRandomWord() {
 
     // Set search input to random word
     const searchInput = document.getElementById('searchInput');
-    searchInput.value = currentDirection === 'io-eo' ? randomEntry.ido :
+    const randomWord = currentDirection === 'io-eo' ? randomEntry.ido :
         (randomEntry.esperanto[0] || randomEntry.ido);
+    searchInput.value = randomWord;
+
+    // Update URL hash with direction
+    window.history.replaceState(null, '', `#${currentDirection}:${encodeURIComponent(randomWord)}`);
 
     // Trigger search
-    search(searchInput.value);
+    search(randomWord);
 }
 
 // Show about modal with metadata
@@ -607,6 +617,15 @@ function closeModal() {
 
 // Event listeners
 document.getElementById('searchInput').addEventListener('input', (e) => {
+    const query = e.target.value.trim();
+
+    // Update URL hash with direction and query
+    if (query) {
+        window.history.replaceState(null, '', `#${currentDirection}:${encodeURIComponent(query)}`);
+    } else {
+        window.history.replaceState(null, '', window.location.pathname);
+    }
+
     search(e.target.value);
 });
 
@@ -721,9 +740,85 @@ function initializePullToRefresh() {
 document.addEventListener('touchstart', handleTouchStart, { passive: true });
 document.addEventListener('touchend', handleTouchEnd, { passive: true });
 
+// Parse URL hash to extract direction and query
+function parseHash(hash) {
+    if (!hash) return { direction: null, query: '' };
+
+    // Check if hash contains direction (format: "io-eo:word" or "eo-io:word")
+    const colonIndex = hash.indexOf(':');
+    if (colonIndex > 0) {
+        const direction = hash.substring(0, colonIndex);
+        const query = decodeURIComponent(hash.substring(colonIndex + 1));
+
+        // Validate direction
+        if (direction === 'io-eo' || direction === 'eo-io') {
+            return { direction, query };
+        }
+    }
+
+    // Fallback: treat entire hash as query (backward compatibility)
+    return { direction: null, query: decodeURIComponent(hash) };
+}
+
+// Handle URL hash on page load
+function handleInitialHash() {
+    const hash = window.location.hash.slice(1); // Remove the '#'
+    if (hash) {
+        const { direction, query } = parseHash(hash);
+        const searchInput = document.getElementById('searchInput');
+
+        // Set direction if specified
+        if (direction && direction !== currentDirection) {
+            currentDirection = direction;
+            const toggleBtn = document.getElementById('directionToggle');
+            const toggleText = toggleBtn.querySelector('.toggle-text');
+            toggleBtn.setAttribute('data-direction', currentDirection);
+            toggleText.textContent = currentDirection === 'io-eo' ? 'Ido → Esperanto' : 'Esperanto → Ido';
+            searchInput.placeholder = currentDirection === 'io-eo'
+                ? 'Serchez en Ido...'
+                : 'Serchez en Esperanto...';
+        }
+
+        searchInput.value = query;
+        search(query);
+    }
+}
+
+// Handle hash changes (browser back/forward)
+window.addEventListener('hashchange', () => {
+    const hash = window.location.hash.slice(1);
+    const { direction, query } = parseHash(hash);
+    const searchInput = document.getElementById('searchInput');
+
+    // Update direction if specified and different
+    if (direction && direction !== currentDirection) {
+        currentDirection = direction;
+        const toggleBtn = document.getElementById('directionToggle');
+        const toggleText = toggleBtn.querySelector('.toggle-text');
+        toggleBtn.setAttribute('data-direction', currentDirection);
+        toggleText.textContent = currentDirection === 'io-eo' ? 'Ido → Esperanto' : 'Esperanto → Ido';
+        searchInput.placeholder = currentDirection === 'io-eo'
+            ? 'Serchez en Ido...'
+            : 'Serchez en Esperanto...';
+    }
+
+    // Only update if different from current value
+    if (searchInput.value !== query) {
+        searchInput.value = query;
+        if (query) {
+            search(query);
+        } else {
+            showEmptyState();
+        }
+    }
+});
+
 // Initialize
 loadDictionary().then(() => {
     // Initialize PullToRefresh after dictionary is loaded
     initializePullToRefresh();
+
+    // Handle initial URL hash
+    handleInitialHash();
 });
 
