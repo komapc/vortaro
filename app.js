@@ -101,11 +101,11 @@ function displayResults(results, searchTerm) {
                 // Create appropriate tooltip text
                 let tooltipText = source;
                 if (source === 'fr_wiktionary_meaning') {
-                    tooltipText = 'Serchar en Franca Wiktionary (pivot-traduko)';
+                    tooltipText = 'Serchar en Franca Wiktionary (via-traduko)';
                 } else if (source === 'en_wiktionary_meaning') {
-                    tooltipText = 'Serchar en Angla Wiktionary (pivot-traduko)';
+                    tooltipText = 'Serchar en Angla Wiktionary (via-traduko)';
                 } else if (source.includes('_meaning')) {
-                    tooltipText = `Serchar en ${source} (pivot-traduko)`;
+                    tooltipText = `Serchar en ${source} (via-traduko)`;
                 } else if (url) {
                     tooltipText = `Vidar ${source} en nova fenestro`;
                 }
@@ -183,8 +183,8 @@ function populateSourceFilters() {
         'io_wiktionary': { icon: '📕', label: 'Ido Wiktionary' },
         'eo_wiktionary': { icon: '📗', label: 'Esperanto Wiktionary' },
         'fr_wiktionary': { icon: '🇫🇷', label: 'French Wiktionary' },
-        'fr_wiktionary_meaning': { icon: '🇫🇷', label: 'French Wiktionary (pivot)' },
-        'en_wiktionary_meaning': { icon: '🇬🇧', label: 'English Wiktionary (pivot)' },
+        'fr_wiktionary_meaning': { icon: '🇫🇷', label: 'French Wiktionary (via)' },
+        'en_wiktionary_meaning': { icon: '🇬🇧', label: 'English Wiktionary (via)' },
         'io_wikipedia': { icon: '📚', label: 'Ido Wikipedia' },
         'whitelist': { icon: '✅', label: 'Whitelist' },
         'wiki': { icon: '📚', label: 'Wikipedia' },
@@ -571,13 +571,13 @@ function showAboutModal() {
             <ul>
                 ${sourceStats.io_wiktionary ? `<li>📕 <strong>Ido Wiktionary:</strong> ${sourceStats.io_wiktionary.toLocaleString()} traduki</li>` : ''}
                 ${sourceStats.io_wikipedia ? `<li>📚 <strong>Ido Wikipedia:</strong> ${sourceStats.io_wikipedia.toLocaleString()} vorti</li>` : ''}
-                ${sourceStats.fr_wiktionary_via ? `<li>🇫🇷 <strong>Franca Wiktionary</strong> (pivoto): ${sourceStats.fr_wiktionary_via.toLocaleString()} traduki</li>` : ''}
+                ${sourceStats.fr_wiktionary_via ? `<li>🇫🇷 <strong>Franca Wiktionary</strong> (via): ${sourceStats.fr_wiktionary_via.toLocaleString()} traduki</li>` : ''}
                 ${sourceStats.eo_wiktionary ? `<li>📗 <strong>Esperanto Wiktionary:</strong> ${sourceStats.eo_wiktionary.toLocaleString()} traduki</li>` : ''}
             </ul>
             
-            <h4>🌍 Quo esas pivot-traduko?</h4>
-            <p>Pivot-traduko uzas interjacanta linguo (komente Franca o Angla) por krear traduki inter Ido e Esperanto kande rekta traduki ne disponesas.</p>
-            <p><strong>Exemplo:</strong> Se ni savas Ido→Franca e Franca→Esperanto, ni povas infercar Ido→Esperanto tra la Franca "pivoto".</p>
+            <h4>🌍 Quo esas "via" traduko?</h4>
+            <p>"Via" traduko uzas interjacanta linguo (komente Franca o Angla) por krear traduki inter Ido e Esperanto kande rekta traduki ne disponesas.</p>
+            <p><strong>Exemplo:</strong> Se ni savas Ido→Franca e Franca→Esperanto, ni povas infercar Ido→Esperanto <em>via</em> Franca.</p>
             
             <h3>⚖️ Licenco e Fonti</h3>
             <p>La datumi en ca vortaro venas de diversa fonti kun diversa licenco:</p>
