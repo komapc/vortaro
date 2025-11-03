@@ -816,3 +816,16 @@ footer a {
         font-size: 0.9rem;
     }
 }
+
+/* Version
+ display */
+.version {
+    color: #6c757d;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    font-family: 'Courier New', monospace;
+}
+
+.version:hover {
+    opacity: 1;
+}
