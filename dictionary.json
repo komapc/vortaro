@@ -11,12 +11,17 @@
       "bert_alignment"
     ],
     "version": "3.0-regenerate-fast",
-    "last_update": "2025-11-22T11:15:33.256443",
+    "last_update": "2025-11-23T14:45:05.799161",
     "bert_integration": {
       "date": "2025-11-22T11:15:33.256459",
       "words_added": 4176,
       "words_updated": 824,
       "translations_added": 2065
+    },
+    "filtered_bert": {
+      "min_similarity": 0.8,
+      "words_removed": 0,
+      "translations_removed": 83
     }
   },
   "abadeyo": {
@@ -1713,7 +1718,6 @@
   "aktoro": {
     "esperanto_words": [
       "aktoro",
-      "aktorino",
       "artisto"
     ],
     "sources": [
@@ -2023,7 +2027,6 @@
   "alfabeto": {
     "esperanto_words": [
       "alfabeto",
-      "litero",
       "dialekto"
     ],
     "sources": [
@@ -2341,7 +2344,6 @@
   "altitudo": {
     "esperanto_words": [
       "altitudo",
-      "marnivelo",
       "nivelo"
     ],
     "sources": [
@@ -5609,8 +5611,7 @@
     "esperanto_words": [
       "asocio",
       "organizita",
-      "asociita",
-      "organizo"
+      "asociita"
     ],
     "sources": [
       "io_wiktionary",
@@ -5998,8 +5999,7 @@
     "esperanto_words": [
       "atingi",
       "atestas",
-      "estinta",
-      "atingas"
+      "estinta"
     ],
     "sources": [
       "io_wiktionary",
@@ -14583,7 +14583,6 @@
   "diametro": {
     "esperanto_words": [
       "diametro",
-      "diametron",
       "volumo"
     ],
     "sources": [
@@ -17347,7 +17346,6 @@
   "eduko": {
     "esperanto_words": [
       "eduko",
-      "edukado",
       "pedagogo"
     ],
     "sources": [
@@ -21635,7 +21633,6 @@
   "fakultato": {
     "esperanto_words": [
       "fakultato",
-      "kolegio",
       "rektoro"
     ],
     "sources": [
@@ -23089,7 +23086,6 @@
   "filio": {
     "esperanto_words": [
       "filo",
-      "patro",
       "familioj",
       "filio"
     ],
@@ -23113,9 +23109,7 @@
   "filiulo": {
     "esperanto_words": [
       "filo",
-      "fratino",
-      "filino",
-      "frato"
+      "fratino"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -23182,7 +23176,6 @@
   "filozofio": {
     "esperanto_words": [
       "filozofio",
-      "teologio",
       "filozofia"
     ],
     "sources": [
@@ -23194,7 +23187,6 @@
   "filozofo": {
     "esperanto_words": [
       "filozofo",
-      "filozofio",
       "pedagogo"
     ],
     "sources": [
@@ -23428,9 +23420,7 @@
   },
   "fizikisto": {
     "esperanto_words": [
-      "fizikisto",
-      "matematikisto",
-      "kemiisto"
+      "fizikisto"
     ],
     "sources": [
       "io_wiktionary",
@@ -23443,8 +23433,7 @@
   "fiziko": {
     "esperanto_words": [
       "fiziko",
-      "biologio",
-      "matematiko"
+      "biologio"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -24828,8 +24817,7 @@
   "fratino": {
     "esperanto_words": [
       "fratino",
-      "fratinoj",
-      "frato"
+      "fratinoj"
     ],
     "sources": [
       "io_wiktionary",
@@ -24843,8 +24831,7 @@
     "esperanto_words": [
       "frato",
       "ino fratino",
-      "fratinoj",
-      "fratino"
+      "fratinoj"
     ],
     "sources": [
       "io_wiktionary",
@@ -28655,7 +28642,6 @@
   "habitantaro": {
     "esperanto_words": [
       "loĝantaro",
-      "populacio",
       "homaro"
     ],
     "sources": [
@@ -30507,8 +30493,7 @@
   "imperio": {
     "esperanto_words": [
       "imperio",
-      "regno",
-      "imperiestro"
+      "regno"
     ],
     "sources": [
       "io_wiktionary",
@@ -31092,8 +31077,7 @@
   "industrio": {
     "esperanto_words": [
       "industrio",
-      "fabriko",
-      "komerco"
+      "fabriko"
     ],
     "sources": [
       "io_wiktionary",
@@ -32052,8 +32036,7 @@
   "insulo": {
     "esperanto_words": [
       "insulo",
-      "island",
-      "insularo"
+      "island"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -32955,9 +32938,7 @@
   },
   "islamo": {
     "esperanto_words": [
-      "islamo",
-      "islama",
-      "kristanismo"
+      "islamo"
     ],
     "sources": [
       "io_wiktionary",
@@ -35109,9 +35090,7 @@
   },
   "kantisto": {
     "esperanto_words": [
-      "kantisto",
-      "muzikisto",
-      "gitaristo"
+      "kantisto"
     ],
     "sources": [
       "io_wiktionary",
@@ -38571,7 +38550,6 @@
   "komerco": {
     "esperanto_words": [
       "komerco",
-      "industrio",
       "komercado"
     ],
     "sources": [
@@ -39125,7 +39103,6 @@
     "esperanto_words": [
       "grafo",
       "komarko",
-      "duko",
       "forto"
     ],
     "sources": [
@@ -44920,8 +44897,7 @@
   "libro": {
     "esperanto_words": [
       "libro",
-      "aparato",
-      "verko"
+      "aparato"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -45357,8 +45333,7 @@
   "literaturo": {
     "esperanto_words": [
       "literaturo",
-      "kulturo",
-      "literatura"
+      "kulturo"
     ],
     "sources": [
       "io_wiktionary",
@@ -51134,8 +51109,7 @@
   "municipo": {
     "esperanto_words": [
       "municipo",
-      "municipoj",
-      "distrikto"
+      "municipoj"
     ],
     "sources": [
       "io_wiktionary",
@@ -51806,7 +51780,6 @@
   "nedependo": {
     "esperanto_words": [
       "sendependeco",
-      "sendependiĝo",
       "reformo",
       "sendependan"
     ],
@@ -53755,7 +53728,6 @@
   "nun": {
     "esperanto_words": [
       "nun",
-      "nuntempe",
       "nunan"
     ],
     "sources": [
@@ -53767,8 +53739,7 @@
   "nuntempe": {
     "esperanto_words": [
       "nuntempe",
-      "nuntempa",
-      "nun"
+      "nuntempa"
     ],
     "sources": [
       "io_wiktionary",
@@ -55403,7 +55374,6 @@
   "ortodoxa": {
     "esperanto_words": [
       "ortodoksa",
-      "katolika",
       "protestanta"
     ],
     "sources": [
@@ -56359,8 +56329,7 @@
   "papo": {
     "esperanto_words": [
       "papo",
-      "pablo",
-      "paŭlo"
+      "pablo"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -56746,8 +56715,7 @@
   "parlamento": {
     "esperanto_words": [
       "parlamento",
-      "parlamentano",
-      "parlamenta"
+      "parlamentano"
     ],
     "sources": [
       "io_wiktionary",
@@ -57339,7 +57307,6 @@
   "patro": {
     "esperanto_words": [
       "patro",
-      "patrino",
       "nomigas"
     ],
     "sources": [
@@ -62252,8 +62219,7 @@
   "profesoro": {
     "esperanto_words": [
       "profesoro",
-      "doktoro",
-      "docento"
+      "doktoro"
     ],
     "sources": [
       "io_wiktionary",
@@ -63860,7 +63826,6 @@
     "esperanto_words": [
       "kvar",
       "plurfoje",
-      "dek",
       "dekstra"
     ],
     "sources": [
@@ -64639,7 +64604,6 @@
   "rapideso": {
     "esperanto_words": [
       "rapido",
-      "rapideco",
       "rapide"
     ],
     "sources": [
@@ -65539,8 +65503,7 @@
     "esperanto_words": [
       "reĝo",
       "rejno",
-      "regado",
-      "reĝoj"
+      "regado"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -67443,8 +67406,7 @@
   "rivero": {
     "esperanto_words": [
       "rivero",
-      "riveron",
-      "riveroj"
+      "riveron"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -69830,7 +69792,6 @@
   "senato": {
     "esperanto_words": [
       "senato",
-      "senatano",
       "sentas"
     ],
     "sources": [
@@ -70122,8 +70083,7 @@
   "sep": {
     "esperanto_words": [
       "sep",
-      "setlejoj",
-      "ses"
+      "setlejoj"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -72574,7 +72534,6 @@
     "esperanto_words": [
       "lernejo",
       "kampuso",
-      "kolegio",
       "skolo"
     ],
     "sources": [
@@ -74260,7 +74219,6 @@
     "esperanto_words": [
       "edzino",
       "fratino",
-      "filino",
       "frato"
     ],
     "sources": [
@@ -74284,7 +74242,6 @@
     "esperanto_words": [
       "edzo",
       "fratino",
-      "filino",
       "frato"
     ],
     "sources": [
@@ -75064,7 +75021,6 @@
     "esperanto_words": [
       "strato",
       "pordo",
-      "placo",
       "surloke"
     ],
     "sources": [
@@ -75288,7 +75244,6 @@
   "studiar": {
     "esperanto_words": [
       "studi",
-      "studis",
       "studas",
       "studado"
     ],
@@ -79542,8 +79497,7 @@
     "esperanto_words": [
       "uzi",
       "uzante",
-      "uzado",
-      "uzis"
+      "uzado"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -79565,7 +79519,6 @@
   "uzo": {
     "esperanto_words": [
       "uzo",
-      "uzado",
       "uzita"
     ],
     "sources": [
@@ -80734,8 +80687,7 @@
   "verko": {
     "esperanto_words": [
       "verko",
-      "operejo",
-      "libro"
+      "operejo"
     ],
     "sources": [
       "io_wiktionary",
@@ -81393,7 +81345,6 @@
   "vinko": {
     "esperanto_words": [
       "venko",
-      "venkis",
       "invadis"
     ],
     "sources": [
@@ -82192,8 +82143,7 @@
   "vorto": {
     "esperanto_words": [
       "vorto",
-      "afero",
-      "termino"
+      "afero"
     ],
     "sources": [
       "eo_wiktionary",
@@ -82283,7 +82233,6 @@
     "esperanto_words": [
       "vi",
       "povu",
-      "vin",
       "big"
     ],
     "sources": [
@@ -101678,7 +101627,6 @@
   "bangladesh": {
     "esperanto_words": [
       "egipta",
-      "pakistano",
       "hindia"
     ],
     "sources": [
@@ -101799,8 +101747,7 @@
   "belgia": {
     "esperanto_words": [
       "belgio",
-      "nederlanda",
-      "nederlando"
+      "nederlanda"
     ],
     "sources": [
       "bert_alignment"
@@ -102943,7 +102890,6 @@
   "chekoslovakia": {
     "esperanto_words": [
       "ĉeĥoslovakio",
-      "ĉeĥoslovaka",
       "slovakio"
     ],
     "sources": [
@@ -102953,7 +102899,6 @@
   },
   "chekoslovakiana": {
     "esperanto_words": [
-      "ĉeĥoslovaka",
       "slovaka",
       "ĉeĥoslovakio"
     ],
@@ -109399,7 +109344,6 @@
   },
   "iesu": {
     "esperanto_words": [
-      "kristo",
       "sakristio",
       "papo"
     ],
@@ -109608,7 +109552,6 @@
   },
   "india": {
     "esperanto_words": [
-      "pakistano",
       "israelo",
       "portugalio"
     ],
@@ -110269,7 +110212,6 @@
   "irlando": {
     "esperanto_words": [
       "irlando",
-      "irlanda",
       "londono"
     ],
     "sources": [
@@ -110368,7 +110310,6 @@
   "israel": {
     "esperanto_words": [
       "israelo",
-      "israela",
       "araba"
     ],
     "sources": [
@@ -111368,7 +111309,6 @@
   },
   "katalunia": {
     "esperanto_words": [
-      "kataluna",
       "katalin",
       "catalina"
     ],
@@ -111379,7 +111319,6 @@
   },
   "kataluniana": {
     "esperanto_words": [
-      "kataluna",
       "katalin",
       "catalina"
     ],
@@ -112105,7 +112044,6 @@
   },
   "kolumbia": {
     "esperanto_words": [
-      "venezuelo",
       "hispanio",
       "kanada"
     ],
@@ -113128,7 +113066,6 @@
   },
   "kosta": {
     "esperanto_words": [
-      "vera",
       "klara",
       "bona"
     ],
@@ -113469,7 +113406,6 @@
   },
   "kuba": {
     "esperanto_words": [
-      "kuba",
       "argentina",
       "araba"
     ],
@@ -114965,9 +114901,7 @@
   },
   "lituania": {
     "esperanto_words": [
-      "litovio",
-      "latvio",
-      "litova"
+      "litovio"
     ],
     "sources": [
       "bert_alignment"
@@ -116132,7 +116066,6 @@
   "mediteraneo": {
     "esperanto_words": [
       "mediteraneo",
-      "mediteranea",
       "kontinento"
     ],
     "sources": [
@@ -116241,7 +116174,6 @@
   },
   "mexikia": {
     "esperanto_words": [
-      "meksika",
       "ameriko",
       "romanika"
     ],
@@ -116263,7 +116195,6 @@
   },
   "mexikiana": {
     "esperanto_words": [
-      "meksika",
       "romanika",
       "portugala"
     ],
@@ -117947,8 +117878,7 @@
   "nederlandana": {
     "esperanto_words": [
       "nederlanda",
-      "portugala",
-      "nederlando"
+      "portugala"
     ],
     "sources": [
       "bert_alignment"
@@ -117968,9 +117898,7 @@
   },
   "nederlando": {
     "esperanto_words": [
-      "nederlando",
-      "nederlanda",
-      "belgio"
+      "nederlando"
     ],
     "sources": [
       "bert_alignment"
@@ -119432,7 +119360,6 @@
   "pacifiko": {
     "esperanto_words": [
       "pacifiko",
-      "pacifika",
       "tropikaj"
     ],
     "sources": [
@@ -120818,7 +120745,6 @@
   "portugal": {
     "esperanto_words": [
       "portugalio",
-      "portugala",
       "brazila"
     ],
     "sources": [
@@ -125383,7 +125309,6 @@
   "suedia": {
     "esperanto_words": [
       "rusia",
-      "sveda",
       "suden"
     ],
     "sources": [
@@ -125404,7 +125329,6 @@
   },
   "suediana": {
     "esperanto_words": [
-      "sveda",
       "suden",
       "sudan"
     ],
@@ -125944,8 +125868,7 @@
   "tero": {
     "esperanto_words": [
       "tero",
-      "stelo",
-      "marso"
+      "stelo"
     ],
     "sources": [
       "bert_alignment"
@@ -127539,8 +127462,7 @@
   "venuso": {
     "esperanto_words": [
       "venuso",
-      "stelo",
-      "marso"
+      "stelo"
     ],
     "sources": [
       "bert_alignment"
