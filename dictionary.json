@@ -1,7 +1,7 @@
 {
   "metadata": {
     "creation_date": "2025-10-23T08:48:01.942709",
-    "total_words": 11600,
+    "total_words": 11684,
     "sources": [
       "io_wiktionary",
       "eo_wiktionary",
@@ -11,12 +11,12 @@
       "bert_alignment"
     ],
     "version": "3.0-regenerate-fast",
-    "last_update": "2025-11-23T14:45:05.799161",
+    "last_update": "2025-12-02T14:05:05.254375",
     "bert_integration": {
-      "date": "2025-11-22T11:15:33.256459",
-      "words_added": 4176,
-      "words_updated": 824,
-      "translations_added": 2065
+      "date": "2025-12-02T14:05:05.254395",
+      "words_added": 84,
+      "words_updated": 180,
+      "translations_added": 205
     },
     "filtered_bert": {
       "min_similarity": 0.8,
@@ -3748,7 +3748,8 @@
     "esperanto_words": [
       "antaŭe",
       "tradicie",
-      "estante"
+      "estante",
+      "iam"
     ],
     "sources": [
       "io_wiktionary",
@@ -4330,7 +4331,8 @@
     "esperanto_words": [
       "aprilo",
       "januaro",
-      "februaro"
+      "februaro",
+      "junio"
     ],
     "sources": [
       "io_wiktionary",
@@ -5744,7 +5746,8 @@
     "esperanto_words": [
       "asteroido",
       "katastrofo",
-      "asteroida"
+      "asteroida",
+      "malkovrita"
     ],
     "sources": [
       "io_wiktionary",
@@ -6380,7 +6383,8 @@
       "aŭtomobilo",
       "platformo",
       "motoro",
-      "figuro"
+      "figuro",
+      "veturilo"
     ],
     "sources": [
       "io_wiktionary",
@@ -10663,10 +10667,12 @@
   },
   "chanco": {
     "esperanto_words": [
-      "sorto"
+      "sorto",
+      "fatalo"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -10902,7 +10908,8 @@
       "ĉefo",
       "direktoro",
       "prezidento",
-      "rektoro"
+      "rektoro",
+      "kapo"
     ],
     "sources": [
       "io_wiktionary",
@@ -12399,7 +12406,9 @@
     "esperanto_words": [
       "decembro",
       "oktobro",
-      "novembro"
+      "novembro",
+      "januaro",
+      "junio"
     ],
     "sources": [
       "io_wiktionary",
@@ -13400,10 +13409,12 @@
   },
   "departar": {
     "esperanto_words": [
-      "foriri"
+      "foriri",
+      "forlasi"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "ar__vblex"
@@ -14259,7 +14270,8 @@
       "dekstra",
       "okcidenta",
       "dna",
-      "distas"
+      "distas",
+      "maldekstra"
     ],
     "sources": [
       "io_wiktionary",
@@ -14696,10 +14708,12 @@
   },
   "dicernar": {
     "esperanto_words": [
-      "distingi"
+      "distingi",
+      "diferencigi"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "ar__vblex"
@@ -14707,10 +14721,12 @@
   },
   "dicionario": {
     "esperanto_words": [
-      "vortaro"
+      "vortaro",
+      "leksikono"
     ],
     "sources": [
-      "eo_wiktionary"
+      "eo_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -15307,10 +15323,13 @@
   },
   "diplaso": {
     "esperanto_words": [
-      "movo"
+      "movo",
+      "bato",
+      "atako"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -15377,10 +15396,13 @@
   },
   "direktar": {
     "esperanto_words": [
-      "direkti"
+      "direkti",
+      "citi",
+      "mencii"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "ar__vblex"
@@ -15612,10 +15634,12 @@
   "dissolvar": {
     "esperanto_words": [
       "disigi",
-      "solvi"
+      "solvi",
+      "apartigi"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "ar__vblex"
@@ -15695,10 +15719,12 @@
   "distinta": {
     "esperanto_words": [
       "aparta",
-      "klara"
+      "klara",
+      "speciala"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "a__adj"
@@ -19933,7 +19959,8 @@
       "oriento",
       "est",
       "estonio",
-      "estonta"
+      "estonta",
+      "okcidento"
     ],
     "sources": [
       "io_wiktionary",
@@ -20367,10 +20394,12 @@
   },
   "evangelio": {
     "esperanto_words": [
-      "Evangelio"
+      "Evangelio",
+      "evangelio"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -21461,7 +21490,8 @@
       "fari",
       "laboras",
       "helpas",
-      "preparis"
+      "preparis",
+      "igi"
     ],
     "sources": [
       "io_wiktionary",
@@ -22271,7 +22301,8 @@
     "esperanto_words": [
       "februaro",
       "aprilo",
-      "januaro"
+      "januaro",
+      "junio"
     ],
     "sources": [
       "io_wiktionary",
@@ -25896,10 +25927,13 @@
   },
   "galaxio": {
     "esperanto_words": [
-      "galaksio"
+      "galaksio",
+      "konstelacio",
+      "pgc"
     ],
     "sources": [
-      "eo_wiktionary"
+      "eo_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -26861,10 +26895,12 @@
   "geya": {
     "esperanto_words": [
       "geja",
-      "samseksema"
+      "samseksema",
+      "samseksama"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "a__adj"
@@ -28575,7 +28611,8 @@
       "regi",
       "laboras",
       "eklaboris",
-      "kreado"
+      "kreado",
+      "reĝi"
     ],
     "sources": [
       "io_wiktionary",
@@ -29612,10 +29649,12 @@
   "homeosexuala": {
     "esperanto_words": [
       "samseksama",
-      "samseksema"
+      "samseksema",
+      "geja"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "a__adj"
@@ -30302,10 +30341,12 @@
   },
   "ilustristo": {
     "esperanto_words": [
-      "Ilustristo"
+      "Ilustristo",
+      "ilustristo"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -30574,7 +30615,8 @@
       "grava",
       "populara",
       "facila",
-      "stabila"
+      "stabila",
+      "peza"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -31178,10 +31220,13 @@
   },
   "infanto": {
     "esperanto_words": [
-      "infano"
+      "infano",
+      "knabo",
+      "knabino"
     ],
     "sources": [
-      "fr_wiktionary_meaning"
+      "fr_wiktionary_meaning",
+      "bert_alignment"
     ],
     "morfologio": []
   },
@@ -33174,7 +33219,8 @@
     "esperanto_words": [
       "januaro",
       "aprilo",
-      "februaro"
+      "februaro",
+      "decembro"
     ],
     "sources": [
       "io_wiktionary",
@@ -33421,10 +33467,12 @@
   },
   "jetar": {
     "esperanto_words": [
-      "ĵeti"
+      "ĵeti",
+      "lanĉi"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "ar__vblex"
@@ -33756,7 +33804,8 @@
     "esperanto_words": [
       "julio",
       "junio",
-      "julia"
+      "julia",
+      "aŭgusto"
     ],
     "sources": [
       "io_wiktionary",
@@ -33792,7 +33841,9 @@
     "esperanto_words": [
       "junio",
       "novembro",
-      "julio"
+      "julio",
+      "majo",
+      "februaro"
     ],
     "sources": [
       "io_wiktionary",
@@ -36916,7 +36967,10 @@
       "kvin",
       "sir",
       "sian",
-      "lin"
+      "lin",
+      "kiun",
+      "kiu",
+      "kies"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -45404,7 +45458,8 @@
       "marbordo",
       "mikroregiono",
       "nordameriko",
-      "kontinento"
+      "kontinento",
+      "plaĝo"
     ],
     "sources": [
       "io_wiktionary",
@@ -47272,7 +47327,9 @@
       "subteni",
       "subtenas",
       "konservis",
-      "laboras"
+      "laboras",
+      "toleri",
+      "suferi"
     ],
     "sources": [
       "io_wiktionary",
@@ -47715,7 +47772,8 @@
     "esperanto_words": [
       "marto",
       "oktobro",
-      "februaro"
+      "februaro",
+      "junio"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -48933,10 +48991,12 @@
   },
   "mesio": {
     "esperanto_words": [
-      "Mesio"
+      "Mesio",
+      "mesio"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -53291,7 +53351,8 @@
     "esperanto_words": [
       "nordo",
       "nordoriento",
-      "norde"
+      "norde",
+      "sudo"
     ],
     "sources": [
       "io_wiktionary",
@@ -53303,10 +53364,12 @@
   },
   "normo": {
     "esperanto_words": [
-      "normo"
+      "normo",
+      "iso"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -53471,7 +53534,8 @@
     "esperanto_words": [
       "novembro",
       "decembro",
-      "oktobro"
+      "oktobro",
+      "junio"
     ],
     "sources": [
       "io_wiktionary",
@@ -53943,10 +54007,12 @@
   },
   "observatorio": {
     "esperanto_words": [
-      "observatorio"
+      "observatorio",
+      "elde"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -55225,10 +55291,14 @@
   },
   "oriento": {
     "esperanto_words": [
-      "Oriento"
+      "Oriento",
+      "oriento",
+      "eosto",
+      "okcidento"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -56878,7 +56948,8 @@
       "aparta",
       "speciala",
       "partikulare",
-      "universala"
+      "universala",
+      "klara"
     ],
     "sources": [
       "io_wiktionary",
@@ -59400,7 +59471,8 @@
       "ebena",
       "plata",
       "plano",
-      "planita"
+      "planita",
+      "samnivela"
     ],
     "sources": [
       "io_wiktionary",
@@ -59471,7 +59543,8 @@
       "plata",
       "plano",
       "modelo",
-      "planita"
+      "planita",
+      "samnivela"
     ],
     "sources": [
       "io_wiktionary",
@@ -59556,7 +59629,9 @@
     "esperanto_words": [
       "plata",
       "loka",
-      "aktiva"
+      "aktiva",
+      "ebena",
+      "samnivela"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -60861,7 +60936,8 @@
       "ebla",
       "videbla",
       "solvebla",
-      "kapablas"
+      "kapablas",
+      "eventuala"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -61188,10 +61264,13 @@
   },
   "precize": {
     "esperanto_words": [
-      "precize"
+      "precize",
+      "prave",
+      "konvene"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "e__adv"
@@ -63166,10 +63245,13 @@
   },
   "puerino": {
     "esperanto_words": [
-      "knabino"
+      "knabino",
+      "knabo",
+      "infano"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -63190,10 +63272,13 @@
   },
   "puerulo": {
     "esperanto_words": [
-      "knabo"
+      "knabo",
+      "knabino",
+      "infano"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -64367,10 +64452,12 @@
   },
   "radiuso": {
     "esperanto_words": [
-      "radiuso"
+      "radiuso",
+      "radio"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -65314,10 +65401,12 @@
   },
   "registragar": {
     "esperanto_words": [
-      "registriĝi"
+      "registriĝi",
+      "registri"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "ar__vblex"
@@ -65978,10 +66067,12 @@
   },
   "renesanco": {
     "esperanto_words": [
-      "Renesanco"
+      "Renesanco",
+      "renesanco"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -66619,10 +66710,12 @@
   },
   "retroirar": {
     "esperanto_words": [
-      "retroiri"
+      "retroiri",
+      "eksiĝi"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "ar__vblex"
@@ -66832,10 +66925,12 @@
     "esperanto_words": [
       "ebena",
       "proksima al surfaco",
-      "samnivela"
+      "samnivela",
+      "plata"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "a__adj"
@@ -67441,7 +67536,8 @@
       "marbordo",
       "navo",
       "pordo",
-      "surloke"
+      "surloke",
+      "plaĝo"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -73250,10 +73346,12 @@
   },
   "solvar": {
     "esperanto_words": [
-      "solvi"
+      "solvi",
+      "disigi"
     ],
     "sources": [
-      "fr_wiktionary_meaning"
+      "fr_wiktionary_meaning",
+      "bert_alignment"
     ],
     "morfologio": []
   },
@@ -74219,7 +74317,8 @@
     "esperanto_words": [
       "edzino",
       "fratino",
-      "frato"
+      "frato",
+      "virino"
     ],
     "sources": [
       "io_wiktionary",
@@ -74679,10 +74778,13 @@
   },
   "stelaro": {
     "esperanto_words": [
-      "konstelacio"
+      "konstelacio",
+      "galaksio",
+      "pgc"
     ],
     "sources": [
-      "fr_wiktionary_meaning"
+      "fr_wiktionary_meaning",
+      "bert_alignment"
     ],
     "morfologio": []
   },
@@ -75448,10 +75550,12 @@
   "subisar": {
     "esperanto_words": [
       "suferi",
-      "toleri"
+      "toleri",
+      "subteni"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "ar__vblex"
@@ -75835,7 +75939,8 @@
     "esperanto_words": [
       "sudo",
       "sude",
-      "suden"
+      "suden",
+      "nordo"
     ],
     "sources": [
       "io_wiktionary",
@@ -76410,7 +76515,8 @@
       "toleri",
       "helpas",
       "kontribuas",
-      "helpis"
+      "helpis",
+      "suferi"
     ],
     "sources": [
       "io_wiktionary",
@@ -76444,10 +76550,12 @@
     "esperanto_words": [
       "ekstermi",
       "elstreki",
-      "subpremi"
+      "subpremi",
+      "premi"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "ar__vblex"
@@ -76653,10 +76761,13 @@
   },
   "sustenar": {
     "esperanto_words": [
-      "subteni"
+      "subteni",
+      "toleri",
+      "suferi"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "ar__vblex"
@@ -77205,7 +77316,8 @@
     "esperanto_words": [
       "tempo",
       "rapido",
-      "time"
+      "time",
+      "movimento"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -80991,10 +81103,12 @@
   "veturo": {
     "esperanto_words": [
       "aŭtomobilo",
-      "veturilo"
+      "veturilo",
+      "aŭto"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -82121,7 +82235,8 @@
     "esperanto_words": [
       "vortaro",
       "instruisto",
-      "traduko"
+      "traduko",
+      "leksikono"
     ],
     "sources": [
       "fr_wiktionary_meaning",
@@ -82155,10 +82270,12 @@
   },
   "vortolibro": {
     "esperanto_words": [
-      "vortaro"
+      "vortaro",
+      "leksikono"
     ],
     "sources": [
-      "eo_wiktionary"
+      "eo_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -82309,10 +82426,13 @@
   },
   "vunduro": {
     "esperanto_words": [
-      "vundo"
+      "vundo",
+      "ulcero",
+      "plago"
     ],
     "sources": [
-      "io_wiktionary"
+      "io_wiktionary",
+      "bert_alignment"
     ],
     "morfologio": [
       "o__n"
@@ -82421,7 +82541,9 @@
       "okcidento",
       "norda",
       "fronto",
-      "nordo"
+      "nordo",
+      "oriento",
+      "eosto"
     ],
     "sources": [
       "io_wiktionary",
@@ -82532,7 +82654,8 @@
     "esperanto_words": [
       "ja",
       "jare",
-      "jaron"
+      "jaron",
+      "eĉ"
     ],
     "sources": [
       "io_wiktionary",
@@ -82627,7 +82750,8 @@
       "je",
       "en",
       "ene",
-      "ke"
+      "ke",
+      "por"
     ],
     "sources": [
       "io_wiktionary",
@@ -82786,10 +82910,13 @@
   },
   "yunino": {
     "esperanto_words": [
-      "knabino"
+      "knabino",
+      "knabo",
+      "infano"
     ],
     "sources": [
-      "fr_wiktionary_meaning"
+      "fr_wiktionary_meaning",
+      "bert_alignment"
     ],
     "morfologio": []
   },
@@ -99615,7 +99742,8 @@
     "esperanto_words": [
       "afrika",
       "araba",
-      "afrikaj"
+      "afrikaj",
+      "afriko"
     ],
     "sources": [
       "bert_alignment"
@@ -99890,7 +100018,8 @@
     "esperanto_words": [
       "amila",
       "aron",
-      "londona"
+      "londona",
+      "alasko"
     ],
     "sources": [
       "bert_alignment"
@@ -99901,7 +100030,8 @@
     "esperanto_words": [
       "bulgara",
       "iberia",
-      "bulgario"
+      "bulgario",
+      "albanio"
     ],
     "sources": [
       "bert_alignment"
@@ -100143,7 +100273,8 @@
     "esperanto_words": [
       "amerika",
       "korea",
-      "zono"
+      "zono",
+      "ameriko"
     ],
     "sources": [
       "bert_alignment"
@@ -100330,7 +100461,8 @@
     "esperanto_words": [
       "irlanda",
       "anglan",
-      "londona"
+      "londona",
+      "anglio"
     ],
     "sources": [
       "bert_alignment"
@@ -100352,7 +100484,8 @@
     "esperanto_words": [
       "anglaj",
       "irlanda",
-      "anglan"
+      "anglan",
+      "anglio"
     ],
     "sources": [
       "bert_alignment"
@@ -100363,7 +100496,8 @@
     "esperanto_words": [
       "londona",
       "irlanda",
-      "kolonia"
+      "kolonia",
+      "angolo"
     ],
     "sources": [
       "bert_alignment"
@@ -100847,7 +100981,8 @@
     "esperanto_words": [
       "hispanio",
       "iberia",
-      "niĝerio"
+      "niĝerio",
+      "argentino"
     ],
     "sources": [
       "bert_alignment"
@@ -101386,7 +101521,8 @@
     "esperanto_words": [
       "irlanda",
       "irlando",
-      "ukrainio"
+      "ukrainio",
+      "aŭstralio"
     ],
     "sources": [
       "bert_alignment"
@@ -101408,7 +101544,8 @@
     "esperanto_words": [
       "irlanda",
       "portugala",
-      "protestanta"
+      "protestanta",
+      "aŭstralio"
     ],
     "sources": [
       "bert_alignment"
@@ -101419,7 +101556,8 @@
     "esperanto_words": [
       "aŭstria",
       "germanio",
-      "bulgario"
+      "bulgario",
+      "aŭstrio"
     ],
     "sources": [
       "bert_alignment"
@@ -101540,7 +101678,8 @@
     "esperanto_words": [
       "azia",
       "nazia",
-      "iberia"
+      "iberia",
+      "azio"
     ],
     "sources": [
       "bert_alignment"
@@ -101627,7 +101766,8 @@
   "bangladesh": {
     "esperanto_words": [
       "egipta",
-      "hindia"
+      "hindia",
+      "bangladeŝo"
     ],
     "sources": [
       "bert_alignment"
@@ -102363,7 +102503,8 @@
     "esperanto_words": [
       "brita",
       "britio",
-      "britaj"
+      "britaj",
+      "britujo"
     ],
     "sources": [
       "bert_alignment"
@@ -102396,7 +102537,8 @@
     "esperanto_words": [
       "brita",
       "irlanda",
-      "britio"
+      "britio",
+      "britujo"
     ],
     "sources": [
       "bert_alignment"
@@ -102869,7 +103011,8 @@
     "esperanto_words": [
       "slovakio",
       "slovaka",
-      "koreio"
+      "koreio",
+      "ĉeĥio"
     ],
     "sources": [
       "bert_alignment"
@@ -102880,7 +103023,8 @@
     "esperanto_words": [
       "slovaka",
       "slovakio",
-      "meksika"
+      "meksika",
+      "ĉeĥio"
     ],
     "sources": [
       "bert_alignment"
@@ -103439,7 +103583,9 @@
     "esperanto_words": [
       "danio",
       "daniel",
-      "germanio"
+      "germanio",
+      "danujo",
+      "danlando"
     ],
     "sources": [
       "bert_alignment"
@@ -103461,7 +103607,8 @@
     "esperanto_words": [
       "daniel",
       "danio",
-      "danco"
+      "danco",
+      "danielo"
     ],
     "sources": [
       "bert_alignment"
@@ -105023,7 +105170,8 @@
     "esperanto_words": [
       "egiptio",
       "egipta",
-      "armenio"
+      "armenio",
+      "egiptujo"
     ],
     "sources": [
       "bert_alignment"
@@ -105045,7 +105193,8 @@
     "esperanto_words": [
       "egipta",
       "egiptio",
-      "kristana"
+      "kristana",
+      "egiptujo"
     ],
     "sources": [
       "bert_alignment"
@@ -105419,7 +105568,8 @@
     "esperanto_words": [
       "sándor",
       "salvador",
-      "moravio"
+      "moravio",
+      "ekvadoro"
     ],
     "sources": [
       "bert_alignment"
@@ -105760,7 +105910,8 @@
     "esperanto_words": [
       "rusia",
       "indonezio",
-      "germanio"
+      "germanio",
+      "estonio"
     ],
     "sources": [
       "bert_alignment"
@@ -105771,7 +105922,8 @@
     "esperanto_words": [
       "estonta",
       "otomana",
-      "estinta"
+      "estinta",
+      "estonio"
     ],
     "sources": [
       "bert_alignment"
@@ -105826,7 +105978,8 @@
     "esperanto_words": [
       "afrika",
       "portugalio",
-      "araba"
+      "araba",
+      "eŭropo"
     ],
     "sources": [
       "bert_alignment"
@@ -106640,7 +106793,8 @@
     "esperanto_words": [
       "deviga",
       "venki",
-      "kiaj"
+      "kiaj",
+      "fiĝio"
     ],
     "sources": [
       "bert_alignment"
@@ -106684,7 +106838,8 @@
     "esperanto_words": [
       "filipo",
       "filinon",
-      "hispanio"
+      "hispanio",
+      "filipinoj"
     ],
     "sources": [
       "bert_alignment"
@@ -106838,7 +106993,9 @@
     "esperanto_words": [
       "portugala",
       "irlanda",
-      "nederlanda"
+      "nederlanda",
+      "finna",
+      "suoma"
     ],
     "sources": [
       "bert_alignment"
@@ -106849,7 +107006,9 @@
     "esperanto_words": [
       "nederlando",
       "organizo",
-      "italio"
+      "italio",
+      "finnlando",
+      "suomio"
     ],
     "sources": [
       "bert_alignment"
@@ -107432,7 +107591,8 @@
     "esperanto_words": [
       "belga",
       "francan",
-      "francio"
+      "francio",
+      "franca"
     ],
     "sources": [
       "bert_alignment"
@@ -107971,7 +108131,8 @@
     "esperanto_words": [
       "germanio",
       "germane",
-      "rusia"
+      "rusia",
+      "germanlando"
     ],
     "sources": [
       "bert_alignment"
@@ -108004,7 +108165,8 @@
     "esperanto_words": [
       "nacia",
       "nazia",
-      "egipta"
+      "egipta",
+      "ganao"
     ],
     "sources": [
       "bert_alignment"
@@ -108334,7 +108496,8 @@
     "esperanto_words": [
       "venezuelo",
       "santiago",
-      "moravio"
+      "moravio",
+      "gvatemalo"
     ],
     "sources": [
       "bert_alignment"
@@ -108356,7 +108519,8 @@
     "esperanto_words": [
       "peruo",
       "portugala",
-      "georgo"
+      "georgo",
+      "gvineo"
     ],
     "sources": [
       "bert_alignment"
@@ -108466,7 +108630,8 @@
     "esperanto_words": [
       "japana",
       "kolonia",
-      "israela"
+      "israela",
+      "gujano"
     ],
     "sources": [
       "bert_alignment"
@@ -108576,7 +108741,8 @@
     "esperanto_words": [
       "skota",
       "tial",
-      "kapti"
+      "kapti",
+      "haitio"
     ],
     "sources": [
       "bert_alignment"
@@ -108939,7 +109105,8 @@
     "esperanto_words": [
       "hispanio",
       "catalina",
-      "hispanoj"
+      "hispanoj",
+      "hispanujo"
     ],
     "sources": [
       "bert_alignment"
@@ -108972,7 +109139,8 @@
     "esperanto_words": [
       "hispanio",
       "portugala",
-      "catalina"
+      "catalina",
+      "hispanujo"
     ],
     "sources": [
       "bert_alignment"
@@ -109082,7 +109250,8 @@
     "esperanto_words": [
       "catalina",
       "venezuelo",
-      "bruselo"
+      "bruselo",
+      "honduro"
     ],
     "sources": [
       "bert_alignment"
@@ -109181,7 +109350,8 @@
     "esperanto_words": [
       "hungario",
       "germanio",
-      "ukrainio"
+      "ukrainio",
+      "hungarujo"
     ],
     "sources": [
       "bert_alignment"
@@ -109345,7 +109515,8 @@
   "iesu": {
     "esperanto_words": [
       "sakristio",
-      "papo"
+      "papo",
+      "jesuo"
     ],
     "sources": [
       "bert_alignment"
@@ -109553,7 +109724,8 @@
   "india": {
     "esperanto_words": [
       "israelo",
-      "portugalio"
+      "portugalio",
+      "barato"
     ],
     "sources": [
       "bert_alignment"
@@ -109575,7 +109747,8 @@
     "esperanto_words": [
       "hindia",
       "japana",
-      "irlanda"
+      "irlanda",
+      "hindio"
     ],
     "sources": [
       "bert_alignment"
@@ -109993,7 +110166,8 @@
     "esperanto_words": [
       "esperanta",
       "portugala",
-      "interagado"
+      "interagado",
+      "interlingvao"
     ],
     "sources": [
       "bert_alignment"
@@ -110114,7 +110288,8 @@
     "esperanto_words": [
       "ernesto",
       "aleksandro",
-      "johannes"
+      "johannes",
+      "johano"
     ],
     "sources": [
       "bert_alignment"
@@ -110387,7 +110562,8 @@
     "esperanto_words": [
       "latina",
       "esperantista",
-      "esperanta"
+      "esperanta",
+      "italio"
     ],
     "sources": [
       "bert_alignment"
@@ -110541,7 +110717,8 @@
     "esperanto_words": [
       "japana",
       "japanio",
-      "faman"
+      "faman",
+      "jamajko"
     ],
     "sources": [
       "bert_alignment"
@@ -110618,7 +110795,8 @@
     "esperanto_words": [
       "japanio",
       "japana",
-      "pakistano"
+      "pakistano",
+      "japanujo"
     ],
     "sources": [
       "bert_alignment"
@@ -110651,7 +110829,8 @@
     "esperanto_words": [
       "japana",
       "japanio",
-      "portugala"
+      "portugala",
+      "japanujo"
     ],
     "sources": [
       "bert_alignment"
@@ -110805,7 +110984,8 @@
     "esperanto_words": [
       "siberio",
       "nederlanda",
-      "iberia"
+      "iberia",
+      "jordanio"
     ],
     "sources": [
       "bert_alignment"
@@ -111102,7 +111282,8 @@
     "esperanto_words": [
       "kongo",
       "koreio",
-      "pakistano"
+      "pakistano",
+      "kamboĝo"
     ],
     "sources": [
       "bert_alignment"
@@ -111113,7 +111294,8 @@
     "esperanto_words": [
       "komunan",
       "egipta",
-      "ukrainio"
+      "ukrainio",
+      "kameruno"
     ],
     "sources": [
       "bert_alignment"
@@ -111310,7 +111492,8 @@
   "katalunia": {
     "esperanto_words": [
       "katalin",
-      "catalina"
+      "catalina",
+      "katalunio"
     ],
     "sources": [
       "bert_alignment"
@@ -111320,7 +111503,8 @@
   "kataluniana": {
     "esperanto_words": [
       "katalin",
-      "catalina"
+      "catalina",
+      "katalunio"
     ],
     "sources": [
       "bert_alignment"
@@ -112045,7 +112229,8 @@
   "kolumbia": {
     "esperanto_words": [
       "hispanio",
-      "kanada"
+      "kanada",
+      "kolombio"
     ],
     "sources": [
       "bert_alignment"
@@ -112056,7 +112241,8 @@
     "esperanto_words": [
       "kolonia",
       "portugala",
-      "hispanio"
+      "hispanio",
+      "kolombio"
     ],
     "sources": [
       "bert_alignment"
@@ -112991,7 +113177,8 @@
     "esperanto_words": [
       "korea",
       "amerika",
-      "teritoria"
+      "teritoria",
+      "koreo"
     ],
     "sources": [
       "bert_alignment"
@@ -113331,7 +113518,8 @@
     "esperanto_words": [
       "kristana",
       "katolika",
-      "kristanismo"
+      "kristanismo",
+      "kristano"
     ],
     "sources": [
       "bert_alignment"
@@ -113407,7 +113595,8 @@
   "kuba": {
     "esperanto_words": [
       "argentina",
-      "araba"
+      "araba",
+      "kubo"
     ],
     "sources": [
       "bert_alignment"
@@ -114650,7 +114839,8 @@
     "esperanto_words": [
       "liberigo",
       "iberia",
-      "kolonia"
+      "kolonia",
+      "liberio"
     ],
     "sources": [
       "bert_alignment"
@@ -114672,7 +114862,8 @@
     "esperanto_words": [
       "litovio",
       "iberia",
-      "ligo"
+      "ligo",
+      "libio"
     ],
     "sources": [
       "bert_alignment"
@@ -115352,7 +115543,8 @@
     "esperanto_words": [
       "belga",
       "turingia",
-      "nederlanda"
+      "nederlanda",
+      "luksemburgo"
     ],
     "sources": [
       "bert_alignment"
@@ -115407,7 +115599,8 @@
     "esperanto_words": [
       "praga",
       "kanada",
-      "densa"
+      "densa",
+      "madagaskaro"
     ],
     "sources": [
       "bert_alignment"
@@ -115506,7 +115699,8 @@
     "esperanto_words": [
       "papa",
       "kalia",
-      "kolonia"
+      "kolonia",
+      "malio"
     ],
     "sources": [
       "bert_alignment"
@@ -115517,7 +115711,8 @@
     "esperanto_words": [
       "malforta",
       "malvarma",
-      "malpeza"
+      "malpeza",
+      "malto"
     ],
     "sources": [
       "bert_alignment"
@@ -116175,7 +116370,8 @@
   "mexikia": {
     "esperanto_words": [
       "ameriko",
-      "romanika"
+      "romanika",
+      "meksiko"
     ],
     "sources": [
       "bert_alignment"
@@ -116196,7 +116392,8 @@
   "mexikiana": {
     "esperanto_words": [
       "romanika",
-      "portugala"
+      "portugala",
+      "meksiko"
     ],
     "sources": [
       "bert_alignment"
@@ -116790,7 +116987,8 @@
     "esperanto_words": [
       "monaĥo",
       "monaĥejo",
-      "montara"
+      "montara",
+      "monako"
     ],
     "sources": [
       "bert_alignment"
@@ -116911,7 +117109,8 @@
     "esperanto_words": [
       "siberio",
       "kongo",
-      "eklezia"
+      "eklezia",
+      "mongolio"
     ],
     "sources": [
       "bert_alignment"
@@ -116922,7 +117121,8 @@
     "esperanto_words": [
       "kongo",
       "pakistano",
-      "siberio"
+      "siberio",
+      "mongolio"
     ],
     "sources": [
       "bert_alignment"
@@ -116933,7 +117133,8 @@
     "esperanto_words": [
       "monteto",
       "montetaro",
-      "piemonto"
+      "piemonto",
+      "montenegro"
     ],
     "sources": [
       "bert_alignment"
@@ -117263,7 +117464,8 @@
     "esperanto_words": [
       "frankfurto",
       "kunigo",
-      "moravio"
+      "moravio",
+      "mozambiko"
     ],
     "sources": [
       "bert_alignment"
@@ -117615,7 +117817,8 @@
     "esperanto_words": [
       "pacifika",
       "egipta",
-      "iberia"
+      "iberia",
+      "namibio"
     ],
     "sources": [
       "bert_alignment"
@@ -117975,7 +118178,8 @@
     "esperanto_words": [
       "nenio",
       "lenin",
-      "teni"
+      "teni",
+      "nepalo"
     ],
     "sources": [
       "bert_alignment"
@@ -118019,7 +118223,8 @@
     "esperanto_words": [
       "nigra",
       "japana",
-      "nigraj"
+      "nigraj",
+      "nigerio"
     ],
     "sources": [
       "bert_alignment"
@@ -118030,7 +118235,8 @@
     "esperanto_words": [
       "jara",
       "juran",
-      "juraj"
+      "juraj",
+      "niĝero"
     ],
     "sources": [
       "bert_alignment"
@@ -118041,7 +118247,8 @@
     "esperanto_words": [
       "moravio",
       "santiago",
-      "zaragozo"
+      "zaragozo",
+      "nikaragvo"
     ],
     "sources": [
       "bert_alignment"
@@ -118129,7 +118336,8 @@
     "esperanto_words": [
       "formi",
       "nomi",
-      "nomis"
+      "nomis",
+      "nombroj"
     ],
     "sources": [
       "bert_alignment"
@@ -118349,7 +118557,8 @@
     "esperanto_words": [
       "korea",
       "nordo",
-      "nordoriento"
+      "nordoriento",
+      "nord-koreio"
     ],
     "sources": [
       "bert_alignment"
@@ -118514,7 +118723,8 @@
     "esperanto_words": [
       "zaragozo",
       "venezuelo",
-      "kalifornio"
+      "kalifornio",
+      "nov-zelando"
     ],
     "sources": [
       "bert_alignment"
@@ -119470,7 +119680,8 @@
     "esperanto_words": [
       "palomar",
       "santiago",
-      "catalina"
+      "catalina",
+      "panamo"
     ],
     "sources": [
       "bert_alignment"
@@ -119481,7 +119692,8 @@
     "esperanto_words": [
       "irlando",
       "venezuelo",
-      "kanada"
+      "kanada",
+      "papuo-novgvineo"
     ],
     "sources": [
       "bert_alignment"
@@ -119492,7 +119704,8 @@
     "esperanto_words": [
       "venezuelo",
       "hispanio",
-      "moravio"
+      "moravio",
+      "paragvajo"
     ],
     "sources": [
       "bert_alignment"
@@ -119954,7 +120167,8 @@
     "esperanto_words": [
       "egipta",
       "siberio",
-      "iberia"
+      "iberia",
+      "persio"
     ],
     "sources": [
       "bert_alignment"
@@ -119965,7 +120179,8 @@
     "esperanto_words": [
       "bulgara",
       "islama",
-      "romanika"
+      "romanika",
+      "persio"
     ],
     "sources": [
       "bert_alignment"
@@ -120603,7 +120818,8 @@
     "esperanto_words": [
       "poloj",
       "rusia",
-      "slovakio"
+      "slovakio",
+      "pollando"
     ],
     "sources": [
       "bert_alignment"
@@ -120636,7 +120852,8 @@
     "esperanto_words": [
       "rusia",
       "luterana",
-      "ukraina"
+      "ukraina",
+      "pollando"
     ],
     "sources": [
       "bert_alignment"
@@ -122978,7 +123195,8 @@
     "esperanto_words": [
       "rumania",
       "rumana",
-      "bulgara"
+      "bulgara",
+      "rumanio"
     ],
     "sources": [
       "bert_alignment"
@@ -123033,7 +123251,8 @@
     "esperanto_words": [
       "rusia",
       "rusio",
-      "rusan"
+      "rusan",
+      "ruslando"
     ],
     "sources": [
       "bert_alignment"
@@ -123066,7 +123285,9 @@
     "esperanto_words": [
       "rusia",
       "rusan",
-      "bulgara"
+      "bulgara",
+      "rusio",
+      "rusujo"
     ],
     "sources": [
       "bert_alignment"
@@ -123121,7 +123342,8 @@
     "esperanto_words": [
       "salvador",
       "moravio",
-      "sándor"
+      "sándor",
+      "salvadoro"
     ],
     "sources": [
       "bert_alignment"
@@ -123484,7 +123706,8 @@
     "esperanto_words": [
       "belga",
       "densa",
-      "gamon"
+      "gamon",
+      "senegalo"
     ],
     "sources": [
       "bert_alignment"
@@ -123924,7 +124147,8 @@
     "esperanto_words": [
       "georgo",
       "irlanda",
-      "londona"
+      "londona",
+      "singapuro"
     ],
     "sources": [
       "bert_alignment"
@@ -124397,7 +124621,8 @@
     "esperanto_words": [
       "kosma",
       "somera",
-      "romia"
+      "romia",
+      "somalio"
     ],
     "sources": [
       "bert_alignment"
@@ -124485,7 +124710,8 @@
     "esperanto_words": [
       "rusia",
       "bulgario",
-      "rusio"
+      "rusio",
+      "sovetunio"
     ],
     "sources": [
       "bert_alignment"
@@ -124518,7 +124744,8 @@
     "esperanto_words": [
       "rusia",
       "bulgario",
-      "ukrainio"
+      "ukrainio",
+      "sovetunio"
     ],
     "sources": [
       "bert_alignment"
@@ -124628,7 +124855,8 @@
     "esperanto_words": [
       "siberio",
       "korea",
-      "rusia"
+      "rusia",
+      "sri-lanko"
     ],
     "sources": [
       "bert_alignment"
@@ -125255,7 +125483,8 @@
     "esperanto_words": [
       "sudan",
       "suden",
-      "sudo"
+      "sudo",
+      "sudano"
     ],
     "sources": [
       "bert_alignment"
@@ -125309,7 +125538,8 @@
   "suedia": {
     "esperanto_words": [
       "rusia",
-      "suden"
+      "suden",
+      "svedio"
     ],
     "sources": [
       "bert_alignment"
@@ -125330,7 +125560,8 @@
   "suediana": {
     "esperanto_words": [
       "suden",
-      "sudan"
+      "sudan",
+      "svedio"
     ],
     "sources": [
       "bert_alignment"
@@ -125352,7 +125583,8 @@
     "esperanto_words": [
       "suden",
       "sudan",
-      "hesio"
+      "hesio",
+      "svislando"
     ],
     "sources": [
       "bert_alignment"
@@ -125451,7 +125683,8 @@
     "esperanto_words": [
       "kongruas",
       "iras",
-      "surbaze"
+      "surbaze",
+      "surinamo"
     ],
     "sources": [
       "bert_alignment"
@@ -126528,7 +126761,8 @@
     "esperanto_words": [
       "turingia",
       "pariza",
-      "parizo"
+      "parizo",
+      "tunizio"
     ],
     "sources": [
       "bert_alignment"
@@ -126682,7 +126916,8 @@
     "esperanto_words": [
       "ukraina",
       "ukrainio",
-      "bulgara"
+      "bulgara",
+      "ukrainujo"
     ],
     "sources": [
       "bert_alignment"
@@ -127012,7 +127247,8 @@
     "esperanto_words": [
       "venezuelo",
       "miguel",
-      "moravio"
+      "moravio",
+      "urugvajo"
     ],
     "sources": [
       "bert_alignment"
@@ -127034,7 +127270,8 @@
     "esperanto_words": [
       "american",
       "rusia",
-      "irlanda"
+      "irlanda",
+      "usono"
     ],
     "sources": [
       "bert_alignment"
@@ -127089,7 +127326,8 @@
     "esperanto_words": [
       "irlanda",
       "rusia",
-      "rusan"
+      "rusan",
+      "usonano"
     ],
     "sources": [
       "bert_alignment"
@@ -127616,7 +127854,8 @@
     "esperanto_words": [
       "palestino",
       "koreio",
-      "israelo"
+      "israelo",
+      "vjetnamo"
     ],
     "sources": [
       "bert_alignment"
@@ -128122,7 +128361,9 @@
     "esperanto_words": [
       "luis",
       "jules",
-      "kiss"
+      "kiss",
+      "kimrujo",
+      "kimrio"
     ],
     "sources": [
       "bert_alignment"
@@ -128959,6 +129200,767 @@
       "edzo",
       "celo",
       "leiden"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "albaniana": {
+    "esperanto_words": [
+      "albanio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "andora": {
+    "esperanto_words": [
+      "andoro"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "aquitania": {
+    "esperanto_words": [
+      "akvitanio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "arabia": {
+    "esperanto_words": [
+      "araba"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "arabiana": {
+    "esperanto_words": [
+      "araba"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "aziana": {
+    "esperanto_words": [
+      "azio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "belize": {
+    "esperanto_words": [
+      "belizo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "benin": {
+    "esperanto_words": [
+      "benino"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "biblo": {
+    "esperanto_words": [
+      "biblio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "britaniano": {
+    "esperanto_words": [
+      "brita"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "chechenia": {
+    "esperanto_words": [
+      "ĉeĉenio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "dalmatia": {
+    "esperanto_words": [
+      "dalmatio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "daniana": {
+    "esperanto_words": [
+      "danujo",
+      "danlando",
+      "danio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "danubio": {
+    "esperanto_words": [
+      "danubo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "etiopiana": {
+    "esperanto_words": [
+      "etiopio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "flandria": {
+    "esperanto_words": [
+      "flandrujo",
+      "flandrio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "flandriana": {
+    "esperanto_words": [
+      "flandrio",
+      "flandrujo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "gabon": {
+    "esperanto_words": [
+      "gabono"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "gambia": {
+    "esperanto_words": [
+      "gambio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "genezo": {
+    "esperanto_words": [
+      "genezo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "grenada": {
+    "esperanto_words": [
+      "grenado"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "grenlando": {
+    "esperanto_words": [
+      "gronlando"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "hungariana": {
+    "esperanto_words": [
+      "hungarujo",
+      "hungario"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "java": {
+    "esperanto_words": [
+      "javo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "judiciisti": {
+    "esperanto_words": [
+      "juĝistoj"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "jupitero": {
+    "esperanto_words": [
+      "jupitero"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "katar": {
+    "esperanto_words": [
+      "kataro"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "kenia": {
+    "esperanto_words": [
+      "kenjo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "keniana": {
+    "esperanto_words": [
+      "kenjo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "korano": {
+    "esperanto_words": [
+      "korano"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "kristano": {
+    "esperanto_words": [
+      "kristano"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "kristonasko": {
+    "esperanto_words": [
+      "kristnasko"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "kroatiana": {
+    "esperanto_words": [
+      "kroatio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "kuwait": {
+    "esperanto_words": [
+      "kuvajto"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "lesoto": {
+    "esperanto_words": [
+      "lesoto"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "libiana": {
+    "esperanto_words": [
+      "libio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "liechtenstein": {
+    "esperanto_words": [
+      "liĥtenŝtejno"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "lituaniana": {
+    "esperanto_words": [
+      "litovio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "luxemburg": {
+    "esperanto_words": [
+      "luksemburgo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "luxemburgiana": {
+    "esperanto_words": [
+      "luksemburgo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "macedonia": {
+    "esperanto_words": [
+      "makedonio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "malawi": {
+    "esperanto_words": [
+      "malavio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "markus": {
+    "esperanto_words": [
+      "marko"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "maurico": {
+    "esperanto_words": [
+      "maŭricio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "mauritania": {
+    "esperanto_words": [
+      "maŭritanio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "merkuro": {
+    "esperanto_words": [
+      "merkuro"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "nauru": {
+    "esperanto_words": [
+      "nauro"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "neptuno": {
+    "esperanto_words": [
+      "neptuno"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "nigeriana": {
+    "esperanto_words": [
+      "nigerio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "nova-guinea": {
+    "esperanto_words": [
+      "nov-gvineo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "nova-kaledonia": {
+    "esperanto_words": [
+      "nov-kaledonio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "oceania": {
+    "esperanto_words": [
+      "oceanio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "oman": {
+    "esperanto_words": [
+      "omano"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "pensilvania": {
+    "esperanto_words": [
+      "pensilvanio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "pirenei": {
+    "esperanto_words": [
+      "pireneoj"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "prusiana": {
+    "esperanto_words": [
+      "prusio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "ruanda": {
+    "esperanto_words": [
+      "ruando"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "sahara": {
+    "esperanto_words": [
+      "saharo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "samoa": {
+    "esperanto_words": [
+      "samoo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "saturno": {
+    "esperanto_words": [
+      "saturno"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "siam": {
+    "esperanto_words": [
+      "siamo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "siberia": {
+    "esperanto_words": [
+      "siberio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "siriana": {
+    "esperanto_words": [
+      "sirio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "skandinavia": {
+    "esperanto_words": [
+      "skandinavio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "skandinaviana": {
+    "esperanto_words": [
+      "skandinavio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "skotiana": {
+    "esperanto_words": [
+      "skotlando"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "slovakiana": {
+    "esperanto_words": [
+      "slovaka"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "somaliana": {
+    "esperanto_words": [
+      "somalio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "suisiana": {
+    "esperanto_words": [
+      "svislando"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "swazilando": {
+    "esperanto_words": [
+      "svazilando"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "trakia": {
+    "esperanto_words": [
+      "trakio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "tuniziana": {
+    "esperanto_words": [
+      "tunizio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "uganda": {
+    "esperanto_words": [
+      "ugando"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "urano": {
+    "esperanto_words": [
+      "urano"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "usano": {
+    "esperanto_words": [
+      "usonano"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "vatikano": {
+    "esperanto_words": [
+      "vatikano"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "viktoria": {
+    "esperanto_words": [
+      "viktorio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "volapük": {
+    "esperanto_words": [
+      "volapuko"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "volinia": {
+    "esperanto_words": [
+      "volinio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "walsana": {
+    "esperanto_words": [
+      "kimra"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "yugoslaviana": {
+    "esperanto_words": [
+      "jugoslavio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "zaire": {
+    "esperanto_words": [
+      "zairo"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "zambia": {
+    "esperanto_words": [
+      "zambio"
+    ],
+    "sources": [
+      "bert_alignment"
+    ],
+    "morfologio": []
+  },
+  "zimbabwe": {
+    "esperanto_words": [
+      "zimbabvo"
     ],
     "sources": [
       "bert_alignment"
