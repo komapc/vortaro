@@ -745,7 +745,9 @@ document.addEventListener('touchend', handleTouchEnd, { passive: true });
 
 // Parse URL hash to extract direction and query
 function parseHash(hash) {
-    if (!hash) return { direction: null, query: '' };
+    if (!hash) {
+        return { direction: null, query: '' };
+    }
 
     // Check if hash contains direction (format: "io-eo:word" or "eo-io:word")
     const colonIndex = hash.indexOf(':');
