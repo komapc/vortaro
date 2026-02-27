@@ -25,18 +25,33 @@ async function loadDictionary() {
         const response = await fetch('dictionary.json');
         const data = await response.json();
 
-        // Extract and store metadata
-        metadata = data.metadata || null;
-        delete data.metadata;
-        dictionary = data;
-
-        // Create searchable entries array with bidirectional support and source info
-        allEntries = Object.entries(dictionary).map(([idoWord, entryData]) => ({
-            ido: idoWord,
-            esperanto: entryData.esperanto_words || [],
-            morfologio: entryData.morfologio || [],
-            sources: entryData.sources || []
-        }));
+        // Handle both old and new dictionary formats
+        if (Array.isArray(data.entries)) {
+            // New format: {version, generation_date, statistics, entries: [{lemma, translations, ...}]}
+            const stats = data.statistics || {};
+            metadata = {
+                total_unique_ido_words: stats.total_entries || data.entries.length,
+                last_updated: data.generation_date,
+                source_stats: stats.original_sources || {}
+            };
+            allEntries = data.entries.map(entry => ({
+                ido: entry.lemma,
+                esperanto: (entry.translations || []).filter(t => t.lang === 'eo').map(t => t.term),
+                morfologio: entry.morphology || [],
+                sources: (entry.source_details || {}).all_sources || []
+            }));
+        } else {
+            // Old format: {metadata, ido_word: {esperanto_words, morfologio, sources}}
+            metadata = data.metadata || null;
+            delete data.metadata;
+            dictionary = data;
+            allEntries = Object.entries(dictionary).map(([idoWord, entryData]) => ({
+                ido: idoWord,
+                esperanto: entryData.esperanto_words || [],
+                morfologio: entryData.morfologio || [],
+                sources: entryData.sources || []
+            }));
+        }
 
         // Update word count
         const totalEntries = metadata?.total_unique_ido_words || allEntries.length;
