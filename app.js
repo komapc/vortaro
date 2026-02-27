@@ -37,7 +37,7 @@ async function loadDictionary() {
             allEntries = data.entries.map(entry => ({
                 ido: entry.lemma,
                 esperanto: (entry.translations || []).filter(t => t.lang === 'eo').map(t => t.term),
-                morfologio: entry.morphology || [],
+                morfologio: entry.morphology?.paradigm ? [entry.morphology.paradigm] : [],
                 sources: (entry.source_details || {}).all_sources || []
             }));
         } else {
