@@ -92,11 +92,14 @@ function search(query) {
     // Apply source filters
     results = applyFilters(results);
 
-    displayResults(results, searchTerm);
+    const totalMatches = results.length;
+    results = results.slice(0, 50);
+
+    displayResults(results, searchTerm, totalMatches);
 }
 
 // Display search results
-function displayResults(results, searchTerm) {
+function displayResults(results, searchTerm, totalMatches = results.length) {
     const resultsContainer = document.getElementById('results');
     const searchInfo = document.getElementById('searchInfo');
 
@@ -106,7 +109,10 @@ function displayResults(results, searchTerm) {
         return;
     }
 
-    searchInfo.textContent = `${results.length} rezulto${results.length !== 1 ? 'i' : ''}`;
+    const truncated = totalMatches > results.length;
+    searchInfo.textContent = truncated
+        ? `${results.length} de ${totalMatches} rezultoi`
+        : `${results.length} rezulto${results.length !== 1 ? 'i' : ''}`;
 
     const html = results.map(entry => {
         // Generate source badges with links
