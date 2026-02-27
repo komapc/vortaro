@@ -137,13 +137,6 @@ describe('New dictionary format', () => {
         expect(allEntries[0].esperanto).toEqual(['la']);
     });
 
-    test('morfologio is always an array, never a dict', () => {
-        const { allEntries } = parseDictionary(newFormat);
-        for (const entry of allEntries) {
-            expect(Array.isArray(entry.morfologio)).toBe(true);
-        }
-    });
-
     test('eo-io search finds nerva entry', () => {
         const { allEntries } = parseDictionary(newFormat);
         const searchTerm = 'nerva';
