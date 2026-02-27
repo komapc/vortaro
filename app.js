@@ -321,7 +321,7 @@ function setupFilterEventListeners() {
 
 // Generate part of speech badges
 function generatePosBadges(morfologio) {
-    if (!morfologio || morfologio.length === 0) {
+    if (!morfologio || !Array.isArray(morfologio) || morfologio.length === 0) {
         return '';
     }
 
