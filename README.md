@@ -6,7 +6,7 @@ Fast, client-side dictionary for Ido and Esperanto lookups.
 
 ## Features
 
-- 📖 **14,900+ entries** from Wiktionary and Wikipedia
+- 📖 **32,000+ entries** from Wiktionary and Wikipedia
 - 🔍 **Bidirectional search** - Ido⇄Esperanto with instant results
 - 🎲 **Random word** - discover new vocabulary
 - 🔽 **Source filters** - filter by Ido/Esperanto/French Wiktionary, Wikipedia
@@ -17,7 +17,7 @@ Fast, client-side dictionary for Ido and Esperanto lookups.
 
 ## How It Works
 
-Static HTML/CSS/JavaScript site that loads dictionary JSON (~14,500 entries) and provides instant search. No build step, no server required.
+Static HTML/CSS/JavaScript site that loads dictionary JSON (~32,000 entries) and provides instant search. No build step, no server required.
 
 ## Dictionary Data
 
