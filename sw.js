@@ -23,7 +23,17 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Network-First for navigation requests
+  // 1. Only handle http/https requests
+  if (!url.protocol.startsWith('http')) {
+    return;
+  }
+
+  // 2. Skip Analytics
+  if (url.hostname.includes('google-analytics') || url.hostname.includes('googletagmanager')) {
+    return;
+  }
+
+  // 3. Network-First for navigation requests
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
@@ -41,7 +51,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Stale-While-Revalidate for static assets
+  // 4. Stale-While-Revalidate for static assets
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       const fetchPromise = fetch(event.request).then((networkResponse) => {
@@ -53,7 +63,6 @@ self.addEventListener('fetch', (event) => {
         }
         return networkResponse;
       }).catch(err => {
-        // Fallback for redirected responses causing the error
         if (err.name === 'TypeError' && event.request.redirect !== 'follow') {
             return fetch(event.request, { redirect: 'follow' });
         }
