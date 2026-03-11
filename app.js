@@ -564,6 +564,9 @@ function showAboutModal(lang = 'io') {
     const modal = document.getElementById('aboutModal');
     const modalBody = document.getElementById('modalBody');
 
+    // Update footer labels based on language
+    translateFooter(lang);
+
     if (!metadata) {
         modalBody.innerHTML = `
             <p>Vortaro-metadatumi ne disponesas.</p>
@@ -703,6 +706,61 @@ function showAboutModal(lang = 'io') {
 
     modal.style.display = 'flex';
     modal.setAttribute('aria-hidden', 'false');
+}
+
+// Translate footer labels
+function translateFooter(lang) {
+    const footer = document.querySelector('footer');
+    if (!footer) return;
+
+    const translations = {
+        io: {
+            projects: 'Mea projekti',
+            resources: 'Rersursi',
+            contact: 'Kontakto',
+            about: 'Pri la projekto',
+            words: 'vorti',
+            code: 'kodo'
+        },
+        en: {
+            projects: 'My projects',
+            resources: 'Resources',
+            contact: 'Contact',
+            about: 'About the project',
+            words: 'words',
+            code: 'code'
+        },
+        eo: {
+            projects: 'Miaj projektoj',
+            resources: 'Rimedoj',
+            contact: 'Kontakto',
+            about: 'Pri la projekto',
+            words: 'vortoj',
+            code: 'kodo'
+        }
+    };
+
+    const t = translations[lang] || translations.io;
+    const lines = footer.querySelectorAll('.footer-line');
+    
+    if (lines.length >= 2) {
+        // Line 1: Projects
+        lines[0].innerHTML = `
+            ${t.projects}: 
+            <a href="https://komapc.github.io/vortaro">Vortaro</a> (<a href="https://github.com/komapc/vortaro" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
+            <a href="https://ido-epo-translator.komapc.workers.dev/">Tradukilo</a> (<a href="https://github.com/komapc/ido-epo-translator" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
+            <a href="https://komapc.github.io/a2a">EchoDrift</a> (<a href="https://github.com/komapc/a2a" target="_blank">${t.code}</a>)
+        `;
+
+        // Line 2: Resources & Info
+        lines[1].innerHTML = `
+            ${t.resources}: <a href="https://github.com/apertium" target="_blank">Apertium</a> <span class="footer-separator">·</span> 
+            ${t.contact}: <a href="mailto:komapc@gmail.com">komapc@gmail.com</a> <span class="footer-separator">·</span> 
+            <button onclick="showAboutModal('${lang}')" style="background:none; border:none; color:white; cursor:pointer; font:inherit; padding:0; font-weight:600;">${t.about}</button>
+            <span class="footer-separator">·</span> <span><span id="wordCount">${metadata ? (metadata.total_unique_ido_words || 0).toLocaleString() : '...'}</span> ${t.words}</span>
+            <span id="version" class="version-tag">v${VERSION}</span>
+        `;
+    }
 }
 
 // Close modal
