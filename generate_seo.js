@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DOMAIN = 'https://vortaro.app';
+const DOMAIN = 'https://komapc.github.io/vortaro';
 const DICTIONARY_PATH = path.join(__dirname, 'dictionary.json');
 const OUTPUT_DIR = path.join(__dirname, 'v');
 
