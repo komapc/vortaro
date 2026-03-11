@@ -11,20 +11,20 @@
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://vortaro.app/">
+    <meta property="og:url" content="https://komapc.github.io/vortaro/">
     <meta property="og:title" content="Vortaro - Ido-Esperanto Dictionary">
     <meta property="og:description" content="Fast, comprehensive Ido-Esperanto dictionary with over 20,000 entries.">
-    <meta property="og:image" content="https://vortaro.app/og-image.png">
+    <meta property="og:image" content="https://komapc.github.io/vortaro/og-image.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://vortaro.app/">
+    <meta property="twitter:url" content="https://komapc.github.io/vortaro/">
     <meta property="twitter:title" content="Vortaro - Ido-Esperanto Dictionary">
     <meta property="twitter:description" content="Fast, comprehensive Ido-Esperanto dictionary with over 20,000 entries.">
-    <meta property="twitter:image" content="https://vortaro.app/og-image.png">
+    <meta property="twitter:image" content="https://komapc.github.io/vortaro/og-image.png">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://vortaro.app/">
+    <link rel="canonical" href="https://komapc.github.io/vortaro/">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -121,12 +121,35 @@
         <div id="results" class="results"></div>
 
         <footer>
-            <p>
-                Datumi de <a href="https://github.com/komapc/ido-esperanto-extractor"
-                    target="_blank">ido-esperanto-extractor</a>
-                • <span id="wordCount">Kargante...</span> vorti
-                • <span id="version" class="version">v1.0.0</span>
-            </p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Linguistikala Utensili</h4>
+                    <ul>
+                        <li><a href="https://komapc.github.io/vortaro">Vortaro (Dilingva)</a></li>
+                        <li><a href="https://ido-epo-translator.komapc.workers.dev/">Tradukilo (Apertium)</a></li>
+                        <li><a href="https://komapc.github.io/phonomorph">PhonoMorph (Phonetics)</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Rersursi</h4>
+                    <ul>
+                        <li><a href="https://github.com/komapc/vortaro" target="_blank">Vortaro Source</a></li>
+                        <li><a href="https://github.com/apertium" target="_blank">Apertium Project</a></li>
+                        <li><a href="https://io.wikipedia.org" target="_blank">Ido Wikipedia</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Informo</h4>
+                    <ul>
+                        <li><button onclick="showAboutModal()" style="background:none; border:none; color:inherit; cursor:pointer; font:inherit; padding:0; text-decoration:underline;">Pri ca projekto</button></li>
+                        <li>Datumi: <span id="wordCount">Kargante...</span> vorti</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>© 2026 Linguo-Ekosistemo • MIT / CC BY-SA</div>
+                <div id="version" class="version">v1.0.0</div>
+            </div>
         </footer>
     </div>
 
