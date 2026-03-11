@@ -587,21 +587,21 @@ function showAboutModal(lang = 'io') {
             title: '📚 Informo pri la Vortaro',
             stats: 'Statistiko',
             totalWords: 'Tota vorti',
-            lastUpdated: 'Latest actualizuro',
+            lastUpdated: 'Maxim recenta aktualigo',
             totalTranslations: 'Tota traduki',
             howCreated: '🔨 Quale ol kreesis',
-            pipelineDesc: 'Ca vortaro automatale extraktesis e kompilesis de multa fonti per la <strong>ONE BIG BIDIX</strong> pipelino:',
+            pipelineDesc: 'Ca vortaro automatale extraktesis e kompilesis de multa fonti per la <strong>ONE BIG BIDIX</strong>-sistemo:',
             sourcesTitle: '📊 Fonti di traduki',
-            viaTitle: '🌍 Quo esas "via" traduko?',
-            viaDesc: '"Via" traduko uzas interjacanta linguo (komente Franca o Angla) por krear traduki inter Ido e Esperanto kande rekta traduki ne disponesas.',
-            viaExample: '<strong>Exemplo:</strong> Se ni savas Ido→Franca e Franca→Esperanto, ni povas infercar Ido→Esperanto <em>via</em> Franca.',
+            viaTitle: '🌍 Quo esas "via"-traduko?',
+            viaDesc: '"Via"-traduko uzas interjacanta linguo (komence la Franca o la Angla) por krear traduki inter Ido e Esperanto kande rekta traduki ne disponesas.',
+            viaExample: '<strong>Exemplo:</strong> Se ni savas Ido→Franca e Franca→Esperanto, ni povas inferar Ido→Esperanto <em>tra</em> la Franca.',
             licenseTitle: '⚖️ Licenco e Fonti',
-            licenseDesc: 'La datumi en ca vortaro venas de diversa fonti kun diversa licenco:',
-            attribution: 'Atribuciono mustas donesez a <a href="https://io.wiktionary.org" target="_blank">Ido Wiktionary</a>, <a href="https://eo.wiktionary.org" target="_blank">Esperanto Wiktionary</a>, <a href="https://io.wikipedia.org" target="_blank">Ido Wikipedia</a>, e <a href="https://fr.wiktionary.org" target="_blank">Franca Wiktionary</a>.',
-            toolsTitle: '🛠️ Utensili & Projekto',
+            licenseDesc: 'La datumi en ca vortaro venas de diversa fonti kun diversa licenci:',
+            attribution: 'Atribuciono devas donesar ad <a href="https://io.wiktionary.org" target="_blank">Ido-Wikivortaro</a>, <a href="https://eo.wiktionary.org" target="_blank">Esperanto-Wikivortaro</a>, <a href="https://io.wikipedia.org" target="_blank">Ido-Wikipedia</a>, e <a href="https://fr.wiktionary.org" target="_blank">Franca Wikivortaro</a>.',
+            toolsTitle: '🛠️ Utensili e Projekto',
             toolsDesc: 'La vortaro extraktesas per <a href="https://github.com/komapc/ido-esperanto-extractor" target="_blank">ido-esperanto-extractor</a>, qua procesas Wiktionary-dumps e Wikipedia-datumi.',
             relatedProjects: 'Relatanta projekti:',
-            translator: 'Ido-Esperanto Tradukilo'
+            translator: 'Ido-Esperanto-Tradukilo'
         },
         en: {
             title: '📚 About the Dictionary',
@@ -672,10 +672,10 @@ function showAboutModal(lang = 'io') {
         
         <h4>${t.sourcesTitle}</h4>
         <ul>
-            ${sourceStats.io_wiktionary ? `<li>📕 <strong>Ido Wiktionary:</strong> ${sourceStats.io_wiktionary.toLocaleString()}</li>` : ''}
-            ${sourceStats.io_wikipedia ? `<li>📚 <strong>Ido Wikipedia:</strong> ${sourceStats.io_wikipedia.toLocaleString()}</li>` : ''}
-            ${sourceStats.fr_wiktionary_via ? `<li>🇫🇷 <strong>Franca Wiktionary (via):</strong> ${sourceStats.fr_wiktionary_via.toLocaleString()}</li>` : ''}
-            ${sourceStats.eo_wiktionary ? `<li>📗 <strong>Esperanto Wiktionary:</strong> ${sourceStats.eo_wiktionary.toLocaleString()}</li>` : ''}
+            ${sourceStats.io_wiktionary ? `<li>📕 <strong>Ido-Wikivortaro:</strong> ${sourceStats.io_wiktionary.toLocaleString()}</li>` : ''}
+            ${sourceStats.io_wikipedia ? `<li>📚 <strong>Ido-Wikipedia:</strong> ${sourceStats.io_wikipedia.toLocaleString()}</li>` : ''}
+            ${sourceStats.fr_wiktionary_via ? `<li>🇫🇷 <strong>Franca Wikivortaro (tra):</strong> ${sourceStats.fr_wiktionary_via.toLocaleString()}</li>` : ''}
+            ${sourceStats.eo_wiktionary ? `<li>📗 <strong>Esperanto-Wikivortaro:</strong> ${sourceStats.eo_wiktionary.toLocaleString()}</li>` : ''}
         </ul>
         
         <h4>${t.viaTitle}</h4>
@@ -685,8 +685,8 @@ function showAboutModal(lang = 'io') {
         <h3>${t.licenseTitle}</h3>
         <p>${t.licenseDesc}</p>
         <ul>
-            <li><strong>Wiktionary/Wikipedia:</strong> <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA 3.0</a></li>
-            <li><strong>Software:</strong> MIT / Open Source</li>
+            <li><strong>Wikivortaro/Wikipedia:</strong> <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA 3.0</a></li>
+            <li><strong>Softwaro:</strong> MIT / Libera kodo</li>
         </ul>
         <p><small>${t.attribution}</small></p>
         
@@ -695,9 +695,9 @@ function showAboutModal(lang = 'io') {
         
         <p><strong>${t.relatedProjects}</strong></p>
         <ul>
-            <li><a href="https://translator.app" target="_blank"><strong>${t.translator}</strong></a> - Kompleta traduk-sistemo</li>
-            <li><a href="https://phonomorph.app" target="_blank"><strong>PhonoMorph</strong></a> - Fonetik-tranformi & evoluciono</li>
-            <li><a href="https://github.com/komapc/apertium-ido-epo" target="_blank">apertium-ido-epo</a> - Apertium linguo-paro</li>
+            <li><a href="https://translator.app" target="_blank"><strong>${t.translator}</strong></a> - Kompleta traduko-sistemo</li>
+            <li><a href="https://phonomorph.app" target="_blank"><strong>PhonoMorph</strong></a> - Fonetikala transformi e evoluciono</li>
+            <li><a href="https://github.com/komapc/apertium-ido-epo" target="_blank">apertium-ido-epo</a> - Apertium-lingvoparo</li>
         </ul>
     `;
 
