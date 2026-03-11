@@ -8,6 +8,7 @@
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage",
         "lint": "eslint app.js",
+        "postbuild": "node generate_seo.js",
         "serve": "python3 -m http.server 8000"
     },
     "keywords": [
