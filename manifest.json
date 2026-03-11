@@ -1,0 +1,21 @@
+{
+  "name": "Vortaro - Ido-Esperanto Dictionary",
+  "short_name": "Vortaro",
+  "description": "Fast offline-first Ido-Esperanto dictionary.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1f3f7a",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
