@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vortaro.app/sitemap.xml
+Sitemap: https://komapc.github.io/vortaro/sitemap.xml

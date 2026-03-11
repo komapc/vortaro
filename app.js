@@ -695,8 +695,8 @@ function showAboutModal(lang = 'io') {
         
         <p><strong>${t.relatedProjects}</strong></p>
         <ul>
-            <li><a href="https://translator.app" target="_blank"><strong>${t.translator}</strong></a> - Kompleta traduko-sistemo</li>
-            <li><a href="https://phonomorph.app" target="_blank"><strong>PhonoMorph</strong></a> - Fonetikala transformi e evoluciono</li>
+            <li><a href="https://ido-epo-translator.komapc.workers.dev/" target="_blank"><strong>${t.translator}</strong></a> - Kompleta traduko-sistemo</li>
+            <li><a href="https://komapc.github.io/phonomorph" target="_blank"><strong>PhonoMorph</strong></a> - Fonetikala transformi e evoluciono</li>
             <li><a href="https://github.com/komapc/apertium-ido-epo" target="_blank">apertium-ido-epo</a> - Apertium-lingvoparo</li>
         </ul>
     `;
