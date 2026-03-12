@@ -9,7 +9,7 @@
         "test:coverage": "jest --coverage",
         "lint": "eslint app.js",
         "postbuild": "node generate_seo.js",
-        "deploy": "npm run postbuild && wrangler pages deploy . --project-name vortaro",
+        "deploy": "npm run postbuild && npx wrangler pages deploy . --project-name vortaro",
         "serve": "python3 -m http.server 8000"
     },
     "devDependencies": {
@@ -22,24 +22,14 @@
         "esperanto",
         "dictionary",
         "translation",
-        "wiktionary"
+        "apertium"
     ],
-    "author": "komapc",
+    "author": "Mark",
     "license": "MIT",
-    "devDependencies": {
-        "jest": "^29.7.0",
-        "jest-environment-jsdom": "^29.7.0",
-        "eslint": "^8.57.0",
-        "@testing-library/jest-dom": "^6.1.4",
-        "@testing-library/dom": "^9.3.3"
-    },
     "jest": {
         "testEnvironment": "jsdom",
-        "setupFilesAfterEnv": [
-            "<rootDir>/test/setup.js"
-        ],
-        "testMatch": [
-            "<rootDir>/test/**/*.test.js"
+        "setupFiles": [
+            "./test/setup.js"
         ],
         "collectCoverageFrom": [
             "app.js",
