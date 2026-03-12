@@ -747,9 +747,9 @@ function translateFooter(lang) {
         // Line 1: Projects
         lines[0].innerHTML = `
             ${t.projects}: 
-            <a href="https://vortaro-98d.pages.dev/">Vortaro</a> (<a href="https://github.com/komapc/vortaro" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
+            <a href="https://ido-vortaro.pages.dev/">Vortaro</a> (<a href="https://github.com/komapc/vortaro" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
             <a href="https://ido-epo-translator.komapc.workers.dev/">Tradukilo</a> (<a href="https://github.com/komapc/ido-epo-translator" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
-            <a href="https://komapc.github.io/a2a">EchoDrift</a> (<a href="https://github.com/komapc/a2a" target="_blank">${t.code}</a>)
+            <a href="https://echodrift.pages.dev/">EchoDrift</a> (<a href="https://github.com/komapc/a2a" target="_blank">${t.code}</a>)
         `;
 
         // Line 2: Resources & Info

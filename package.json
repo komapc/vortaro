@@ -9,7 +9,7 @@
         "test:coverage": "jest --coverage",
         "lint": "eslint app.js",
         "postbuild": "node generate_seo.js",
-        "deploy": "npm run postbuild && npx wrangler pages deploy . --project-name vortaro",
+        "deploy": "npm run postbuild && npx wrangler pages deploy . --project-name ido-vortaro",
         "serve": "python3 -m http.server 8000"
     },
     "devDependencies": {
