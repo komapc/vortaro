@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About the Dictionary - Ido-Esperanto Dictionary</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="alternate" hreflang="io" href="about-io.html">
+    <link rel="alternate" hreflang="eo" href="about-eo.html">
+    <link rel="canonical" href="https://ido-vortaro.pages.dev/about-en.html">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; color: #333; }
+        .card { background: white; border-radius: 8px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1, h2, h3 { color: #1f3f7a; }
+        .lang-switcher { margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; }
+        .lang-btn { text-decoration: none; padding: 5px 15px; border: 1px solid #ccc; border-radius: 4px; background: #f8f9fa; color: black; }
+        .lang-btn.active { background: #1f3f7a; color: white; border-color: #1f3f7a; }
+        .back-link { display: inline-block; margin-top: 20px; text-decoration: none; color: #1f3f7a; font-weight: bold; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div class="lang-switcher">
+        <a href="about-io.html" class="lang-btn">Ido</a>
+        <a href="about-en.html" class="lang-btn active">English</a>
+        <a href="about-eo.html" class="lang-btn">Esperanto</a>
+    </div>
+
+    <div class="card">
+        <h1>📚 About the Dictionary</h1>
+        
+        <h3>🔨 How it was created</h3>
+        <p>This dictionary was automatically extracted and compiled from multiple sources using the <strong>ONE BIG BIDIX</strong> pipeline:</p>
+        
+        <h4>📊 Translation Sources</h4>
+        <ul>
+            <li>📕 <strong>Ido Wiktionary:</strong> Translations extracted from Ido Wiktionary dumps.</li>
+            <li>📚 <strong>Ido Wikipedia:</strong> Inter-wiki links used as a glossary of terms.</li>
+            <li>🇫🇷 <strong>French Wiktionary (via):</strong> "Via" translations using French as a bridge language.</li>
+            <li>📗 <strong>Esperanto Wiktionary:</strong> Translations extracted from Esperanto Wiktionary dumps.</li>
+        </ul>
+        
+        <h4>🌍 What is a "via" translation?</h4>
+        <p>A "via" translation uses an intermediate language (like French or English) to create translations between Ido and Esperanto when direct translations are not available.</p>
+        <p><strong>Example:</strong> If we know Ido→French and French→Esperanto, we can infer Ido→Esperanto <em>via</em> French.</p>
+        
+        <h3>⚖️ License and Sources</h3>
+        <p>The data in this dictionary comes from various sources with different licenses:</p>
+        <ul>
+            <li><strong>Wiktionary/Wikipedia:</strong> <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA 3.0</a></li>
+            <li><strong>Software:</strong> MIT / Open Source</li>
+        </ul>
+        <p><small>Attribution must be given to <a href="https://io.wiktionary.org" target="_blank">Ido Wiktionary</a>, <a href="https://eo.wiktionary.org" target="_blank">Esperanto Wiktionary</a>, <a href="https://io.wikipedia.org" target="_blank">Ido Wikipedia</a>, and <a href="https://fr.wiktionary.org" target="_blank">French Wiktionary</a>.</small></p>
+        
+        <h3>🛠️ Tools & Project</h3>
+        <p>The dictionary is extracted using <a href="https://github.com/komapc/ido-esperanto-extractor" target="_blank">ido-esperanto-extractor</a>, which processes Wiktionary dumps and Wikipedia data.</p>
+        
+        <p><strong>Related projects:</strong></p>
+        <ul>
+            <li><a href="https://translator.app" target="_blank"><strong>Ido-Esperanto Translator</strong></a> - Complete translation system</li>
+            <li><a href="https://phonomorph.app" target="_blank"><strong>PhonoMorph</strong></a> - Phonetic transformations and evolution</li>
+            <li><a href="https://github.com/komapc/apertium-ido-epo" target="_blank">apertium-ido-epo</a> - Apertium language pair</li>
+        </ul>
+
+        <a href="/" class="back-link">← Back to dictionary</a>
+    </div>
+</body>
+</html>
