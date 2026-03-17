@@ -1,44 +1,44 @@
 {
-    "name": "vortaro",
-    "version": "1.0.0",
-    "description": "Ido-Esperanto Dictionary - Client-side dictionary lookup",
-    "main": "app.js",
-    "scripts": {
-        "test": "jest",
-        "test:watch": "jest --watch",
-        "test:coverage": "jest --coverage",
-        "lint": "eslint app.js",
-        "postbuild": "node generate_seo.js",
-        "deploy": "npm run postbuild && npx wrangler pages deploy . --project-name ido-vortaro",
-        "serve": "python3 -m http.server 8000"
-    },
-    "devDependencies": {
-        "eslint": "^8.52.0",
-        "jest": "^29.7.0",
-        "wrangler": "^3.15.0"
-    },
-    "keywords": [
-        "ido",
-        "esperanto",
-        "dictionary",
-        "translation",
-        "apertium"
+  "name": "vortaro",
+  "version": "1.0.1",
+  "description": "Ido-Esperanto Dictionary - Client-side dictionary lookup",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint app.js",
+    "postbuild": "node generate_seo.js",
+    "deploy": "npm run postbuild && npx wrangler pages deploy . --project-name ido-vortaro",
+    "serve": "python3 -m http.server 8000"
+  },
+  "devDependencies": {
+    "eslint": "^8.52.0",
+    "jest": "^29.7.0",
+    "wrangler": "^3.15.0"
+  },
+  "keywords": [
+    "ido",
+    "esperanto",
+    "dictionary",
+    "translation",
+    "apertium"
+  ],
+  "author": "Mark",
+  "license": "MIT",
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFiles": [
+      "./test/setup.js"
     ],
-    "author": "Mark",
-    "license": "MIT",
-    "jest": {
-        "testEnvironment": "jsdom",
-        "setupFiles": [
-            "./test/setup.js"
-        ],
-        "collectCoverageFrom": [
-            "app.js",
-            "!node_modules/**"
-        ],
-        "coverageReporters": [
-            "text",
-            "lcov",
-            "html"
-        ]
-    }
+    "collectCoverageFrom": [
+      "app.js",
+      "!node_modules/**"
+    ],
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ]
+  }
 }

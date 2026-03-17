@@ -4,6 +4,13 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    // Handle legacy /vortaro/ prefix from GitHub Pages
+    if (url.pathname === '/vortaro' || url.pathname.startsWith('/vortaro/')) {
+      const newUrl = new URL(request.url);
+      newUrl.pathname = url.pathname.replace(/^\/vortaro/, '') || '/';
+      return Response.redirect(newUrl, 301);
+    }
     
     // 1. Static assets via ASSETS binding
     try {
