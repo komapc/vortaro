@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DOMAIN = 'https://ido-vortaro.pages.dev';
+const DOMAIN = 'https://vortaro.com';
 const DICTIONARY_PATH = path.join(__dirname, 'dictionary.json');
 const OUTPUT_DIR = path.join(__dirname, 'v');
 
