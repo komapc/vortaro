@@ -2,7 +2,7 @@
 
 Fast, client-side dictionary for Ido and Esperanto lookups.
 
-**🌐 Live:** https://ido-vortaro.pages.dev/
+**🌐 Live:** https://vortaro.com/
 
 ## Features
 
