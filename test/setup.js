@@ -1,5 +1,5 @@
 // Jest setup file
-require('@testing-library/jest-dom');
+
 
 // Mock PullToRefresh.js since it's loaded from CDN
 global.PullToRefresh = {

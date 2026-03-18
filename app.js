@@ -711,7 +711,7 @@ function showAboutModal(lang = 'io') {
 // Translate footer labels
 function translateFooter(lang) {
     const footer = document.querySelector('footer');
-    if (!footer) return;
+    if (!footer) { return; }
 
     const translations = {
         io: {
