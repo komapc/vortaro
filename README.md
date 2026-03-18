@@ -2,7 +2,7 @@
 
 Fast, client-side dictionary for Ido and Esperanto lookups.
 
-**🌐 Live:** https://komapc.github.io/vortaro/
+**🌐 Live:** https://ido-vortaro.pages.dev/
 
 ## Features
 
@@ -76,7 +76,7 @@ vortaro/
 
 ## Related Projects
 
-- [ido-epo-translator](https://github.com/komapc/ido-epo-translator) - Full Apertium translator
+- [ido-tradukilo](https://github.com/komapc/ido-tradukilo) - Full Apertium translator
 - [ido-esperanto-extractor](https://github.com/komapc/ido-esperanto-extractor) - Dictionary extraction pipeline
 - [apertium-ido-epo](https://github.com/komapc/apertium-ido-epo) - Apertium language pair
 

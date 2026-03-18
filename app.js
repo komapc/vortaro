@@ -512,10 +512,10 @@ function toggleDirection() {
         ? 'Serchez en Ido...'
         : 'Serchez en Esperanto...';
 
-    // Update URL hash with new direction
+    // Update URL with new direction using pretty paths
     const query = searchInput.value.trim();
     if (query) {
-        window.history.replaceState(null, '', `#${currentDirection}:${encodeURIComponent(query)}`);
+        window.history.replaceState(null, '', `/${currentDirection}/${encodeURIComponent(query)}`);
     }
 
     // Re-run search if there's a query
@@ -552,8 +552,8 @@ function showRandomWord() {
         (randomEntry.esperanto[0] || randomEntry.ido);
     searchInput.value = randomWord;
 
-    // Update URL hash with direction
-    window.history.replaceState(null, '', `#${currentDirection}:${encodeURIComponent(randomWord)}`);
+    // Update URL with direction and word using pretty paths
+    window.history.replaceState(null, '', `/${currentDirection}/${encodeURIComponent(randomWord)}`);
 
     // Trigger search
     search(randomWord);
@@ -711,7 +711,7 @@ function showAboutModal(lang = 'io') {
 // Translate footer labels
 function translateFooter(lang) {
     const footer = document.querySelector('footer');
-    if (!footer) return;
+    if (!footer) { return; }
 
     const translations = {
         io: {
@@ -747,9 +747,9 @@ function translateFooter(lang) {
         // Line 1: Projects
         lines[0].innerHTML = `
             ${t.projects}: 
-            <a href="https://vortaro.komapc.workers.dev/">Vortaro</a> (<a href="https://github.com/komapc/vortaro" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
-            <a href="https://ido-epo-translator.komapc.workers.dev/">Tradukilo</a> (<a href="https://github.com/komapc/ido-epo-translator" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
-            <a href="https://komapc.github.io/a2a">EchoDrift</a> (<a href="https://github.com/komapc/a2a" target="_blank">${t.code}</a>)
+            <a href="https://ido-vortaro.pages.dev/">Vortaro</a> (<a href="https://github.com/komapc/vortaro" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
+            <a href="https://ido-tradukilo.pages.dev/">Tradukilo</a> (<a href="https://github.com/komapc/ido-epo-translator" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
+            <a href="https://echodrift.pages.dev/">EchoDrift</a> (<a href="https://github.com/komapc/phonomorph" target="_blank">${t.code}</a>)
         `;
 
         // Line 2: Resources & Info
@@ -774,11 +774,11 @@ function closeModal() {
 document.getElementById('searchInput').addEventListener('input', (e) => {
     const query = e.target.value.trim();
 
-    // Update URL hash with direction and query
+    // Update URL with direction and query using pretty paths
     if (query) {
-        window.history.replaceState(null, '', `#${currentDirection}:${encodeURIComponent(query)}`);
+        window.history.replaceState(null, '', `/${currentDirection}/${encodeURIComponent(query)}`);
     } else {
-        window.history.replaceState(null, '', window.location.pathname);
+        window.history.replaceState(null, '', '/');
     }
 
     search(e.target.value);
@@ -895,56 +895,59 @@ function initializePullToRefresh() {
 document.addEventListener('touchstart', handleTouchStart, { passive: true });
 document.addEventListener('touchend', handleTouchEnd, { passive: true });
 
-// Parse URL hash to extract direction and query
-function parseHash(hash) {
-    if (!hash) {
-        return { direction: null, query: '' };
+// Parse URL to extract direction and query (supports path and hash)
+function parseUrl() {
+    const pathname = window.location.pathname;
+    const hash = window.location.hash.slice(1);
+
+    // 1. Try pretty path: /io-eo/hundo
+    const pathMatch = pathname.match(/^\/(io-eo|eo-io)\/(.+)$/);
+    if (pathMatch) {
+        return { direction: pathMatch[1], query: decodeURIComponent(pathMatch[2]) };
     }
 
-    // Check if hash contains direction (format: "io-eo:word" or "eo-io:word")
-    const colonIndex = hash.indexOf(':');
-    if (colonIndex > 0) {
-        const direction = hash.substring(0, colonIndex);
-        const query = decodeURIComponent(hash.substring(colonIndex + 1));
-
-        // Validate direction
-        if (direction === 'io-eo' || direction === 'eo-io') {
-            return { direction, query };
+    // 2. Try legacy hash: #io-eo:hundo
+    if (hash) {
+        const colonIndex = hash.indexOf(':');
+        if (colonIndex > 0) {
+            const direction = hash.substring(0, colonIndex);
+            const query = decodeURIComponent(hash.substring(colonIndex + 1));
+            if (direction === 'io-eo' || direction === 'eo-io') {
+                return { direction, query };
+            }
         }
+        return { direction: null, query: decodeURIComponent(hash) };
     }
 
-    // Fallback: treat entire hash as query (backward compatibility)
-    return { direction: null, query: decodeURIComponent(hash) };
+    return { direction: null, query: '' };
 }
 
-// Handle URL hash on page load
-function handleInitialHash() {
-    const hash = window.location.hash.slice(1); // Remove the '#'
-    if (hash) {
-        const { direction, query } = parseHash(hash);
-        const searchInput = document.getElementById('searchInput');
+// Handle URL on page load
+function handleInitialUrl() {
+    const { direction, query } = parseUrl();
+    const searchInput = document.getElementById('searchInput');
 
-        // Set direction if specified
-        if (direction && direction !== currentDirection) {
-            currentDirection = direction;
-            const toggleBtn = document.getElementById('directionToggle');
-            const toggleText = toggleBtn.querySelector('.toggle-text');
-            toggleBtn.setAttribute('data-direction', currentDirection);
-            toggleText.textContent = currentDirection === 'io-eo' ? 'Ido → Esperanto' : 'Esperanto → Ido';
-            searchInput.placeholder = currentDirection === 'io-eo'
-                ? 'Serchez en Ido...'
-                : 'Serchez en Esperanto...';
-        }
+    // Set direction if specified
+    if (direction && direction !== currentDirection) {
+        currentDirection = direction;
+        const toggleBtn = document.getElementById('directionToggle');
+        const toggleText = toggleBtn.querySelector('.toggle-text');
+        toggleBtn.setAttribute('data-direction', currentDirection);
+        toggleText.textContent = currentDirection === 'io-eo' ? 'Ido → Esperanto' : 'Esperanto → Ido';
+        searchInput.placeholder = currentDirection === 'io-eo'
+            ? 'Serchez en Ido...'
+            : 'Serchez en Esperanto...';
+    }
 
+    if (query) {
         searchInput.value = query;
         search(query);
     }
 }
 
-// Handle hash changes (browser back/forward)
-window.addEventListener('hashchange', () => {
-    const hash = window.location.hash.slice(1);
-    const { direction, query } = parseHash(hash);
+// Handle URL changes (browser back/forward)
+window.addEventListener('popstate', () => {
+    const { direction, query } = parseUrl();
     const searchInput = document.getElementById('searchInput');
 
     // Update direction if specified and different
@@ -983,8 +986,8 @@ loadDictionary().then(() => {
     // Initialize PullToRefresh after dictionary is loaded
     initializePullToRefresh();
 
-    // Handle initial URL hash
-    handleInitialHash();
+    // Handle initial URL (pretty paths or hash)
+    handleInitialUrl();
 
     // Initialize version display
     initializeVersion();

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vortaro.komapc.workers.dev/sitemap.xml
+Sitemap: https://ido-vortaro.pages.dev/sitemap.xml
