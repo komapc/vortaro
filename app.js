@@ -104,7 +104,8 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
     const searchInfo = document.getElementById('searchInfo');
 
     if (results.length === 0) {
-        resultsContainer.innerHTML = '<div class="no-results">Nula rezulti por "' + searchTerm + '"</div>';
+        const safeSearch = searchTerm.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+        resultsContainer.innerHTML = '<div class="no-results">Nula rezulti por "' + safeSearch + '"</div>';
         searchInfo.textContent = '0 rezulti';
         return;
     }
@@ -478,8 +479,10 @@ function getSourceUrl(source, idoWord, esperantoWord) {
 
 // Highlight matching text
 function highlightMatch(text, query) {
-    const regex = new RegExp(`(${query})`, 'gi');
-    return text.replace(regex, '<mark style="background-color: #fff3cd; padding: 2px 1px; border-radius: 2px;">$1</mark>');
+    const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const safeText = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    const regex = new RegExp(`(${safeQuery})`, 'gi');
+    return safeText.replace(regex, '<mark style="background-color: #fff3cd; padding: 2px 1px; border-radius: 2px;">$1</mark>');
 }
 
 // Show empty state
@@ -716,7 +719,7 @@ function translateFooter(lang) {
     const translations = {
         io: {
             projects: 'Mea projekti',
-            resources: 'Rersursi',
+            resources: 'Resursi',
             contact: 'Kontakto',
             about: 'Pri la projekto',
             words: 'vorti',

@@ -1,6 +1,13 @@
 // Cloudflare Pages _worker.js for Vortaro
 // Handles dynamic SEO injection and serves static assets
 
+const escapeHtml = (s) => String(s)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#39;')
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -29,9 +36,9 @@ export default {
         // Inject SEO tags for the specific word
         const langFrom = direction === 'io-eo' ? 'Ido' : 'Esperanto';
         const langTo = direction === 'io-eo' ? 'Esperanto' : 'Ido';
-        const decodedWord = decodeURIComponent(word);
+        const decodedWord = escapeHtml(decodeURIComponent(word));
         const title = `${decodedWord} - ${langFrom} to ${langTo} Dictionary`;
-        const description = `Look up "${decodedWord}" in the Ido-Esperanto Dictionary. Fast, comprehensive, and offline-ready.`;
+        const description = `Look up &quot;${decodedWord}&quot; in the Ido-Esperanto Dictionary. Fast, comprehensive, and offline-ready.`;
         
         const metaTags = `
     <title>${title}</title>
@@ -69,8 +76,9 @@ export default {
         
         const langFrom = dir === 'io-eo' ? 'Ido' : 'Esperanto';
         const langTo = dir === 'io-eo' ? 'Esperanto' : 'Ido';
-        const title = `${q} - ${langFrom} to ${langTo} Dictionary`;
-        const description = `Look up "${q}" in the Ido-Esperanto Dictionary. Fast, comprehensive, and offline-ready.`;
+        const safeQ = escapeHtml(q);
+        const title = `${safeQ} - ${langFrom} to ${langTo} Dictionary`;
+        const description = `Look up &quot;${safeQ}&quot; in the Ido-Esperanto Dictionary. Fast, comprehensive, and offline-ready.`;
         
         const metaTags = `
     <title>${title}</title>
