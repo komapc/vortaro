@@ -607,7 +607,12 @@ function showAboutModal(lang = 'io') {
             toolsTitle: '🛠️ Utensili e Projekto',
             toolsDesc: 'La idala vortolibro extraktesas per <a href="https://github.com/komapc/ido-esperanto-extractor" target="_blank">ido-esperanto-extractor</a>, qua procesas Wiktionary-dumps e Wikipedia-datumi.',
             relatedProjects: 'Relatanta projekti:',
-            translator: 'Ido-Esperanto-Tradukilo'
+            translator: 'Ido-Esperanto-Tradukilo',
+            colabTitle: '🤝 Kolaborado',
+            colabDesc: 'Ca vortolibro esas komunala projekto. Vu povas helpar!',
+            colabReport: 'Raportar eroro o mankar traduko',
+            colabSuggest: 'Sugestar nova traduko',
+            colabCode: 'Kontributar kodo o datumi'
         },
         en: {
             title: '📚 About the Dictionary',
@@ -627,7 +632,12 @@ function showAboutModal(lang = 'io') {
             toolsTitle: '🛠️ Tools & Project',
             toolsDesc: 'The dictionary is extracted using <a href="https://github.com/komapc/ido-esperanto-extractor" target="_blank">ido-esperanto-extractor</a>, processing Wiktionary dumps and Wikipedia data.',
             relatedProjects: 'Related projects:',
-            translator: 'Ido-Esperanto Translator'
+            translator: 'Ido-Esperanto Translator',
+            colabTitle: '🤝 Contribute',
+            colabDesc: 'This dictionary is a community project. You can help!',
+            colabReport: 'Report an error or missing translation',
+            colabSuggest: 'Suggest a new translation',
+            colabCode: 'Contribute code or data'
         },
         eo: {
             title: '📚 Pri la Vortaro',
@@ -647,7 +657,12 @@ function showAboutModal(lang = 'io') {
             toolsTitle: '🛠️ Iloj kaj Projekto',
             toolsDesc: 'La vortaro estas eltirita per <a href="https://github.com/komapc/ido-esperanto-extractor" target="_blank">ido-esperanto-extractor</a>, procesante elŝutojn de Vikivortaro kaj Vikipedio.',
             relatedProjects: 'Rilataj projektoj:',
-            translator: 'Ido-Esperanto Tradukilo'
+            translator: 'Ido-Esperanto Tradukilo',
+            colabTitle: '🤝 Kontribui',
+            colabDesc: 'Ĉi tiu vortaro estas komunuma projekto. Vi povas helpi!',
+            colabReport: 'Raporti eraron aŭ mankantan tradukon',
+            colabSuggest: 'Sugesti novan tradukon',
+            colabCode: 'Kontribui kodon aŭ datumojn'
         }
     };
 
@@ -705,6 +720,14 @@ function showAboutModal(lang = 'io') {
             <li><a href="https://echodrift.pages.dev/" target="_blank"><strong>EchoDrift</strong></a> - Fonetikala transformi e evoluciono</li>
             <li><a href="https://github.com/komapc/apertium-ido-epo" target="_blank">apertium-ido-epo</a> - Apertium-lingvoparo</li>
         </ul>
+
+        <h3>${t.colabTitle}</h3>
+        <p>${t.colabDesc}</p>
+        <ul>
+            <li><a href="https://github.com/komapc/vortaro/issues/new?labels=bug&template=&title=Error%3A+%5Bword%5D" target="_blank">${t.colabReport}</a></li>
+            <li><a href="https://github.com/komapc/vortaro/issues/new?labels=enhancement&title=Suggestion%3A+%5Bword%5D" target="_blank">${t.colabSuggest}</a></li>
+            <li><a href="https://github.com/komapc/vortaro" target="_blank">${t.colabCode}</a></li>
+        </ul>
     `;
 
     modal.style.display = 'flex';
@@ -723,7 +746,8 @@ function translateFooter(lang) {
             contact: 'Kontakto',
             about: 'Pri la projekto',
             words: 'vorti',
-            code: 'kodo'
+            code: 'kodo',
+            report: 'Raportar eroro'
         },
         en: {
             projects: 'My projects',
@@ -731,7 +755,8 @@ function translateFooter(lang) {
             contact: 'Contact',
             about: 'About the project',
             words: 'words',
-            code: 'code'
+            code: 'code',
+            report: 'Report an error'
         },
         eo: {
             projects: 'Miaj projektoj',
@@ -739,7 +764,8 @@ function translateFooter(lang) {
             contact: 'Kontakto',
             about: 'Pri la projekto',
             words: 'vortoj',
-            code: 'kodo'
+            code: 'kodo',
+            report: 'Raporti eraron'
         }
     };
 
@@ -757,8 +783,9 @@ function translateFooter(lang) {
 
         // Line 2: Resources & Info
         lines[1].innerHTML = `
-            ${t.resources}: <a href="https://github.com/apertium" target="_blank">Apertium</a> <span class="footer-separator">·</span> 
-            ${t.contact}: <a href="mailto:komapc@gmail.com">komapc@gmail.com</a> <span class="footer-separator">·</span> 
+            ${t.resources}: <a href="https://github.com/apertium" target="_blank">Apertium</a> <span class="footer-separator">·</span>
+            ${t.contact}: <a href="mailto:komapc@gmail.com">komapc@gmail.com</a> <span class="footer-separator">·</span>
+            <a href="https://github.com/komapc/vortaro/issues/new?labels=bug&title=Error%3A+%5Bword%5D" target="_blank">${t.report}</a> <span class="footer-separator">·</span>
             <button onclick="showAboutModal('${lang}')" style="background:none; border:none; color:white; cursor:pointer; font:inherit; padding:0; font-weight:600;">${t.about}</button>
             <span class="footer-separator">·</span> <span><span id="wordCount">${metadata ? (metadata.total_unique_ido_words || 0).toLocaleString() : '...'}</span> ${t.words}</span>
             <span id="version" class="version-tag">v${VERSION}</span>
