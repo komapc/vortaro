@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DOMAIN = 'https://vortaro.com';
+const DOMAIN = 'https://ido-vortaro.pages.dev';
 const DICTIONARY_PATH = path.join(__dirname, 'dictionary.json');
 const OUTPUT_DIR = path.join(__dirname, 'v');
 
@@ -58,6 +58,14 @@ entries.forEach((entry, index) => {
     <link rel="canonical" href="${DOMAIN}/v/${fileName}">
     <script type="application/ld+json">
     ${JSON.stringify(jsonLd)}
+    </script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DMH4HKHLLS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DMH4HKHLLS');
     </script>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; background-color: #f8f9fa; }

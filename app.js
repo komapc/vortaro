@@ -590,22 +590,22 @@ function showAboutModal(lang = 'io') {
 
     const translations = {
         io: {
-            title: '📚 Informo pri la Vortaro',
+            title: '📚 Informo pri la Idala Vortolibro',
             stats: 'Statistiko',
             totalWords: 'Tota vorti',
             lastUpdated: 'Maxim recenta aktualigo',
             totalTranslations: 'Tota traduki',
             howCreated: '🔨 Quale ol kreesis',
-            pipelineDesc: 'Ca vortaro automatale extraktesis e kompilesis de multa fonti per la <strong>ONE BIG BIDIX</strong>-sistemo:',
+            pipelineDesc: 'Ca idala vortolibro automatale extraktesis e kompilesis de multa fonti per la <strong>ONE BIG BIDIX</strong>-sistemo:',
             sourcesTitle: '📊 Fonti di traduki',
             viaTitle: '🌍 Quo esas "via"-traduko?',
             viaDesc: '"Via"-traduko uzas interjacanta linguo (komence la Franca o la Angla) por krear traduki inter Ido e Esperanto kande rekta traduki ne disponesas.',
             viaExample: '<strong>Exemplo:</strong> Se ni savas Ido→Franca e Franca→Esperanto, ni povas inferar Ido→Esperanto <em>tra</em> la Franca.',
             licenseTitle: '⚖️ Licenco e Fonti',
-            licenseDesc: 'La datumi en ca vortaro venas de diversa fonti kun diversa licenci:',
+            licenseDesc: 'La datumi en ca idala vortolibro venas de diversa fonti kun diversa licenci:',
             attribution: 'Atribuciono devas donesar ad <a href="https://io.wiktionary.org" target="_blank">Ido-Wikivortaro</a>, <a href="https://eo.wiktionary.org" target="_blank">Esperanto-Wikivortaro</a>, <a href="https://io.wikipedia.org" target="_blank">Ido-Wikipedia</a>, e <a href="https://fr.wiktionary.org" target="_blank">Franca Wikivortaro</a>.',
             toolsTitle: '🛠️ Utensili e Projekto',
-            toolsDesc: 'La vortaro extraktesas per <a href="https://github.com/komapc/ido-esperanto-extractor" target="_blank">ido-esperanto-extractor</a>, qua procesas Wiktionary-dumps e Wikipedia-datumi.',
+            toolsDesc: 'La idala vortolibro extraktesas per <a href="https://github.com/komapc/ido-esperanto-extractor" target="_blank">ido-esperanto-extractor</a>, qua procesas Wiktionary-dumps e Wikipedia-datumi.',
             relatedProjects: 'Relatanta projekti:',
             translator: 'Ido-Esperanto-Tradukilo'
         },
@@ -701,8 +701,8 @@ function showAboutModal(lang = 'io') {
         
         <p><strong>${t.relatedProjects}</strong></p>
         <ul>
-            <li><a href="https://translator.app" target="_blank"><strong>${t.translator}</strong></a> - Kompleta traduko-sistemo</li>
-            <li><a href="https://phonomorph.app" target="_blank"><strong>PhonoMorph</strong></a> - Fonetikala transformi e evoluciono</li>
+            <li><a href="https://ido-tradukilo.pages.dev/" target="_blank"><strong>${t.translator}</strong></a> - Kompleta traduko-sistemo</li>
+            <li><a href="https://echodrift.pages.dev/" target="_blank"><strong>EchoDrift</strong></a> - Fonetikala transformi e evoluciono</li>
             <li><a href="https://github.com/komapc/apertium-ido-epo" target="_blank">apertium-ido-epo</a> - Apertium-lingvoparo</li>
         </ul>
     `;
@@ -750,7 +750,7 @@ function translateFooter(lang) {
         // Line 1: Projects
         lines[0].innerHTML = `
             ${t.projects}: 
-            <a href="https://vortaro.com/">Vortaro</a> (<a href="https://github.com/komapc/vortaro" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
+            <a href="https://ido-vortaro.pages.dev/">Vortaro</a> (<a href="https://github.com/komapc/vortaro" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
             <a href="https://ido-tradukilo.pages.dev/">Tradukilo</a> (<a href="https://github.com/komapc/ido-epo-translator" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
             <a href="https://echodrift.pages.dev/">EchoDrift</a> (<a href="https://github.com/komapc/phonomorph" target="_blank">${t.code}</a>)
         `;
