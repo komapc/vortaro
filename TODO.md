@@ -75,10 +75,10 @@ Vortaro is a client-side dictionary for Ido-Esperanto lookups.
   - ✅ Synced with package.json version
   - Version can be manually incremented when releasing updates
 
-- [ ] **Collaboration**
-  - Report errors/corrections
-  - Suggest new translations
-  - Community contributions
-  - Link to GitHub issues
+- [x] **Collaboration** - COMPLETED
+  - ✅ "Report an error" link in footer (GitHub Issues)
+  - ✅ Collaboration section in About modal (3 languages)
+  - ✅ Collaboration section in about-en/eo/io.html static pages
+  - ✅ Links: report error, suggest translation, contribute code
 
 ---
