@@ -1,7 +1,7 @@
 {
-  "name": "Vortaro - Ido-Esperanto Dictionary",
+  "name": "Vortaro — Ido-Esperanto Vortaro / Dictionary (Vortlibro)",
   "short_name": "Vortaro",
-  "description": "Fast offline-first Ido-Esperanto dictionary.",
+  "description": "Fast offline-first Ido-Esperanto dictionary with 29,000+ entries. Senpaga Ido-Esperanto vortaro ed vortlibro.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
