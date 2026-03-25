@@ -37,12 +37,13 @@ export default {
         const langFrom = direction === 'io-eo' ? 'Ido' : 'Esperanto';
         const langTo = direction === 'io-eo' ? 'Esperanto' : 'Ido';
         const decodedWord = escapeHtml(decodeURIComponent(word));
-        const title = `${decodedWord} - ${langFrom} to ${langTo} Dictionary`;
-        const description = `Look up &quot;${decodedWord}&quot; in the Ido-Esperanto Dictionary. Fast, comprehensive, and offline-ready.`;
+        const title = `${decodedWord} — Ido-Esperanto Vortaro / Dictionary`;
+        const description = `Look up "${decodedWord}" in the Ido-Esperanto Dictionary (Vortaro / Vortlibro). Fast, comprehensive, and offline-ready.`;
         
         const metaTags = `
     <title>${title}</title>
     <meta name="description" content="${description}">
+    <link rel="canonical" href="https://ido-vortaro.pages.dev/v/${encodeURIComponent(word)}.html">
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">
     <meta property="og:url" content="${url.href}">
@@ -50,7 +51,9 @@ export default {
     <meta property="twitter:description" content="${description}">
         `;
         
-        html = html.replace('<title>Vortaro - Ido-Esperanto Dictionary</title>', '');
+        // Use regex for more robust title replacement
+        html = html.replace(/<title>.*?<\/title>/, '');
+        html = html.replace(/<link rel="canonical" href="https:\/\/ido-vortaro\.pages\.dev\/">/, '');
         html = html.replace('</head>', `${metaTags}\n  </head>`);
         
         return new Response(html, {
@@ -77,12 +80,13 @@ export default {
         const langFrom = dir === 'io-eo' ? 'Ido' : 'Esperanto';
         const langTo = dir === 'io-eo' ? 'Esperanto' : 'Ido';
         const safeQ = escapeHtml(q);
-        const title = `${safeQ} - ${langFrom} to ${langTo} Dictionary`;
-        const description = `Look up &quot;${safeQ}&quot; in the Ido-Esperanto Dictionary. Fast, comprehensive, and offline-ready.`;
+        const title = `${safeQ} — Ido-Esperanto Vortaro / Dictionary`;
+        const description = `Look up "${safeQ}" in the Ido-Esperanto Dictionary (Vortaro / Vortlibro). Fast, comprehensive, and offline-ready.`;
         
         const metaTags = `
     <title>${title}</title>
     <meta name="description" content="${description}">
+    <link rel="canonical" href="https://ido-vortaro.pages.dev/v/${encodeURIComponent(q)}.html">
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">
     <meta property="og:url" content="${url.href}">
@@ -90,8 +94,9 @@ export default {
     <meta property="twitter:description" content="${description}">
         `;
         
-        // Remove existing generic title if it exists and inject new tags
-        html = html.replace('<title>Vortaro - Ido-Esperanto Dictionary</title>', '');
+        // Use regex for more robust title replacement
+        html = html.replace(/<title>.*?<\/title>/, '');
+        html = html.replace(/<link rel="canonical" href="https:\/\/ido-vortaro\.pages\.dev\/">/, '');
         html = html.replace('</head>', `${metaTags}\n  </head>`);
         
         return new Response(html, {

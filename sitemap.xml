@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://ido-vortaro.pages.dev/</loc><priority>1.0</priority></url>
-  <url><loc>https://ido-vortaro.pages.dev/about-io.html</loc><priority>0.5</priority></url>
-  <url><loc>https://ido-vortaro.pages.dev/about-en.html</loc><priority>0.5</priority></url>
-  <url><loc>https://ido-vortaro.pages.dev/about-eo.html</loc><priority>0.5</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/about-io.html</loc><priority>0.7</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/about-en.html</loc><priority>0.7</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/about-eo.html</loc><priority>0.7</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/index.html</loc><priority>0.9</priority></url>
   <url><loc>https://ido-vortaro.pages.dev/v/en.html</loc><priority>0.8</priority></url>
   <url><loc>https://ido-vortaro.pages.dev/v/de.html</loc><priority>0.8</priority></url>
   <url><loc>https://ido-vortaro.pages.dev/v/segun.html</loc><priority>0.8</priority></url>
@@ -29647,4 +29648,77 @@
   <url><loc>https://ido-vortaro.pages.dev/v/quo.html</loc><priority>0.8</priority></url>
   <url><loc>https://ido-vortaro.pages.dev/v/qui.html</loc><priority>0.8</priority></url>
   <url><loc>https://ido-vortaro.pages.dev/v/quin.html</loc><priority>0.8</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/!.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/".html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/#.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/$.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/%.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/(.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/..html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse//.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/0.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/1.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/2.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/3.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/4.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/5.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/6.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/7.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/8.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/9.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/:.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/A.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/B.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/C.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/D.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/E.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/F.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/G.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/H.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/I.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/J.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/K.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/L.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/M.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/N.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/O.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/P.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Q.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/R.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/S.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/T.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/U.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/V.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/W.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/X.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Y.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Z.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/].html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/°.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/».html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Á.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Å.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ç.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/É.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Í.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ò.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ó.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ö.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ú.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ü.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ĉ.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Č.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ĝ.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ĥ.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ĵ.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ľ.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ł.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ś.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ŝ.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ş.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Š.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ŭ.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ż.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/Ž.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ido-vortaro.pages.dev/browse/ˈ.html</loc><priority>0.6</priority></url>
 </urlset>
