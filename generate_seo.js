@@ -27,7 +27,7 @@ entries.forEach((entry) => {
   if (!lemma) return;
   
   const encoded = encodeURIComponent(lemma);
-  sitemap += `  <url><loc>${DOMAIN}/io-eo/${encoded}</loc><priority>0.6</priority></url>\n`;
+  sitemap += `  <url><loc>${DOMAIN}/io-eo/${encoded}</loc><lastmod>${now}</lastmod><priority>0.6</priority></url>\n`;
 });
 
 sitemap += '</urlset>';

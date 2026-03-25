@@ -40,6 +40,15 @@ export default {
         const title = `${decodedWord} — Ido-Esperanto Vortaro / Dictionary`;
         const description = `Look up "${decodedWord}" in the Ido-Esperanto Dictionary (Vortaro / Vortlibro). Fast, comprehensive, and offline-ready.`;
         
+        const breadcrumbData = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Vortaro", "item": "https://ido-vortaro.pages.dev/" },
+            { "@type": "ListItem", "position": 2, "name": decodedWord, "item": url.href }
+          ]
+        };
+
         const metaTags = `
     <title>${title}</title>
     <meta name="description" content="${description}">
@@ -49,6 +58,7 @@ export default {
     <meta property="og:url" content="${url.href}">
     <meta property="twitter:title" content="${title}">
     <meta property="twitter:description" content="${description}">
+    <script type="application/ld+json">${JSON.stringify(breadcrumbData)}</script>
         `;
         
         // Use regex for more robust title replacement
@@ -83,6 +93,15 @@ export default {
         const title = `${safeQ} — Ido-Esperanto Vortaro / Dictionary`;
         const description = `Look up "${safeQ}" in the Ido-Esperanto Dictionary (Vortaro / Vortlibro). Fast, comprehensive, and offline-ready.`;
         
+        const breadcrumbData = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Vortaro", "item": "https://ido-vortaro.pages.dev/" },
+            { "@type": "ListItem", "position": 2, "name": safeQ, "item": url.href }
+          ]
+        };
+
         const metaTags = `
     <title>${title}</title>
     <meta name="description" content="${description}">
@@ -92,6 +111,7 @@ export default {
     <meta property="og:url" content="${url.href}">
     <meta property="twitter:title" content="${title}">
     <meta property="twitter:description" content="${description}">
+    <script type="application/ld+json">${JSON.stringify(breadcrumbData)}</script>
         `;
         
         // Use regex for more robust title replacement
