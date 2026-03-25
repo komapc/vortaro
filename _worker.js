@@ -43,7 +43,7 @@ export default {
         const metaTags = `
     <title>${title}</title>
     <meta name="description" content="${description}">
-    <link rel="canonical" href="https://ido-vortaro.pages.dev/v/${encodeURIComponent(word)}.html">
+    <link rel="canonical" href="${url.origin}${url.pathname}">
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">
     <meta property="og:url" content="${url.href}">
@@ -86,7 +86,7 @@ export default {
         const metaTags = `
     <title>${title}</title>
     <meta name="description" content="${description}">
-    <link rel="canonical" href="https://ido-vortaro.pages.dev/v/${encodeURIComponent(q)}.html">
+    <link rel="canonical" href="${url.origin}${url.pathname}">
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">
     <meta property="og:url" content="${url.href}">
