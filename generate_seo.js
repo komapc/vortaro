@@ -5,7 +5,10 @@ const DOMAIN = 'https://ido-vortaro.pages.dev';
 const DICTIONARY_PATH = path.join(__dirname, 'dictionary.json');
 
 const dictionary = JSON.parse(fs.readFileSync(DICTIONARY_PATH, 'utf8'));
-const entries = dictionary.entries || [];
+// Support both old array format (dictionary.entries) and new dict-keyed format
+const entries = Array.isArray(dictionary.entries)
+  ? dictionary.entries
+  : Object.keys(dictionary).filter(k => k !== 'metadata').map(k => ({ lemma: k }));
 
 console.log(`Generating sitemap for ${entries.length} entries...`);
 
