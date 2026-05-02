@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vortaro-v2';
+const CACHE_NAME = 'vortaro-v1.1.0';
 const ASSETS = [
   './',
   './index.html',
