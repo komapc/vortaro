@@ -19,6 +19,34 @@ const activeFilters = {
 };
 const availableSources = new Set();
 
+// Debounced GA4 search-event reporting. Fires ~1.5s after the user stops
+// typing so we don't blast a beacon for every keystroke. No-op when gtag is
+// blocked (ad blockers) or absent (local dev).
+let _searchTrackTimer = null;
+let _lastTrackedSearch = null;
+function trackSearch(term, direction, resultCount) {
+    if (!term || term.length < 2) {
+        return;
+    }
+    clearTimeout(_searchTrackTimer);
+    _searchTrackTimer = setTimeout(() => {
+        const key = direction + '|' + term;
+        if (key === _lastTrackedSearch) {
+            return;
+        }
+        _lastTrackedSearch = key;
+        // eslint-disable-next-line no-undef
+        if (typeof gtag === 'function') {
+            // eslint-disable-next-line no-undef
+            gtag('event', 'search', {
+                search_term: term,
+                direction: direction,
+                result_count: resultCount,
+            });
+        }
+    }, 1500);
+}
+
 // Load dictionary data
 async function loadDictionary() {
     try {
@@ -96,6 +124,7 @@ function search(query) {
     results = results.slice(0, 50);
 
     displayResults(results, searchTerm, totalMatches);
+    trackSearch(searchTerm, currentDirection, totalMatches);
 }
 
 // Display search results
