@@ -4,6 +4,7 @@ const VERSION = '1.1.0';
 // Dictionary data
 let dictionary = {};
 let allEntries = [];
+let idoLemmaSet = new Set(); // lowercased Ido lemmas, for inflected-form lookup
 let metadata = null;
 let currentDirection = 'io-eo'; // 'io-eo' or 'eo-io'
 
@@ -81,6 +82,9 @@ async function loadDictionary() {
             }));
         }
 
+        // Index Ido lemmas for inflected-form lookup (habitas -> habitar).
+        idoLemmaSet = new Set(allEntries.map(e => e.ido.toLowerCase()));
+
         // Update word count
         const totalEntries = metadata?.total_unique_ido_words || allEntries.length;
         document.getElementById('wordCount').textContent = `${totalEntries.toLocaleString()} vorti`;
@@ -95,6 +99,29 @@ async function loadDictionary() {
         document.getElementById('results').innerHTML =
             '<div class="no-results">Error loading dictionary. Please try again later.</div>';
     }
+}
+
+// Map an inflected Ido surface form to its candidate dictionary lemmas.
+// Ido inflection is fully regular, so a few rules cover it without shipping a
+// paradigm table: verb tenses/participles -> infinitive(s), noun plural -> sing.
+// Only candidates that actually exist as lemmas are returned (existence-gated),
+// so e.g. `habitas` -> `habitar`, `urbi` -> `urbo`.
+function idoLemmaCandidates(word) {
+    const cands = new Set();
+    const add = w => { if (idoLemmaSet.has(w)) cands.add(w); };
+    let m;
+    // finite verb forms: -as/-is/-os/-us/-ez -> infinitive (try all 3 classes)
+    if ((m = word.match(/^(.{2,})(as|is|os|us|ez)$/))) {
+        for (const inf of ['ar', 'ir', 'or']) add(m[1] + inf);
+    }
+    // participles (adj -a / adv -e / noun -o / plural -i) -> infinitive
+    if ((m = word.match(/^(.{2,})(ant|int|ont|at|it|ot)[aeoi]$/))) {
+        for (const inf of ['ar', 'ir', 'or']) add(m[1] + inf);
+    }
+    // noun/adjective plural -i -> singular -o / lemma -a
+    if ((m = word.match(/^(.{2,})i$/))) { add(m[1] + 'o'); add(m[1] + 'a'); }
+    cands.delete(word); // a direct lemma hit is already covered by substring search
+    return cands;
 }
 
 // Search function
@@ -116,6 +143,23 @@ function search(query) {
             return entry.esperanto.some(eoWord => eoWord.toLowerCase().includes(searchTerm));
         }
     });
+
+    // Inflected-form lookup (io→eo only): if the query is an inflected surface
+    // form, also surface its lemma entries (habitas→habitar) without bloating
+    // the dictionary with every paradigm form.
+    if (currentDirection === 'io-eo') {
+        const lemmas = idoLemmaCandidates(searchTerm);
+        if (lemmas.size) {
+            const have = new Set(results.map(e => e.ido.toLowerCase()));
+            for (const entry of allEntries) {
+                const lc = entry.ido.toLowerCase();
+                if (lemmas.has(lc) && !have.has(lc)) {
+                    results.push(entry);
+                    have.add(lc);
+                }
+            }
+        }
+    }
 
     // Apply source filters
     results = applyFilters(results);

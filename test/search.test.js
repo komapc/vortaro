@@ -124,3 +124,46 @@ describe('Source Badge Generation', () => {
         expect(getBadgeClass('unknown_source')).toBe('badge-default');
     });
 });
+describe('Inflected-form lookup (Ido de-inflection)', () => {
+    // Mirrors idoLemmaCandidates() in app.js: maps an inflected surface form to
+    // candidate lemmas, gated to those present in the dictionary.
+    const lemmaSet = new Set(['amar', 'esar', 'venar', 'urbo', 'libro', 'skribar', 'bela']);
+    function idoLemmaCandidates(word) {
+        const cands = new Set();
+        const add = w => { if (lemmaSet.has(w)) cands.add(w); };
+        let m;
+        if ((m = word.match(/^(.{2,})(as|is|os|us|ez)$/))) {
+            for (const inf of ['ar', 'ir', 'or']) add(m[1] + inf);
+        }
+        if ((m = word.match(/^(.{2,})(ant|int|ont|at|it|ot)[aeoi]$/))) {
+            for (const inf of ['ar', 'ir', 'or']) add(m[1] + inf);
+        }
+        if ((m = word.match(/^(.{2,})i$/))) { add(m[1] + 'o'); add(m[1] + 'a'); }
+        cands.delete(word);
+        return cands;
+    }
+
+    test('maps finite verb forms to the infinitive lemma', () => {
+        expect([...idoLemmaCandidates('amas')]).toEqual(['amar']); // present
+        expect([...idoLemmaCandidates('esis')]).toEqual(['esar']); // past
+        expect([...idoLemmaCandidates('venos')]).toEqual(['venar']); // future
+    });
+
+    test('maps participles and imperatives to the infinitive lemma', () => {
+        expect([...idoLemmaCandidates('skribita')]).toEqual(['skribar']);
+    });
+
+    test('maps noun plural -i to the singular lemma', () => {
+        expect(idoLemmaCandidates('urbi').has('urbo')).toBe(true);
+        expect(idoLemmaCandidates('libri').has('libro')).toBe(true);
+    });
+
+    test('returns nothing for a lemma whose candidate is absent', () => {
+        expect(idoLemmaCandidates('manjas').size).toBe(0); // manjar not in lemmaSet
+    });
+
+    test('does not de-inflect uninflected lemmas (no false positives)', () => {
+        expect(idoLemmaCandidates('bela').size).toBe(0); // adjective lemma, unchanged
+        expect(idoLemmaCandidates('amar').size).toBe(0); // already the infinitive
+    });
+});
