@@ -21,3 +21,6 @@ venv/
 *.log
 npm-debug.log*
 
+
+# Cloudflare Wrangler local state
+.wrangler/
