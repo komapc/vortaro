@@ -51,3 +51,51 @@ sitemap += '</urlset>';
 
 fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemap);
 console.log(`✅ SEO Generation complete: sitemap.xml updated with ${entries.length} dynamic routes.`);
+
+// --- Per-letter SEO shards for server-side rendering of word pages ---------
+// The _worker.js injects each /io-eo/<word> page's actual translations into the
+// HTML body so the 38k word pages have unique, indexable content (not just a
+// distinct <title> over the same SPA shell). dictionary.json is 7MB — too big
+// to parse per request — so we emit compact first-letter shards {lemma:{e,m}}
+// that the worker fetches (one ~200-400KB shard per request, edge-cached).
+function entryData(lemma) {
+  // dict-keyed format: dictionary[lemma] = {esperanto_words, morfologio}
+  const d = dictionary[lemma];
+  if (d) return { e: d.esperanto_words || [], m: d.morfologio || [] };
+  return { e: [], m: [] };
+}
+const shardKey = (lemma) => {
+  const c = (lemma[0] || '_').toLowerCase();
+  return /[a-z]/.test(c) ? c : '_';
+};
+const shards = {};
+let withData = 0;
+entries.forEach((entry) => {
+  const lemma = entry.lemma;
+  if (!lemma) return;
+  // array format carries translations on the entry itself
+  let data;
+  if (Array.isArray(dictionary.entries)) {
+    data = {
+      e: (entry.translations || []).filter((t) => t.lang === 'eo').map((t) => t.term),
+      m: entry.morphology?.paradigm ? [entry.morphology.paradigm] : [],
+    };
+  } else {
+    data = entryData(lemma);
+  }
+  if (data.e.length) withData++;
+  const k = shardKey(lemma);
+  (shards[k] || (shards[k] = {}))[lemma] = data;
+});
+const seoDir = path.join(__dirname, 'seo');
+fs.mkdirSync(seoDir, { recursive: true });
+// Clear stale shards so removed letters don't linger.
+for (const f of fs.readdirSync(seoDir)) {
+  if (f.endsWith('.json')) fs.unlinkSync(path.join(seoDir, f));
+}
+let shardCount = 0;
+for (const [k, obj] of Object.entries(shards)) {
+  fs.writeFileSync(path.join(seoDir, `${k}.json`), JSON.stringify(obj));
+  shardCount++;
+}
+console.log(`✅ SEO shards: ${shardCount} files in seo/ (${withData}/${entries.length} entries with translations) for body SSR.`);
