@@ -55,11 +55,12 @@ export default {
       const direction = prettyUrlMatch[1];
       const word = prettyUrlMatch[2];
       
-      // We serve index.html, and the client-side app.js will pick up the path
-      const indexRequest = new Request(new URL('/index.html', request.url), request);
-      let response = await env.ASSETS.fetch(indexRequest);
-      
-      if (response.status === 200) {
+      // Serve index.html (clean GET — passing the original /io-eo/<word> request
+      // as init made ASSETS return a non-200, so the block fell through to the
+      // SPA fallback and the per-word SEO was never applied). app.js picks up the
+      // path client-side.
+      const response = await env.ASSETS.fetch(new URL('/index.html', url.origin));
+      {
         let html = await response.text();
 
         const langFrom = direction === 'io-eo' ? 'Ido' : 'Esperanto';
