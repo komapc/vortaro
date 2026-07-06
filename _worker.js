@@ -41,6 +41,15 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // Yandex Webmaster verification: must serve at this exact .html path with
+    // a 200, not the 308 Cloudflare Pages issues for .html extensions by default.
+    if (url.pathname === '/yandex_a4663d340339ec30.html') {
+      return new Response(
+        '<html>\n    <head>\n        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n    </head>\n    <body>Verification: a4663d340339ec30</body>\n</html>\n',
+        { headers: { 'content-type': 'text/html; charset=UTF-8' } }
+      );
+    }
+
     // 0. Handle legacy /vortaro/ prefix from GitHub Pages
     if (url.pathname === '/vortaro' || url.pathname.startsWith('/vortaro/')) {
       const newUrl = new URL(request.url);
