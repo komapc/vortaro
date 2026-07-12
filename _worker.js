@@ -69,6 +69,11 @@ export default {
       // SPA fallback and the per-word SEO was never applied). app.js picks up the
       // path client-side.
       const response = await env.ASSETS.fetch(new URL('/index.html', url.origin));
+      if (!response.ok) {
+        // /index.html itself failed to load from ASSETS — don't fake a 200 by
+        // injecting SEO tags into an error/empty body; pass the real failure through.
+        return response;
+      }
       {
         let html = await response.text();
 
@@ -213,14 +218,14 @@ export default {
       
       // Fallback to index.html for SPA-like routing (if we decide to use pretty URLs later)
       if (!response.ok && !url.pathname.includes('.')) {
-        const indexRequest = new Request(new URL('/index.html', request.url), request);
-        return await env.ASSETS.fetch(indexRequest);
+        // Clean GET (see fix above) — a rehomed Request here also returns a
+        // non-200 from ASSETS, which would 404 the SPA fallback itself.
+        return await env.ASSETS.fetch(new URL('/index.html', url.origin));
       }
-      
+
       return response;
     } catch (_) {
-      const indexRequest = new Request(new URL('/index.html', request.url), request);
-      return await env.ASSETS.fetch(indexRequest);
+      return await env.ASSETS.fetch(new URL('/index.html', url.origin));
     }
   },
 };
