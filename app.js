@@ -1,5 +1,5 @@
 // Version
-const VERSION = '1.3.1';
+const VERSION = '1.3.2';
 
 // Dictionary data
 let dictionary = {};
@@ -97,9 +97,16 @@ async function loadDictionary() {
         // Index Ido lemmas for inflected-form lookup (habitas -> habitar).
         idoLemmaSet = new Set(allEntries.map(e => e.ido.toLowerCase()));
 
-        // Update word count
+        // Update word count — but skip the write when the build-injected static
+        // value already matches: rewriting the footer (the viewport's largest
+        // text block) after the dictionary loads re-registers it as a new LCP
+        // candidate at dictionary-load time.
         const totalEntries = metadata?.total_unique_ido_words || allEntries.length;
-        document.getElementById('wordCount').textContent = `${totalEntries.toLocaleString()} vorti`;
+        const wordCountEl = document.getElementById('wordCount');
+        const wordCountText = totalEntries.toLocaleString('en-US');
+        if (wordCountEl.textContent !== wordCountText) {
+            wordCountEl.textContent = wordCountText;
+        }
 
         // Initialize filters
         initializeFilters();
