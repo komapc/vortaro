@@ -1,5 +1,5 @@
 // Version
-const VERSION = '1.2.0';
+const VERSION = '1.3.0';
 
 // Dictionary data
 let dictionary = {};
@@ -839,7 +839,8 @@ function translateFooter(lang) {
             about: 'Pri la projekto',
             words: 'vorti',
             code: 'kodo',
-            report: 'Raportar eroro'
+            report: 'Raportar eroro',
+            browse: 'Indexo di vorti'
         },
         en: {
             projects: 'My projects',
@@ -848,7 +849,8 @@ function translateFooter(lang) {
             about: 'About the project',
             words: 'words',
             code: 'code',
-            report: 'Report an error'
+            report: 'Report an error',
+            browse: 'Word index'
         },
         eo: {
             projects: 'Miaj projektoj',
@@ -857,7 +859,8 @@ function translateFooter(lang) {
             about: 'Pri la projekto',
             words: 'vortoj',
             code: 'kodo',
-            report: 'Raporti eraron'
+            report: 'Raporti eraron',
+            browse: 'Vortindekso'
         }
     };
 
@@ -878,6 +881,7 @@ function translateFooter(lang) {
             ${t.resources}: <a href="https://github.com/apertium" target="_blank">Apertium</a> <span class="footer-separator">·</span>
             ${t.contact}: <a href="mailto:komapc@gmail.com">komapc@gmail.com</a> <span class="footer-separator">·</span>
             <a href="https://github.com/komapc/vortaro/issues/new?labels=bug&title=Error%3A+%5Bword%5D" target="_blank">${t.report}</a> <span class="footer-separator">·</span>
+            <a href="/browse/" style="color:white; text-decoration:none; font-weight:600;">${t.browse}</a> <span class="footer-separator">·</span>
             <button onclick="showAboutModal('${lang}')" style="background:none; border:none; color:white; cursor:pointer; font:inherit; padding:0; font-weight:600;">${t.about}</button>
             <span class="footer-separator">·</span> <span><span id="wordCount">${metadata ? (metadata.total_unique_ido_words || 0).toLocaleString() : '...'}</span> ${t.words}</span>
             <span id="version" class="version-tag">v${VERSION}</span>

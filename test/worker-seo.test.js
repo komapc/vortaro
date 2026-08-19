@@ -171,6 +171,14 @@ describe('_worker.js SEO meta handling', () => {
     expect(html).not.toContain('rel="canonical"');
   });
 
+  test('word pages SSR internal links: alphabetical neighbors + exact browse page', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hundo'), makeEnv());
+    const html = await res.text();
+    expect(html).toContain('class="related-words"');
+    expect(html).toContain('<a href="/io-eo/Hamburg">Hamburg</a>'); // shard neighbor
+    expect(html).toContain('<a href="/browse/h-1">'); // idx 1, page size 500 -> page 1
+  });
+
   test('legacy /?q= URLs 301-redirect to the pretty path', async () => {
     const res = await worker.fetch(
       new Request('https://ido-vortaro.pages.dev/?q=hundo&dir=eo-io'),
