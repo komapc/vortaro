@@ -855,3 +855,22 @@ footer a:hover {
 .version:hover {
     opacity: 1;
 }
+/* Server-rendered related-words links on /io-eo/<word> pages (shown until the
+   SPA hydrates and re-renders #results) */
+.related-words {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: white;
+    border-radius: 8px;
+    line-height: 1.9;
+}
+
+.related-words h3 {
+    color: #1f3f7a;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.related-words a {
+    color: #1f3f7a;
+}
