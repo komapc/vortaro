@@ -36,6 +36,16 @@ const shardKeyOf = (word) => {
   const c = (word[0] || '_').toLowerCase();
   return /[a-z]/.test(c) ? c : '_';
 };
+// MUST match generate_seo.js: browse pages are chunks of BROWSE_PAGE_SIZE over
+// the default-.sort()ed lemma list, so index -> page number maps 1:1.
+const BROWSE_PAGE_SIZE = 500;
+const shardKeysCache = new Map();
+const sortedShardKeys = (key, shard) => {
+  if (!shardKeysCache.has(key)) {
+    shardKeysCache.set(key, shard ? Object.keys(shard).sort() : []);
+  }
+  return shardKeysCache.get(key);
+};
 const PARADIGM_POS = {
   o__n: 'substantivo', a__adj: 'adjektivo', e__adv: 'adverbo', ar__vblex: 'verbo',
   ir__vblex: 'verbo', __prn: 'pronomo', __pr: 'prepoziciono', __det: 'artiklo',
@@ -98,14 +108,29 @@ export default {
         let translations = [];
         let pos = '';
         let found = false;
+        let relatedHtml = '';
         if (direction === 'io-eo') {
-          const shard = await getShard(env, request, shardKeyOf(rawWord));
+          const letter = shardKeyOf(rawWord);
+          const shard = await getShard(env, request, letter);
           // Shard keys are exact lemmas; also try lowercase and Capitalized so
           // e.g. /io-eo/aachen reaches the "Aachen" entry.
-          const entry = shard && (shard[rawWord]
-            || shard[rawWord.toLowerCase()]
-            || shard[rawWord.charAt(0).toUpperCase() + rawWord.slice(1)]);
-          if (entry && Array.isArray(entry.e)) { found = true; translations = entry.e; pos = posLabel(entry.m); }
+          const lemma = shard && [rawWord, rawWord.toLowerCase(),
+            rawWord.charAt(0).toUpperCase() + rawWord.slice(1)].find((c) => shard[c]);
+          const entry = lemma && shard[lemma];
+          if (entry && Array.isArray(entry.e)) {
+            found = true; translations = entry.e; pos = posLabel(entry.m);
+            // Internal links: alphabetical neighbors + this word's exact browse
+            // page. Word pages were sitemap-only orphans, which search engines
+            // barely index — these links make the 38k pages a connected graph.
+            const keys = sortedShardKeys(letter, shard);
+            const idx = keys.indexOf(lemma);
+            const neighbors = keys.slice(Math.max(0, idx - 4), idx + 5).filter((k) => k !== lemma);
+            const browsePageNo = Math.floor(idx / BROWSE_PAGE_SIZE) + 1;
+            relatedHtml = `<nav class="related-words"><h3>Altra vorti</h3>`
+              + neighbors.map((k) => `<a href="/io-eo/${encodeURIComponent(k)}">${escapeHtml(k)}</a>`).join(' · ')
+              + ` · <a href="/browse/${letter}-${browsePageNo}">Plu multa vorti per "${letter === '_' ? '#' : letter.toUpperCase()}"</a>`
+              + `</nav>`;
+          }
         }
         const transStr = translations.slice(0, 5).map(escapeHtml).join(', ');
 
@@ -168,7 +193,8 @@ export default {
             + `<h2 class="source-word">${decodedWord}</h2>`
             + `<div class="target-words">→ ${transStr}</div>`
             + (pos ? `<div class="morfologio">${escapeHtml(pos)}</div>` : '')
-            + `</div>`;
+            + `</div>`
+            + relatedHtml;
           html = html.replace(
             '<div id="results" class="results"></div>',
             `<div id="results" class="results">${bodyHtml}</div>`
