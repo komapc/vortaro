@@ -1,5 +1,5 @@
 // Version
-const VERSION = '1.3.0';
+const VERSION = '1.3.1';
 
 // Dictionary data
 let dictionary = {};
@@ -104,11 +104,9 @@ async function loadDictionary() {
         // Initialize filters
         initializeFilters();
 
-        // Show empty state — but never clobber a server-rendered word page
-        // (URL carries a query) before handleInitialUrl re-renders it.
-        if (!parseUrl().query) {
-            showEmptyState();
-        }
+        // Do NOT re-render the empty state here: it already painted at init,
+        // and repainting identical content after the multi-MB dictionary load
+        // resets the page's LCP to dictionary-load time (measured 5.6s).
     } catch (error) {
         console.error('Error loading dictionary:', error);
         document.getElementById('results').innerHTML =

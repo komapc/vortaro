@@ -24,3 +24,9 @@ npm-debug.log*
 
 # Cloudflare Wrangler local state
 .wrangler/
+
+# Generated at build time by generate_seo.js (npm run deploy regenerates them);
+# tracking them made every deploy dirty the working tree (issue #126)
+sitemap.xml
+seo/
+browse/
