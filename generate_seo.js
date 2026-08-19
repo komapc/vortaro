@@ -35,6 +35,12 @@ const roundedCount = `${(Math.floor(entries.length / 1000) * 1000).toLocaleStrin
 const indexPath = path.join(__dirname, 'index.html');
 let indexHtml = fs.readFileSync(indexPath, 'utf8');
 indexHtml = indexHtml.replace(/[\d,.]+\+ (Entries|entries)/g, `${roundedCount}+ $1`);
+// Exact count into the footer's wordCount span. This must be pre-rendered:
+// the footer is the largest text block in the mobile viewport, and growing it
+// at dictionary-load time ("..." -> "37,997") registered a new, larger LCP
+// candidate at ~5.5s. With the real number in the static HTML, app.js finds
+// the text already correct and never repaints it (it skips same-value writes).
+indexHtml = indexHtml.replace(/(<span id="wordCount">)[^<]*(<\/span>)/, `$1${entries.length.toLocaleString('en-US')}$2`);
 fs.writeFileSync(indexPath, indexHtml);
 const manifestPath = path.join(__dirname, 'manifest.json');
 let manifest = fs.readFileSync(manifestPath, 'utf8');
