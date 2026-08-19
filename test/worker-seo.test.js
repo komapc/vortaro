@@ -50,8 +50,10 @@ const HUNDO_SHARD = {
 
 // Minimal env.ASSETS mock. `behavior` lets each test steer what the "origin"
 // static-asset fetch (first call, made with the real request) does, while
-// /index.html and /seo/*.json are served from fixtures.
-function makeEnv({ throwOnOrigin = false, originStatus = 404, indexStatus = 200 } = {}) {
+// /index.html and /seo/*.json are served from fixtures. `spaFallback` mirrors
+// production Cloudflare Pages SPA mode: a MISSING asset comes back as
+// index.html + 200, never a 404.
+function makeEnv({ throwOnOrigin = false, originStatus = 404, indexStatus = 200, spaFallback = false } = {}) {
   const fetch = jest.fn(async (input) => {
     const reqUrl = new URL(input instanceof Request ? input.url : input);
 
@@ -63,7 +65,16 @@ function makeEnv({ throwOnOrigin = false, originStatus = 404, indexStatus = 200 
     if (reqUrl.pathname === '/seo/h.json') {
       return new Response(JSON.stringify(HUNDO_SHARD), { status: 200 });
     }
+    if (reqUrl.pathname === '/favicon.png') {
+      return new Response('PNGBYTES', { status: 200, headers: { 'content-type': 'image/png' } });
+    }
+    if (reqUrl.pathname === '/about-en.html') {
+      return new Response('<html>about</html>', { status: 200, headers: { 'content-type': 'text/html' } });
+    }
     if (throwOnOrigin) throw new TypeError('network error');
+    if (spaFallback) {
+      return new Response(INDEX_HTML, { status: 200, headers: { 'content-type': 'text/html' } });
+    }
     return new Response('not found', { status: originStatus });
   });
   return { ASSETS: { fetch } };
@@ -177,6 +188,33 @@ describe('_worker.js SEO meta handling', () => {
     expect(html).toContain('class="related-words"');
     expect(html).toContain('<a href="/io-eo/Hamburg">Hamburg</a>'); // shard neighbor
     expect(html).toContain('<a href="/browse/h-1">'); // idx 1, page size 500 -> page 1
+  });
+
+  test('/favicon.ico serves the PNG bytes as an image, not the SPA shell', async () => {
+    const res = await worker.fetch(
+      new Request('https://ido-vortaro.pages.dev/favicon.ico'),
+      makeEnv({ spaFallback: true })
+    );
+    expect(res.status).toBe(200);
+    expect(res.headers.get('content-type')).toBe('image/png');
+    expect(await res.text()).toBe('PNGBYTES');
+  });
+
+  test('missing file-like asset returns 404 even when Pages SPA mode answers 200 + index.html', async () => {
+    const res = await worker.fetch(
+      new Request('https://ido-vortaro.pages.dev/no-such-file.xyz'),
+      makeEnv({ spaFallback: true })
+    );
+    expect(res.status).toBe(404);
+  });
+
+  test('real .html asset is passed through untouched', async () => {
+    const res = await worker.fetch(
+      new Request('https://ido-vortaro.pages.dev/about-en.html'),
+      makeEnv({ spaFallback: true })
+    );
+    expect(res.status).toBe(200);
+    expect(await res.text()).toContain('about');
   });
 
   test('legacy /?q= URLs 301-redirect to the pretty path', async () => {

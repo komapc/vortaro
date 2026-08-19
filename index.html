@@ -67,9 +67,11 @@
     }
     </script>
 
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="shortcut icon" href="favicon.png">
+    <!-- Absolute paths: this shell is also served at /io-eo/<word>, where a
+         relative favicon href would resolve to the nonexistent /io-eo/favicon.png. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1f3f7a">
