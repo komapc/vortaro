@@ -1,10 +1,14 @@
-const CACHE_NAME = 'vortaro-v1.3.0';
+const CACHE_NAME = 'vortaro-v1.3.1';
+// dictionary.json is deliberately NOT precached: at 7MB it would be
+// re-downloaded by every user on every version bump, and one flaky request
+// would fail the whole atomic cache.addAll install. The runtime
+// stale-while-revalidate handler caches it on first fetch instead, so
+// offline still works after the first visit.
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './app.js',
-  './dictionary.json',
   './favicon.png',
   './favicon.svg'
 ];
