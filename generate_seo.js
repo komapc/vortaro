@@ -105,6 +105,8 @@ const browsePage = ({ letter, pageNo, pageCount, items, prev, next }) => `<!DOCT
     <title>Ido-vorti per "${letterLabel(letter)}" (${pageNo}/${pageCount}) — Ido-Esperanto Vortaro</title>
     <meta name="description" content="Listo di Ido-vorti komencanta per '${letterLabel(letter)}' kun Esperanto-traduki — pagino ${pageNo} de ${pageCount}. ${escapeHtml(items.slice(0, 5).map((i) => i.lemma).join(', '))}…">
     <link rel="canonical" href="${DOMAIN}/browse/${letter}-${pageNo}">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; color: #333; }
         h1 { color: #1f3f7a; font-size: 1.4em; }
@@ -157,6 +159,8 @@ const browseIndex = `<!DOCTYPE html>
     <title>Indexo di Ido-vorti — Ido-Esperanto Vortaro</title>
     <meta name="description" content="Alfabetala indexo di ${wordData.length.toLocaleString('en-US')} Ido-vorti kun Esperanto-traduki en la senpaga Ido-Esperanto vortaro.">
     <link rel="canonical" href="${DOMAIN}/browse/">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; color: #333; }
         h1 { color: #1f3f7a; } a { color: #1f3f7a; } li { margin-bottom: 4px; }

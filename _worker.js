@@ -70,6 +70,22 @@ export default {
       );
     }
 
+    // Crawlers request /favicon.ico by convention; there is no .ico file, and
+    // the Pages SPA fallback would answer with index.html + 200 (Yandex flags
+    // this as FAVICON_PROBLEM). Serve the PNG bytes at the .ico path.
+    if (url.pathname === '/favicon.ico') {
+      const png = await env.ASSETS.fetch(new URL('/favicon.png', url.origin));
+      // The SPA fallback can answer a missing asset with index.html + 200 —
+      // require an actual image, never relay HTML as image/png.
+      if (!png.ok || !(png.headers.get('content-type') || '').startsWith('image/')) {
+        return new Response(null, { status: 404 });
+      }
+      return new Response(png.body, {
+        status: 200,
+        headers: { 'content-type': 'image/png', 'cache-control': 'public, max-age=86400' },
+      });
+    }
+
     // 0. Handle legacy /vortaro/ prefix from GitHub Pages
     if (url.pathname === '/vortaro' || url.pathname.startsWith('/vortaro/')) {
       const newUrl = new URL(request.url);
@@ -229,6 +245,17 @@ export default {
     try {
       const response = await env.ASSETS.fetch(request);
 
+      // Pages runs in SPA mode (no 404.html), so ASSETS answers ANY missing
+      // path with index.html + 200. For file-like paths (non-.html extension)
+      // an HTML response can only be that fallback — return an honest 404
+      // instead of an infinite soft-404 space (/anything.xyz was a 200).
+      const ext = (url.pathname.match(/\.([a-z0-9]+)$/i) || [])[1];
+      if (
+        response.ok && ext && !/^html?$/i.test(ext)
+        && (response.headers.get('content-type') || '').includes('text/html')
+      ) {
+        return new Response(null, { status: 404 });
+      }
 
       // Fallback to index.html for SPA-like routing (if we decide to use pretty URLs later)
       if (!response.ok && !url.pathname.includes('.')) {
