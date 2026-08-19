@@ -12,23 +12,23 @@
     <meta name="msvalidate.01" content="CAFA7BE0D5D83695993D635831499022" />
     <meta name="google-site-verification" content="XxGiZn2zzBNQSmkhKQp_9M6Ca-_Mcd0oTxVOiWHr9xw" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vortaro — Ido-Esperanto Vortaro / Dictionary (Vortlibro) | 20,000+ Entries</title>
-    <meta name="description" content="Free two-way Ido-Esperanto dictionary with 20,000+ entries. Senpaga Ido-Esperanto vortaro ed Ido-Esperanto vortlibro por tradukar facile.">
+    <title>Vortaro — Ido-Esperanto Vortaro / Dictionary (Vortlibro) | 37,000+ Entries</title>
+    <meta name="description" content="Free two-way Ido-Esperanto dictionary with 37,000+ entries. Senpaga Ido-Esperanto vortaro ed Ido-Esperanto vortlibro por tradukar facile.">
     <meta name="keywords" content="Ido, Esperanto, dictionary, vortaro, vortlibro, translation, linguo ido, auxlang, Apertium, Ido language, constructed language, planned language, conlang dictionary, international auxiliary language, Ido vocabulary, Ido words, two-way dictionary, morphology search, free online dictionary, Ido translator, Esperanto dictionary, auxlang dictionary, Ido Esperanto">
     <meta name="author" content="komapc">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ido-vortaro.pages.dev/">
-    <meta property="og:title" content="Vortaro — Free Ido–Esperanto Dictionary | 20,000+ Entries">
-    <meta property="og:description" content="Free two-way Ido–Esperanto dictionary with 20,000+ entries and morphology analysis. Ido is an international auxiliary language derived from Esperanto.">
+    <meta property="og:title" content="Vortaro — Free Ido–Esperanto Dictionary | 37,000+ Entries">
+    <meta property="og:description" content="Free two-way Ido–Esperanto dictionary with 37,000+ entries and morphology analysis. Ido is an international auxiliary language derived from Esperanto.">
     <meta property="og:image" content="https://ido-vortaro.pages.dev/og-image.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://ido-vortaro.pages.dev/">
-    <meta property="twitter:title" content="Vortaro — Free Ido–Esperanto Dictionary | 20,000+ Entries">
-    <meta property="twitter:description" content="Free two-way Ido–Esperanto dictionary with 20,000+ entries and morphology analysis. Ido is an international auxiliary language derived from Esperanto.">
+    <meta property="twitter:title" content="Vortaro — Free Ido–Esperanto Dictionary | 37,000+ Entries">
+    <meta property="twitter:description" content="Free two-way Ido–Esperanto dictionary with 37,000+ entries and morphology analysis. Ido is an international auxiliary language derived from Esperanto.">
     <meta property="twitter:image" content="https://ido-vortaro.pages.dev/og-image.png">
 
     <!-- Canonical URL -->
@@ -50,6 +50,22 @@
       "license": "https://opensource.org/licenses/MIT"
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Vortaro — Ido-Esperanto Vortaro",
+      "url": "https://ido-vortaro.pages.dev/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://ido-vortaro.pages.dev/io-eo/{search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -66,8 +82,9 @@
         }
     </script>
 
-    <!-- PullToRefresh.js -->
-    <script src="https://cdn.jsdelivr.net/npm/pulltorefreshjs@0.1.22/dist/index.umd.min.js"></script>
+    <!-- PullToRefresh.js — deferred: only used after the dictionary loads, and
+         a synchronous CDN script in <head> blocks first paint -->
+    <script defer src="https://cdn.jsdelivr.net/npm/pulltorefreshjs@0.1.22/dist/index.umd.min.js"></script>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DMH4HKHLLS"></script>

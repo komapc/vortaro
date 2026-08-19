@@ -1,5 +1,5 @@
 // Version
-const VERSION = '1.1.0';
+const VERSION = '1.2.0';
 
 // Dictionary data
 let dictionary = {};
@@ -13,6 +13,18 @@ let touchStartX = 0;
 let touchStartY = 0;
 let touchEndX = 0;
 let touchEndY = 0;
+
+// Escape a value for interpolation into HTML (element text or a quoted
+// attribute). All dictionary-derived strings pass through this at the render
+// boundary — the data pipeline is trusted, but rendering shouldn't rely on it.
+function esc(s) {
+    return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
 
 // Filters state
 const activeFilters = {
@@ -92,8 +104,11 @@ async function loadDictionary() {
         // Initialize filters
         initializeFilters();
 
-        // Show empty state
-        showEmptyState();
+        // Show empty state — but never clobber a server-rendered word page
+        // (URL carries a query) before handleInitialUrl re-renders it.
+        if (!parseUrl().query) {
+            showEmptyState();
+        }
     } catch (error) {
         console.error('Error loading dictionary:', error);
         document.getElementById('results').innerHTML =
@@ -108,15 +123,15 @@ async function loadDictionary() {
 // so e.g. `habitas` -> `habitar`, `urbi` -> `urbo`.
 function idoLemmaCandidates(word) {
     const cands = new Set();
-    const add = w => { if (idoLemmaSet.has(w)) cands.add(w); };
+    const add = w => { if (idoLemmaSet.has(w)) {cands.add(w);} };
     let m;
     // finite verb forms: -as/-is/-os/-us/-ez -> infinitive (try all 3 classes)
     if ((m = word.match(/^(.{2,})(as|is|os|us|ez)$/))) {
-        for (const inf of ['ar', 'ir', 'or']) add(m[1] + inf);
+        for (const inf of ['ar', 'ir', 'or']) {add(m[1] + inf);}
     }
     // participles (adj -a / adv -e / noun -o / plural -i) -> infinitive
     if ((m = word.match(/^(.{2,})(ant|int|ont|at|it|ot)[aeoi]$/))) {
-        for (const inf of ['ar', 'ir', 'or']) add(m[1] + inf);
+        for (const inf of ['ar', 'ir', 'or']) {add(m[1] + inf);}
     }
     // noun/adjective plural -i -> singular -o / lemma -a
     if ((m = word.match(/^(.{2,})i$/))) { add(m[1] + 'o'); add(m[1] + 'a'); }
@@ -177,8 +192,7 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
     const searchInfo = document.getElementById('searchInfo');
 
     if (results.length === 0) {
-        const safeSearch = searchTerm.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-        resultsContainer.innerHTML = '<div class="no-results">Nula rezulti por "' + safeSearch + '"</div>';
+        resultsContainer.innerHTML = '<div class="no-results">Nula rezulti por "' + esc(searchTerm) + '"</div>';
         searchInfo.textContent = '0 rezulti';
         return;
     }
@@ -209,9 +223,9 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
                 }
 
                 if (url) {
-                    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="source-badge ${badgeClass}" title="${tooltipText}">${badgeText}</a>`;
+                    return `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer" class="source-badge ${badgeClass}" title="${esc(tooltipText)}">${esc(badgeText)}</a>`;
                 } else {
-                    return `<span class="source-badge ${badgeClass}" title="${tooltipText}">${badgeText}</span>`;
+                    return `<span class="source-badge ${badgeClass}" title="${esc(tooltipText)}">${esc(badgeText)}</span>`;
                 }
             }).join(' ')
             : '';
@@ -222,12 +236,12 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
                 <div class="result-item">
                     <div class="source-word">${highlightMatch(entry.ido, searchTerm)}</div>
                     <div class="target-words">
-                        → ${entry.esperanto.map(word => word).join(', ') || '<em>nula traduko</em>'}
+                        → ${entry.esperanto.map(esc).join(', ') || '<em>nula traduko</em>'}
                     </div>
                     ${generatePosBadges(entry.morfologio)}
                     ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
                     ${entry.morfologio.length > 0 ?
-                    `<div class="morfologio">Morfologio: ${entry.morfologio.join(' + ')}</div>` :
+                    `<div class="morfologio">Morfologio: ${esc(entry.morfologio.join(' + '))}</div>` :
                     ''
                 }
                 </div>
@@ -240,12 +254,12 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
                         ${entry.esperanto.map(word => highlightMatch(word, searchTerm)).join(', ')}
                     </div>
                     <div class="source-word">
-                        → ${entry.ido}
+                        → ${esc(entry.ido)}
                     </div>
                     ${generatePosBadges(entry.morfologio)}
                     ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
                     ${entry.morfologio.length > 0 ?
-                    `<div class="morfologio">Morfologio: ${entry.morfologio.join(' + ')}</div>` :
+                    `<div class="morfologio">Morfologio: ${esc(entry.morfologio.join(' + '))}</div>` :
                     ''
                 }
                 </div>
@@ -296,14 +310,14 @@ function populateSourceFilters() {
         const info = sourceInfo[source] || { icon: '📄', label: source };
         return `
             <div class="filter-option">
-                <input type="checkbox" 
-                       class="filter-checkbox" 
-                       id="source-${source}" 
-                       value="${source}"
+                <input type="checkbox"
+                       class="filter-checkbox"
+                       id="source-${esc(source)}"
+                       value="${esc(source)}"
                        data-filter-type="source">
-                <label for="source-${source}" class="filter-label">
+                <label for="source-${esc(source)}" class="filter-label">
                     <span class="source-icon">${info.icon}</span>
-                    ${info.label}
+                    ${esc(info.label)}
                 </label>
             </div>
         `;
@@ -550,12 +564,17 @@ function getSourceUrl(source, idoWord, esperantoWord) {
     return null;
 }
 
-// Highlight matching text
+// Highlight matching text. Match on the RAW string and escape each segment
+// afterwards — escaping first let queries like "amp" match inside "&amp;"
+// entities and corrupt the markup.
 function highlightMatch(text, query) {
-    const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    const safeText = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(`(${safeQuery})`, 'gi');
-    return safeText.replace(regex, '<mark style="background-color: #fff3cd; padding: 2px 1px; border-radius: 2px;">$1</mark>');
+    return text.split(regex).map((part, i) =>
+        i % 2 === 1
+            ? `<mark style="background-color: #fff3cd; padding: 2px 1px; border-radius: 2px;">${esc(part)}</mark>`
+            : esc(part)
+    ).join('');
 }
 
 // Show empty state
@@ -873,17 +892,21 @@ function closeModal() {
     modal.setAttribute('aria-hidden', 'true');
 }
 
+// Debounced URL update: Safari rate-limits history.replaceState (~100 calls
+// per 30s) and THROWS when exceeded, so a per-keystroke call can crash the
+// input handler for fast typers. Search stays immediate; only the URL waits.
+let _urlUpdateTimer = null;
+function scheduleUrlUpdate(query) {
+    clearTimeout(_urlUpdateTimer);
+    _urlUpdateTimer = setTimeout(() => {
+        window.history.replaceState(null, '',
+            query ? `/${currentDirection}/${encodeURIComponent(query)}` : '/');
+    }, 300);
+}
+
 // Event listeners
 document.getElementById('searchInput').addEventListener('input', (e) => {
-    const query = e.target.value.trim();
-
-    // Update URL with direction and query using pretty paths
-    if (query) {
-        window.history.replaceState(null, '', `/${currentDirection}/${encodeURIComponent(query)}`);
-    } else {
-        window.history.replaceState(null, '', '/');
-    }
-
+    scheduleUrlUpdate(e.target.value.trim());
     search(e.target.value);
 });
 
@@ -1052,9 +1075,10 @@ function handleInitialUrl() {
 window.addEventListener('popstate', () => {
     const { direction, query } = parseUrl();
     const searchInput = document.getElementById('searchInput');
+    const directionChanged = Boolean(direction && direction !== currentDirection);
 
     // Update direction if specified and different
-    if (direction && direction !== currentDirection) {
+    if (directionChanged) {
         currentDirection = direction;
         const toggleBtn = document.getElementById('directionToggle');
         const toggleText = toggleBtn.querySelector('.toggle-text');
@@ -1065,8 +1089,9 @@ window.addEventListener('popstate', () => {
             : 'Serchez en Esperanto...';
     }
 
-    // Only update if different from current value
-    if (searchInput.value !== query) {
+    // Re-run when the query text changed — or when only the direction did
+    // (same word, other language): results must follow the direction.
+    if (searchInput.value !== query || directionChanged) {
         searchInput.value = query;
         if (query) {
             search(query);
@@ -1084,7 +1109,12 @@ function initializeVersion() {
     }
 }
 
-// Initialize
+// Initialize. Paint the initial UI immediately — first paint must not wait
+// for the multi-MB dictionary download+parse (it was the mobile LCP
+// bottleneck). SSR'd word pages keep their server-rendered results meanwhile.
+if (!parseUrl().query) {
+    showEmptyState();
+}
 loadDictionary().then(() => {
     // Initialize PullToRefresh after dictionary is loaded
     initializePullToRefresh();

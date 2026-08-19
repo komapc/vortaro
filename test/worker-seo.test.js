@@ -32,10 +32,21 @@ const worker = loadWorker();
 const GENERIC_TITLE = '<title>Ido-Esperanto Vortaro</title>';
 const INDEX_HTML = `<!doctype html><html><head>
     ${GENERIC_TITLE}
+    <meta name="description" content="GENERIC DESCRIPTION">
+    <meta property="og:title" content="GENERIC OG TITLE">
+    <meta property="og:description" content="GENERIC OG DESCRIPTION">
+    <meta property="og:url" content="https://ido-vortaro.pages.dev/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://ido-vortaro.pages.dev/og-image.png">
+    <meta property="twitter:title" content="GENERIC TW TITLE">
+    <meta property="twitter:description" content="GENERIC TW DESCRIPTION">
     <link rel="canonical" href="https://ido-vortaro.pages.dev/">
   </head><body><div id="results" class="results"></div></body></html>`;
 
-const HUNDO_SHARD = { hundo: { e: ['hundo'], m: ['o__n'] } };
+const HUNDO_SHARD = {
+  hundo: { e: ['hundo'], m: ['o__n'] },
+  Hamburg: { e: ['Hamburgo'], m: ['o__n'] },
+};
 
 // Minimal env.ASSETS mock. `behavior` lets each test steer what the "origin"
 // static-asset fetch (first call, made with the real request) does, while
@@ -114,5 +125,58 @@ describe('_worker.js fetch handler — ASSETS.fetch call sites', () => {
 
     const res = await worker.fetch(request, env);
     expect(res.status).toBe(500);
+  });
+});
+
+describe('_worker.js SEO meta handling', () => {
+  test('word pages strip ALL replaced static tags (description/og/twitter/canonical), keep og:type/og:image', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hundo'), makeEnv());
+    const html = await res.text();
+
+    // No duplicates of anything the worker re-injects — OG parsers take the
+    // first occurrence, so a surviving generic tag wins over the injected one.
+    expect(html).not.toContain('GENERIC DESCRIPTION');
+    expect(html).not.toContain('GENERIC OG TITLE');
+    expect(html).not.toContain('GENERIC OG DESCRIPTION');
+    expect(html).not.toContain('GENERIC TW TITLE');
+    expect(html).not.toContain('GENERIC TW DESCRIPTION');
+    expect(html.match(/<meta name="description"/g)).toHaveLength(1);
+    expect(html.match(/property="og:title"/g)).toHaveLength(1);
+    expect(html.match(/rel="canonical"/g)).toHaveLength(1);
+    expect(html).toContain('href="https://ido-vortaro.pages.dev/io-eo/hundo"');
+    // Tags the worker does NOT re-inject survive.
+    expect(html).toContain('property="og:type"');
+    expect(html).toContain('property="og:image"');
+  });
+
+  test('unknown io-eo word returns 404 (rendered SPA, honest status — no soft-404s)', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/zzznotaword'), makeEnv());
+    expect(res.status).toBe(404);
+    const html = await res.text();
+    expect(html).toContain('<div id="results" class="results">'); // page still works for humans
+  });
+
+  test('capitalized lemma is found from a lowercase URL', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hamburg'), makeEnv());
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).toContain('Hamburgo');
+  });
+
+  test('eo-io pages are noindexed (no shard data, not sitemapped) and carry no canonical', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/eo-io/hundo'), makeEnv());
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).toContain('<meta name="robots" content="noindex">');
+    expect(html).not.toContain('rel="canonical"');
+  });
+
+  test('legacy /?q= URLs 301-redirect to the pretty path', async () => {
+    const res = await worker.fetch(
+      new Request('https://ido-vortaro.pages.dev/?q=hundo&dir=eo-io'),
+      makeEnv()
+    );
+    expect(res.status).toBe(301);
+    expect(res.headers.get('location')).toBe('https://ido-vortaro.pages.dev/eo-io/hundo');
   });
 });

@@ -1,8 +1,8 @@
 {
   "name": "Vortaro — Ido-Esperanto Vortaro / Dictionary (Vortlibro)",
   "short_name": "Vortaro",
-  "description": "Fast offline-first Ido-Esperanto dictionary with 29,000+ entries. Senpaga Ido-Esperanto vortaro ed vortlibro.",
-  "start_url": "./index.html",
+  "description": "Fast offline-first Ido-Esperanto dictionary with 37,000+ entries. Senpaga Ido-Esperanto vortaro ed vortlibro.",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1f3f7a",
@@ -10,6 +10,16 @@
     {
       "src": "favicon.png",
       "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
       "type": "image/png"
     },
     {

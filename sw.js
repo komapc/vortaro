@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vortaro-v1.1.0';
+const CACHE_NAME = 'vortaro-v1.2.0';
 const ASSETS = [
   './',
   './index.html',
@@ -39,7 +39,10 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => {
-          return caches.match(event.request) || caches.match('./index.html');
+          // caches.match returns a Promise (always truthy), so `||` between the
+          // two calls never reached the shell fallback — chain instead.
+          return caches.match(event.request)
+            .then((cached) => cached || caches.match('./index.html'));
         })
     );
     return;
