@@ -8,6 +8,16 @@ const escapeHtml = (s) => String(s)
   .replace(/"/g, '&quot;')
   .replace(/'/g, '&#39;')
 
+// Remove the static SEO tags that the per-word injection replaces. Leaving the
+// originals in place means two <meta name="description"> / og:* sets per page,
+// and OG parsers take the FIRST occurrence — so shared word links showed the
+// generic homepage card. og:type/og:image/twitter:card are kept (not re-injected).
+const stripDefaultSeoTags = (html) => html
+  .replace(/<title>.*?<\/title>\s*/s, '')
+  .replace(/[ \t]*<meta name="description"[^>]*>\n?/, '')
+  .replace(/[ \t]*<meta property="(?:og|twitter):(?:title|description|url)"[^>]*>\n?/g, '')
+  .replace(/[ \t]*<link rel="canonical"[^>]*>\n?/, '')
+
 // Per-letter SEO shards (built by generate_seo.js), cached per isolate so the
 // 7MB dictionary is never parsed per request — only the ~200KB first-letter
 // shard for the requested word, and only once per isolate.
@@ -87,10 +97,15 @@ export default {
         // io-eo direction is shard-indexed (the sitemap only lists io-eo URLs).
         let translations = [];
         let pos = '';
+        let found = false;
         if (direction === 'io-eo') {
           const shard = await getShard(env, request, shardKeyOf(rawWord));
-          const entry = shard && (shard[rawWord] || shard[rawWord.toLowerCase()]);
-          if (entry && Array.isArray(entry.e)) { translations = entry.e; pos = posLabel(entry.m); }
+          // Shard keys are exact lemmas; also try lowercase and Capitalized so
+          // e.g. /io-eo/aachen reaches the "Aachen" entry.
+          const entry = shard && (shard[rawWord]
+            || shard[rawWord.toLowerCase()]
+            || shard[rawWord.charAt(0).toUpperCase() + rawWord.slice(1)]);
+          if (entry && Array.isArray(entry.e)) { found = true; translations = entry.e; pos = posLabel(entry.m); }
         }
         const transStr = translations.slice(0, 5).map(escapeHtml).join(', ');
 
@@ -127,10 +142,13 @@ export default {
           });
         }
 
+        // eo-io pages have no shard data (no unique content) and are not in the
+        // sitemap — noindex them instead of offering 38k thin self-canonical
+        // duplicates of the io-eo pages.
         const metaTags = `
     <title>${title}</title>
     <meta name="description" content="${description}">
-    <link rel="canonical" href="${url.origin}${url.pathname}">
+    ${direction === 'eo-io' ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${url.origin}${url.pathname}">`}
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">
     <meta property="og:url" content="${url.href}">
@@ -139,8 +157,7 @@ export default {
     ${ld.map((d) => `<script type="application/ld+json">${JSON.stringify(d)}</script>`).join('\n    ')}
         `;
 
-        html = html.replace(/<title>.*?<\/title>/, '');
-        html = html.replace(/<link rel="canonical" href="https:\/\/ido-vortaro\.pages\.dev\/">/, '');
+        html = stripDefaultSeoTags(html);
         html = html.replace('</head>', `${metaTags}\n  </head>`);
 
         // Server-render the definition into the #results container. app.js reads
@@ -158,7 +175,14 @@ export default {
           );
         }
 
+        // Unknown io-eo word: serve the working SPA page but with a 404 status,
+        // so the infinite /io-eo/<anything> space doesn't become soft-404s /
+        // crawl-budget waste. (eo-io can't be existence-checked — no shards —
+        // and is noindexed above instead.)
+        const status = direction === 'io-eo' && !found ? 404 : 200;
+
         return new Response(html, {
+          status,
           headers: {
             ...Object.fromEntries(response.headers),
             'Content-Type': 'text/html;charset=UTF-8'
@@ -167,55 +191,19 @@ export default {
       }
     }
     
-    // 2. Static assets via ASSETS binding
-    try {
-      // Check for dictionary lookup queries (e.g., ?q=amiko)
+    // 2. Legacy ?q= lookup URLs: redirect to the canonical pretty path so
+    // there is a single URL space (and a single meta-injection code path).
+    if ((url.pathname === '/' || url.pathname === '/index.html') && url.searchParams.get('q')) {
       const q = url.searchParams.get('q');
-      const dir = url.searchParams.get('dir') || 'io-eo';
-      
-      let response = await env.ASSETS.fetch(request);
-      
-      // Only inject for the index page when a query is present
-      if (response.status === 200 && (url.pathname === '/' || url.pathname === '/index.html') && q) {
-        let html = await response.text();
-        
-        const langFrom = dir === 'io-eo' ? 'Ido' : 'Esperanto';
-        const langTo = dir === 'io-eo' ? 'Esperanto' : 'Ido';
-        const safeQ = escapeHtml(q);
-        const title = `${safeQ} — Ido-Esperanto Vortaro / Dictionary`;
-        const description = `Look up "${safeQ}" in the Ido-Esperanto Dictionary (Vortaro / Vortlibro). Fast, comprehensive, and offline-ready.`;
-        
-        const breadcrumbData = {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Vortaro", "item": "https://ido-vortaro.pages.dev/" },
-            { "@type": "ListItem", "position": 2, "name": safeQ, "item": url.href }
-          ]
-        };
+      const dir = url.searchParams.get('dir') === 'eo-io' ? 'eo-io' : 'io-eo';
+      return Response.redirect(`${url.origin}/${dir}/${encodeURIComponent(q)}`, 301);
+    }
 
-        const metaTags = `
-    <title>${title}</title>
-    <meta name="description" content="${description}">
-    <link rel="canonical" href="${url.origin}${url.pathname}">
-    <meta property="og:title" content="${title}">
-    <meta property="og:description" content="${description}">
-    <meta property="og:url" content="${url.href}">
-    <meta property="twitter:title" content="${title}">
-    <meta property="twitter:description" content="${description}">
-    <script type="application/ld+json">${JSON.stringify(breadcrumbData)}</script>
-        `;
-        
-        // Use regex for more robust title replacement
-        html = html.replace(/<title>.*?<\/title>/, '');
-        html = html.replace(/<link rel="canonical" href="https:\/\/ido-vortaro\.pages\.dev\/">/, '');
-        html = html.replace('</head>', `${metaTags}\n  </head>`);
-        
-        return new Response(html, {
-          headers: response.headers
-        });
-      }
-      
+    // 3. Static assets via ASSETS binding
+    try {
+      const response = await env.ASSETS.fetch(request);
+
+
       // Fallback to index.html for SPA-like routing (if we decide to use pretty URLs later)
       if (!response.ok && !url.pathname.includes('.')) {
         // Clean GET (see fix above) — a rehomed Request here also returns a
