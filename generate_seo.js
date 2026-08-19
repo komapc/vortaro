@@ -29,61 +29,74 @@ app = app.replace(/const VERSION = '[^']*';/, `const VERSION = '${VERSION}';`);
 fs.writeFileSync(appPath, app);
 console.log(`✅ app.js VERSION set to ${VERSION}`);
 
-// Generate sitemap
+// Inject the real entry count into index.html and manifest.json so the
+// public claims ("20,000+ Entries") can never go stale against the data.
+const roundedCount = `${(Math.floor(entries.length / 1000) * 1000).toLocaleString('en-US')}`;
+const indexPath = path.join(__dirname, 'index.html');
+let indexHtml = fs.readFileSync(indexPath, 'utf8');
+indexHtml = indexHtml.replace(/[\d,.]+\+ (Entries|entries)/g, `${roundedCount}+ $1`);
+fs.writeFileSync(indexPath, indexHtml);
+const manifestPath = path.join(__dirname, 'manifest.json');
+let manifest = fs.readFileSync(manifestPath, 'utf8');
+manifest = manifest.replace(/[\d,.]+\+ (Entries|entries)/g, `${roundedCount}+ $1`);
+fs.writeFileSync(manifestPath, manifest);
+console.log(`✅ Entry count injected into index.html + manifest.json: ${roundedCount}+`);
+
+// --- Per-entry data (translations + paradigm) ------------------------------
+// Computed once, used by BOTH the sitemap and the SEO shards so they stay
+// consistent: an entry without Esperanto translations gets no shard data,
+// and the worker 404s its page — so it must not be sitemapped either.
+function entryData(entry) {
+  // array format carries translations on the entry itself
+  if (Array.isArray(dictionary.entries)) {
+    return {
+      e: (entry.translations || []).filter((t) => t.lang === 'eo').map((t) => t.term),
+      m: entry.morphology?.paradigm ? [entry.morphology.paradigm] : [],
+    };
+  }
+  // dict-keyed format: dictionary[lemma] = {esperanto_words, morfologio}
+  const d = dictionary[entry.lemma];
+  if (d) return { e: d.esperanto_words || [], m: d.morfologio || [] };
+  return { e: [], m: [] };
+}
+const wordData = entries
+  .filter((entry) => entry.lemma)
+  .map((entry) => ({ lemma: entry.lemma, data: entryData(entry) }))
+  .filter(({ data }) => data.e.length);
+
+// Generate sitemap. No lastmod on word URLs: stamping 38k URLs with every
+// deploy date teaches Google to distrust lastmod site-wide.
 const now = new Date().toISOString().split('T')[0];
 
 let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${DOMAIN}/</loc><lastmod>${now}</lastmod><priority>1.0</priority></url>
-  <url><loc>${DOMAIN}/about-io.html</loc><lastmod>${now}</lastmod><priority>0.7</priority></url>
-  <url><loc>${DOMAIN}/about-en.html</loc><lastmod>${now}</lastmod><priority>0.7</priority></url>
-  <url><loc>${DOMAIN}/about-eo.html</loc><lastmod>${now}</lastmod><priority>0.7</priority></url>
+  <url><loc>${DOMAIN}/about-io.html</loc><priority>0.7</priority></url>
+  <url><loc>${DOMAIN}/about-en.html</loc><priority>0.7</priority></url>
+  <url><loc>${DOMAIN}/about-eo.html</loc><priority>0.7</priority></url>
 `;
 
-entries.forEach((entry) => {
-  const lemma = entry.lemma;
-  if (!lemma) return;
-  const encoded = encodeURIComponent(lemma);
-  sitemap += `  <url><loc>${DOMAIN}/io-eo/${encoded}</loc><lastmod>${now}</lastmod><priority>0.6</priority></url>\n`;
+wordData.forEach(({ lemma }) => {
+  sitemap += `  <url><loc>${DOMAIN}/io-eo/${encodeURIComponent(lemma)}</loc><priority>0.6</priority></url>\n`;
 });
 
 sitemap += '</urlset>';
 
 fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemap);
-console.log(`✅ SEO Generation complete: sitemap.xml updated with ${entries.length} dynamic routes.`);
+console.log(`✅ SEO Generation complete: sitemap.xml updated with ${wordData.length}/${entries.length} dynamic routes (entries with translations).`);
 
 // --- Per-letter SEO shards for server-side rendering of word pages ---------
 // The _worker.js injects each /io-eo/<word> page's actual translations into the
-// HTML body so the 38k word pages have unique, indexable content (not just a
+// HTML body so the word pages have unique, indexable content (not just a
 // distinct <title> over the same SPA shell). dictionary.json is 7MB — too big
 // to parse per request — so we emit compact first-letter shards {lemma:{e,m}}
 // that the worker fetches (one ~200-400KB shard per request, edge-cached).
-function entryData(lemma) {
-  // dict-keyed format: dictionary[lemma] = {esperanto_words, morfologio}
-  const d = dictionary[lemma];
-  if (d) return { e: d.esperanto_words || [], m: d.morfologio || [] };
-  return { e: [], m: [] };
-}
 const shardKey = (lemma) => {
   const c = (lemma[0] || '_').toLowerCase();
   return /[a-z]/.test(c) ? c : '_';
 };
 const shards = {};
-let withData = 0;
-entries.forEach((entry) => {
-  const lemma = entry.lemma;
-  if (!lemma) return;
-  // array format carries translations on the entry itself
-  let data;
-  if (Array.isArray(dictionary.entries)) {
-    data = {
-      e: (entry.translations || []).filter((t) => t.lang === 'eo').map((t) => t.term),
-      m: entry.morphology?.paradigm ? [entry.morphology.paradigm] : [],
-    };
-  } else {
-    data = entryData(lemma);
-  }
-  if (data.e.length) withData++;
+wordData.forEach(({ lemma, data }) => {
   const k = shardKey(lemma);
   (shards[k] || (shards[k] = {}))[lemma] = data;
 });
@@ -98,4 +111,4 @@ for (const [k, obj] of Object.entries(shards)) {
   fs.writeFileSync(path.join(seoDir, `${k}.json`), JSON.stringify(obj));
   shardCount++;
 }
-console.log(`✅ SEO shards: ${shardCount} files in seo/ (${withData}/${entries.length} entries with translations) for body SSR.`);
+console.log(`✅ SEO shards: ${shardCount} files in seo/ (${wordData.length}/${entries.length} entries with translations) for body SSR.`);
