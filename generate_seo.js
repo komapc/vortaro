@@ -185,9 +185,9 @@ const now = new Date().toISOString().split('T')[0];
 let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${DOMAIN}/</loc><lastmod>${now}</lastmod><priority>1.0</priority></url>
-  <url><loc>${DOMAIN}/about-io.html</loc><priority>0.7</priority></url>
-  <url><loc>${DOMAIN}/about-en.html</loc><priority>0.7</priority></url>
-  <url><loc>${DOMAIN}/about-eo.html</loc><priority>0.7</priority></url>
+  <url><loc>${DOMAIN}/about-io</loc><priority>0.7</priority></url>
+  <url><loc>${DOMAIN}/about-en</loc><priority>0.7</priority></url>
+  <url><loc>${DOMAIN}/about-eo</loc><priority>0.7</priority></url>
   <url><loc>${DOMAIN}/browse/</loc><priority>0.7</priority></url>
 `;
 
