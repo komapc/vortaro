@@ -63,7 +63,7 @@ function trackSearch(term, direction, resultCount) {
 // Load dictionary data
 async function loadDictionary() {
     try {
-        const response = await fetch('dictionary.json');
+        const response = await fetch('/dictionary.json');
         const data = await response.json();
 
         // Handle both old and new dictionary formats
@@ -167,8 +167,9 @@ function search(query) {
     // Inflected-form lookup (io→eo only): if the query is an inflected surface
     // form, also surface its lemma entries (habitas→habitar) without bloating
     // the dictionary with every paradigm form.
+    let lemmas = new Set();
     if (currentDirection === 'io-eo') {
-        const lemmas = idoLemmaCandidates(searchTerm);
+        lemmas = idoLemmaCandidates(searchTerm);
         if (lemmas.size) {
             const have = new Set(results.map(e => e.ido.toLowerCase()));
             for (const entry of allEntries) {
@@ -185,11 +186,37 @@ function search(query) {
     results = applyFilters(results);
 
     const totalMatches = results.length;
-    results = results.slice(0, 50);
+    results = sortByRelevance(results, searchTerm, currentDirection, lemmas).slice(0, 50);
 
     displayResults(results, searchTerm, totalMatches);
     trackSearch(searchTerm, currentDirection, totalMatches);
 }
+
+// Order matches so the exact word is never cut off by the 50-result limit
+// (substring matching alone put "la" at position ~2000 of 4000 hits):
+// exact match, then lemma of an inflected query, then prefix, then any
+// substring; shorter words first within a tier, dictionary order otherwise.
+function sortByRelevance(results, searchTerm, direction, lemmas) {
+    const rank = (word) => {
+        const w = word.toLowerCase();
+        if (w === searchTerm) {return 0;}
+        if (lemmas.has(w)) {return 1;}
+        if (w.startsWith(searchTerm)) {return 2;}
+        return 3;
+    };
+    const keyed = results.map((entry, i) => {
+        const words = direction === 'io-eo' ? [entry.ido] : entry.esperanto;
+        let best = 4, len = Infinity;
+        for (const word of words) {
+            const r = rank(word);
+            if (r < best || (r === best && word.length < len)) { best = r; len = word.length; }
+        }
+        return { entry, best, len, i };
+    });
+    keyed.sort((a, b) => a.best - b.best || a.len - b.len || a.i - b.i);
+    return keyed.map(k => k.entry);
+}
+// END sortByRelevance
 
 // Display search results
 function displayResults(results, searchTerm, totalMatches = results.length) {
