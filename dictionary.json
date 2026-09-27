@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last_updated": "2026-09-26T12:41:29.494942",
+    "last_updated": "2026-09-27T06:21:24.122418",
     "total_unique_ido_words": 37792,
     "source_stats": {
       "bert_embeddings": 4322,
@@ -84703,8 +84703,8 @@
   },
   "developita": {
     "esperanto_words": [
-      "disvolvita",
       "evoluigita",
+      "disvolvita",
       "kreskigita",
       "kultivita",
       "kulturita",
@@ -90503,8 +90503,8 @@
   },
   "distingita": {
     "esperanto_words": [
-      "diferencigita",
       "distingita",
+      "diferencigita",
       "karakterizita"
     ],
     "sources": [
@@ -97895,8 +97895,8 @@
   },
   "duople": {
     "esperanto_words": [
-      "duople",
-      "duoble"
+      "duoble",
+      "duople"
     ],
     "sources": [
       "bert_embeddings",
@@ -129289,8 +129289,8 @@
   },
   "fine": {
     "esperanto_words": [
-      "finne",
       "fine",
+      "finne",
       "morte",
       "suome"
     ],
@@ -152744,8 +152744,8 @@
   },
   "grafikisto": {
     "esperanto_words": [
-      "grafikaĵisto",
-      "grafikisto"
+      "grafikisto",
+      "grafikaĵisto"
     ],
     "sources": [
       "bert_embeddings",
@@ -153674,8 +153674,8 @@
   },
   "grantita": {
     "esperanto_words": [
-      "konsentita",
-      "donita"
+      "donita",
+      "konsentita"
     ],
     "sources": [
       "bert_embeddings",
@@ -156172,11 +156172,11 @@
   },
   "guidanta": {
     "esperanto_words": [
+      "kondukanta",
       "gvidanta",
       "reganta",
       "mastrumanta",
-      "kondutanta",
-      "kondukanta"
+      "kondutanta"
     ],
     "sources": [
       "bert_embeddings",
@@ -179992,8 +179992,8 @@
   },
   "institucita": {
     "esperanto_words": [
-      "konstituita",
-      "establita"
+      "establita",
+      "konstituita"
     ],
     "sources": [
       "bert_embeddings",
@@ -217270,8 +217270,8 @@
   },
   "komencante": {
     "esperanto_words": [
-      "komenciĝante",
       "komencante",
+      "komenciĝante",
       "ekante"
     ],
     "sources": [
@@ -217312,8 +217312,8 @@
   },
   "komence": {
     "esperanto_words": [
-      "eke",
-      "komence"
+      "komence",
+      "eke"
     ],
     "sources": [
       "bert_embeddings",
@@ -217364,8 +217364,8 @@
   },
   "komencita": {
     "esperanto_words": [
-      "komenciĝita",
       "komencita",
+      "komenciĝita",
       "ekita"
     ],
     "sources": [
@@ -221882,8 +221882,8 @@
   },
   "konektita": {
     "esperanto_words": [
-      "kunigita",
-      "konektita"
+      "konektita",
+      "kunigita"
     ],
     "sources": [
       "bert_embeddings",
@@ -289690,8 +289690,8 @@
   },
   "navaro": {
     "esperanto_words": [
-      "ŝiparo",
-      "navaro"
+      "navaro",
+      "ŝiparo"
     ],
     "sources": [
       "bert_embeddings",
@@ -300542,8 +300542,8 @@
   },
   "nure": {
     "esperanto_words": [
-      "sole",
-      "nure"
+      "nure",
+      "sole"
     ],
     "sources": [
       "bert_embeddings",
@@ -358062,8 +358062,8 @@
   },
   "realigita": {
     "esperanto_words": [
-      "efektivigita",
-      "realigita"
+      "realigita",
+      "efektivigita"
     ],
     "sources": [
       "bert_embeddings",
@@ -374760,8 +374760,8 @@
   },
   "rotacanta": {
     "esperanto_words": [
-      "aks-turniĝanta",
-      "rotacianta"
+      "rotacianta",
+      "aks-turniĝanta"
     ],
     "sources": [
       "bert_embeddings",
@@ -384684,8 +384684,8 @@
   },
   "selektita": {
     "esperanto_words": [
-      "selektita",
       "elektita",
+      "selektita",
       "volita"
     ],
     "sources": [
@@ -386844,8 +386844,8 @@
   },
   "separata": {
     "esperanto_words": [
-      "disigata",
       "separata",
+      "disigata",
       "apartigata"
     ],
     "sources": [
