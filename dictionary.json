@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "last_updated": "2026-09-27T16:21:54.385190",
-    "total_unique_ido_words": 37792,
+    "last_updated": "2026-09-27T21:49:09.772985",
+    "total_unique_ido_words": 37801,
     "source_stats": {
-      "bert_embeddings": 4322,
+      "bert_embeddings": 4323,
       "closed_class_tables": 85,
       "closed_class_tables_qualified": 2,
       "en_wiktionary_via": 3951,
@@ -13,14 +13,14 @@
       "function_word_override": 12,
       "function_words_seed": 3,
       "io_wikipedia": 328,
-      "io_wiktionary": 14972,
-      "morphological_expansion": 10047,
+      "io_wiktionary": 14980,
+      "morphological_expansion": 10052,
       "wikidata_labels": 11095,
       "wikipedia_langlinks": 14194
     },
     "version": "3.2",
     "junk_removed": 0,
-    "case_pairs_merged": 4412
+    "case_pairs_merged": 4413
   },
   "a": {
     "esperanto_words": [
@@ -3761,6 +3761,17 @@
     ],
     "morfologio": [
       "o__n"
+    ]
+  },
+  "adheme": {
+    "esperanto_words": [
+      "hejmen"
+    ],
+    "sources": [
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "e__adv"
     ]
   },
   "adherado": {
@@ -17395,6 +17406,17 @@
     ],
     "sources": [
       "morphological_expansion"
+    ],
+    "morfologio": [
+      "o__n"
+    ]
+  },
+  "amoro": {
+    "esperanto_words": [
+      "amo"
+    ],
+    "sources": [
+      "io_wiktionary"
     ],
     "morfologio": [
       "o__n"
@@ -72449,16 +72471,18 @@
       "o__n"
     ]
   },
-  "Co": {
+  "co": {
     "esperanto_words": [
+      "ĉi tio",
       "kobalto",
       "Co"
     ],
     "sources": [
+      "io_wiktionary",
       "wikidata_labels"
     ],
     "morfologio": [
-      "o__n"
+      "__prn"
     ]
   },
   "Coahuila": {
@@ -157570,6 +157594,31 @@
       "o__n"
     ]
   },
+  "habitado": {
+    "esperanto_words": [
+      "loĝado"
+    ],
+    "sources": [
+      "io_wiktionary",
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "o__n"
+    ]
+  },
+  "habitanta": {
+    "esperanto_words": [
+      "loĝanta"
+    ],
+    "sources": [
+      "bert_embeddings",
+      "io_wiktionary",
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "a__adj"
+    ]
+  },
   "habitantaro": {
     "esperanto_words": [
       "loĝantaro"
@@ -157579,6 +157628,17 @@
     ],
     "morfologio": [
       "o__n"
+    ]
+  },
+  "habitante": {
+    "esperanto_words": [
+      "loĝante"
+    ],
+    "sources": [
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "e__adv"
     ]
   },
   "habitanto": {
@@ -157594,6 +157654,40 @@
     ],
     "morfologio": [
       "o__n"
+    ]
+  },
+  "habitar": {
+    "esperanto_words": [
+      "loĝi"
+    ],
+    "sources": [
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "ar__vblex"
+    ]
+  },
+  "habitata": {
+    "esperanto_words": [
+      "loĝata"
+    ],
+    "sources": [
+      "io_wiktionary",
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "a__adj"
+    ]
+  },
+  "habitita": {
+    "esperanto_words": [
+      "loĝita"
+    ],
+    "sources": [
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "a__adj"
     ]
   },
   "habito": {
@@ -379378,7 +379472,8 @@
   },
   "salutara": {
     "esperanto_words": [
-      "bonefika"
+      "bonefika",
+      "saluta"
     ],
     "sources": [
       "io_wiktionary"
@@ -395036,6 +395131,7 @@
   },
   "sioro": {
     "esperanto_words": [
+      "sinjoro",
       "s-ano",
       "gesinjoro"
     ],
@@ -419542,6 +419638,17 @@
     ],
     "morfologio": [
       "a__adj"
+    ]
+  },
+  "tam": {
+    "esperanto_words": [
+      "tiel"
+    ],
+    "sources": [
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "__adv"
     ]
   },
   "Tama": {
