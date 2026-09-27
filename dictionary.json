@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last_updated": "2026-09-27T06:21:24.122418",
+    "last_updated": "2026-09-27T16:21:54.385190",
     "total_unique_ido_words": 37792,
     "source_stats": {
       "bert_embeddings": 4322,
@@ -170876,7 +170876,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "__prn"
+      "a__adj"
     ]
   },
   "ich": {
