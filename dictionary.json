@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "last_updated": "2026-09-28T02:49:04.479222",
-    "total_unique_ido_words": 37814,
+    "last_updated": "2026-09-28T09:42:38.934144",
+    "total_unique_ido_words": 37815,
     "source_stats": {
       "bert_embeddings": 4324,
       "closed_class_tables": 85,
@@ -13,7 +13,7 @@
       "function_word_override": 12,
       "function_words_seed": 3,
       "io_wikipedia": 328,
-      "io_wiktionary": 14992,
+      "io_wiktionary": 14993,
       "morphological_expansion": 10056,
       "wikidata_labels": 11095,
       "wikipedia_langlinks": 14194
@@ -290336,6 +290336,17 @@
       "o__n"
     ]
   },
+  "ne plus": {
+    "esperanto_words": [
+      "ne plu"
+    ],
+    "sources": [
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "o__n"
+    ]
+  },
   "Ne-binara genro": {
     "esperanto_words": [
       "Neduuma genro"
@@ -331935,7 +331946,8 @@
   "plus": {
     "esperanto_words": [
       "plus",
-      "krome"
+      "krome",
+      "plu"
     ],
     "sources": [
       "io_wiktionary"
