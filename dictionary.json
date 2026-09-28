@@ -1,20 +1,20 @@
 {
   "metadata": {
-    "last_updated": "2026-09-27T21:49:09.772985",
-    "total_unique_ido_words": 37801,
+    "last_updated": "2026-09-28T02:49:04.479222",
+    "total_unique_ido_words": 37814,
     "source_stats": {
-      "bert_embeddings": 4323,
+      "bert_embeddings": 4324,
       "closed_class_tables": 85,
       "closed_class_tables_qualified": 2,
-      "en_wiktionary_via": 3951,
+      "en_wiktionary_via": 3950,
       "eo_wiktionary": 200,
       "eowiki_langlinks": 14376,
       "fr_wiktionary_via": 276,
       "function_word_override": 12,
       "function_words_seed": 3,
       "io_wikipedia": 328,
-      "io_wiktionary": 14980,
-      "morphological_expansion": 10052,
+      "io_wiktionary": 14992,
+      "morphological_expansion": 10056,
       "wikidata_labels": 11095,
       "wikipedia_langlinks": 14194
     },
@@ -3913,7 +3913,6 @@
       "ĉi tien"
     ],
     "sources": [
-      "en_wiktionary_via",
       "io_wiktionary"
     ],
     "morfologio": [
@@ -157570,6 +157569,29 @@
       "o__n"
     ]
   },
+  "habila": {
+    "esperanto_words": [
+      "lerta"
+    ],
+    "sources": [
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "a__adj"
+    ]
+  },
+  "habile": {
+    "esperanto_words": [
+      "lerte"
+    ],
+    "sources": [
+      "io_wiktionary",
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "e__adv"
+    ]
+  },
   "habileso": {
     "esperanto_words": [
       "arto"
@@ -196809,13 +196831,24 @@
   },
   "justa": {
     "esperanto_words": [
-      "ĵusta"
+      "ĝusta"
     ],
     "sources": [
       "io_wiktionary"
     ],
     "morfologio": [
       "a__adj"
+    ]
+  },
+  "justatempe": {
+    "esperanto_words": [
+      "ĝustatempe"
+    ],
+    "sources": [
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "e__adv"
     ]
   },
   "juste": {
@@ -196833,7 +196866,7 @@
   },
   "justeso": {
     "esperanto_words": [
-      "ĵusteco"
+      "ĝusteco"
     ],
     "sources": [
       "io_wiktionary",
@@ -196958,7 +196991,7 @@
   },
   "justino": {
     "esperanto_words": [
-      "ĵustino"
+      "ĝustino"
     ],
     "sources": [
       "morphological_expansion"
@@ -290599,6 +290632,43 @@
     ],
     "morfologio": []
   },
+  "necesanta": {
+    "esperanto_words": [
+      "daŭranta",
+      "daŭriganta"
+    ],
+    "sources": [
+      "io_wiktionary",
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "a__adj"
+    ]
+  },
+  "necesar": {
+    "esperanto_words": [
+      "daŭri",
+      "daŭrigi"
+    ],
+    "sources": [
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "ar__vblex"
+    ]
+  },
+  "necesata": {
+    "esperanto_words": [
+      "daŭrata",
+      "daŭrigata"
+    ],
+    "sources": [
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "a__adj"
+    ]
+  },
   "necese": {
     "esperanto_words": [
       "necese"
@@ -305513,8 +305583,7 @@
       "ĉiutage"
     ],
     "sources": [
-      "io_wiktionary",
-      "morphological_expansion"
+      "io_wiktionary"
     ],
     "morfologio": [
       "e__adv"
@@ -331863,6 +331932,30 @@
       "o__n"
     ]
   },
+  "plus": {
+    "esperanto_words": [
+      "plus",
+      "krome"
+    ],
+    "sources": [
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "num"
+    ]
+  },
+  "plusa": {
+    "esperanto_words": [
+      "plia",
+      "aldona"
+    ],
+    "sources": [
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "a__adj"
+    ]
+  },
   "pluse": {
     "esperanto_words": [
       "plie",
@@ -349268,6 +349361,18 @@
       "o__n"
     ]
   },
+  "proxima": {
+    "esperanto_words": [
+      "proksima"
+    ],
+    "sources": [
+      "bert_embeddings",
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "a__adj"
+    ]
+  },
   "proxime": {
     "esperanto_words": [
       "proksimume",
@@ -349279,6 +349384,18 @@
     ],
     "morfologio": [
       "e__adv"
+    ]
+  },
+  "proximeso": {
+    "esperanto_words": [
+      "proksimeco"
+    ],
+    "sources": [
+      "io_wiktionary",
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "o__n"
     ]
   },
   "Proximigado": {
@@ -411521,6 +411638,17 @@
       "o__n"
     ]
   },
+  "sub": {
+    "esperanto_words": [
+      "sub"
+    ],
+    "sources": [
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "__pr"
+    ]
+  },
   "suba": {
     "esperanto_words": [
       "suba"
@@ -424039,6 +424167,7 @@
   "tera": {
     "esperanto_words": [
       "tera",
+      "grunda",
       "tergloba"
     ],
     "sources": [
@@ -424070,6 +424199,8 @@
   },
   "terala": {
     "esperanto_words": [
+      "tera",
+      "grunda",
       "tergloba"
     ],
     "sources": [
@@ -424242,6 +424373,8 @@
   },
   "tere": {
     "esperanto_words": [
+      "tere",
+      "grunde",
       "terglobe"
     ],
     "sources": [
@@ -424405,6 +424538,8 @@
   },
   "terino": {
     "esperanto_words": [
+      "terino",
+      "grundino",
       "terglobino"
     ],
     "sources": [
@@ -424751,7 +424886,8 @@
   },
   "tero": {
     "esperanto_words": [
-      "Tero",
+      "tero",
+      "grundo",
       "terglobo"
     ],
     "sources": [
@@ -443434,6 +443570,29 @@
     ],
     "morfologio": [
       "e__adv"
+    ]
+  },
+  "varmega": {
+    "esperanto_words": [
+      "varmega"
+    ],
+    "sources": [
+      "io_wiktionary"
+    ],
+    "morfologio": [
+      "a__adj"
+    ]
+  },
+  "varmegeso": {
+    "esperanto_words": [
+      "varmegeco"
+    ],
+    "sources": [
+      "io_wiktionary",
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "o__n"
     ]
   },
   "varmesala": {
