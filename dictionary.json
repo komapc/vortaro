@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last_updated": "2026-09-28T09:42:38.934144",
+    "last_updated": "2026-09-28T17:14:49.772695",
     "total_unique_ido_words": 37815,
     "source_stats": {
       "bert_embeddings": 4324,
@@ -277708,7 +277708,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "num"
+      "__cnjcoo"
     ]
   },
   "minuskula": {
@@ -331953,7 +331953,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "num"
+      "__cnjcoo"
     ]
   },
   "plusa": {
