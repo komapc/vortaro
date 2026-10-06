@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "last_updated": "2026-10-06T12:38:45.192125",
-    "total_unique_ido_words": 37829,
+    "last_updated": "2026-10-06T16:42:48.147807",
+    "total_unique_ido_words": 37834,
     "source_stats": {
-      "bert_embeddings": 4324,
+      "bert_embeddings": 4323,
       "closed_class_tables": 87,
       "closed_class_tables_qualified": 2,
       "en_wiktionary_via": 3948,
@@ -12,15 +12,15 @@
       "fr_wiktionary_via": 276,
       "function_word_override": 12,
       "function_words_seed": 3,
-      "io_wikipedia": 329,
-      "io_wiktionary": 15000,
-      "morphological_expansion": 10061,
+      "io_wikipedia": 330,
+      "io_wiktionary": 15002,
+      "morphological_expansion": 10065,
       "wikidata_labels": 11097,
       "wikipedia_langlinks": 14194
     },
     "version": "3.2",
     "junk_removed": 0,
-    "case_pairs_merged": 4415
+    "case_pairs_merged": 4416
   },
   "a": {
     "esperanto_words": [
@@ -63380,7 +63380,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "num"
+      "o__n"
     ]
   },
   "cento": {
@@ -69802,7 +69802,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "num"
+      "o__n"
     ]
   },
   "cifroplako": {
@@ -170402,8 +170402,9 @@
       "o__n"
     ]
   },
-  "Hungaria": {
+  "hungaria": {
     "esperanto_words": [
+      "nulo",
       "Hungarujo",
       "Hungario"
     ],
@@ -170411,7 +170412,30 @@
       "io_wiktionary"
     ],
     "morfologio": [
+      "o__n"
+    ]
+  },
+  "hungariana": {
+    "esperanto_words": [
+      "nulo"
+    ],
+    "sources": [
+      "io_wikipedia",
+      "io_wiktionary"
+    ],
+    "morfologio": [
       "a__adj"
+    ]
+  },
+  "hungariane": {
+    "esperanto_words": [
+      "nule"
+    ],
+    "sources": [
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "e__adv"
     ]
   },
   "hungariani": {
@@ -170426,10 +170450,9 @@
   },
   "hungariano": {
     "esperanto_words": [
-      "hungario"
+      "nulo"
     ],
     "sources": [
-      "bert_embeddings",
       "io_wiktionary"
     ],
     "morfologio": [
@@ -300581,7 +300604,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "num"
+      "o__n"
     ]
   },
   "numero-un": {
@@ -337694,7 +337717,7 @@
       "wikidata_labels"
     ],
     "morfologio": [
-      "num"
+      "o__n"
     ]
   },
   "potenta": {
@@ -355183,7 +355206,7 @@
       "wikidata_labels"
     ],
     "morfologio": [
-      "num"
+      "o__n"
     ]
   },
   "radikoza": {
@@ -434133,6 +434156,39 @@
     ],
     "morfologio": [
       "a__adj"
+    ]
+  },
+  "triuna": {
+    "esperanto_words": [
+      "triunua"
+    ],
+    "sources": [
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "a__adj"
+    ]
+  },
+  "triunala": {
+    "esperanto_words": [
+      "triunua"
+    ],
+    "sources": [
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "a__adj"
+    ]
+  },
+  "triuneso": {
+    "esperanto_words": [
+      "triunueco"
+    ],
+    "sources": [
+      "morphological_expansion"
+    ],
+    "morfologio": [
+      "o__n"
     ]
   },
   "triuno": {
