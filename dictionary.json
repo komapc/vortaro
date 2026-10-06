@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "last_updated": "2026-09-28T17:14:49.772695",
+    "last_updated": "2026-10-06T10:26:50.092997",
     "total_unique_ido_words": 37815,
     "source_stats": {
       "bert_embeddings": 4324,
-      "closed_class_tables": 85,
+      "closed_class_tables": 87,
       "closed_class_tables_qualified": 2,
       "en_wiktionary_via": 3950,
       "eo_wiktionary": 200,
@@ -12,7 +12,7 @@
       "fr_wiktionary_via": 276,
       "function_word_override": 12,
       "function_words_seed": 3,
-      "io_wikipedia": 328,
+      "io_wikipedia": 329,
       "io_wiktionary": 14993,
       "morphological_expansion": 10056,
       "wikidata_labels": 11095,
@@ -20,7 +20,7 @@
     },
     "version": "3.2",
     "junk_removed": 0,
-    "case_pairs_merged": 4413
+    "case_pairs_merged": 4412
   },
   "a": {
     "esperanto_words": [
@@ -59720,17 +59720,22 @@
   },
   "ca": {
     "esperanto_words": [
+      "ĉi tiu",
+      "tiu",
       "ĉi",
       "kalcio",
       "kalciumo",
       "Ca"
     ],
     "sources": [
+      "closed_class_tables",
+      "function_words_seed",
+      "io_wikipedia",
       "io_wiktionary",
       "wikidata_labels"
     ],
     "morfologio": [
-      "__prn"
+      "a__adj"
     ]
   },
   "Cab Calloway": {
@@ -72477,6 +72482,7 @@
       "Co"
     ],
     "sources": [
+      "closed_class_tables",
       "io_wiktionary",
       "wikidata_labels"
     ],
