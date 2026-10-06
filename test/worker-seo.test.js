@@ -182,6 +182,11 @@ describe('_worker.js SEO meta handling', () => {
     expect(html).not.toContain('rel="canonical"');
   });
 
+  test('rendered pages carry a single content-type header (no "a, b" duplicate)', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hundo'), makeEnv());
+    expect(res.headers.get('content-type')).toBe('text/html;charset=UTF-8');
+  });
+
   test('word pages SSR internal links: alphabetical neighbors + exact browse page', async () => {
     const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hundo'), makeEnv());
     const html = await res.text();
