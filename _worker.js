@@ -223,13 +223,13 @@ export default {
         // and is noindexed above instead.)
         const status = direction === 'io-eo' && !found ? 404 : 200;
 
-        return new Response(html, {
-          status,
-          headers: {
-            ...Object.fromEntries(response.headers),
-            'Content-Type': 'text/html;charset=UTF-8'
-          }
-        });
+        // Copy the asset headers into a Headers object so content-type is SET once
+        // (spreading them next to a differently-cased 'Content-Type' sent it twice),
+        // and drop the stale length of the original, unmodified document.
+        const headers = new Headers(response.headers);
+        headers.set('content-type', 'text/html;charset=UTF-8');
+        headers.delete('content-length');
+        return new Response(html, { status, headers });
       }
     }
     
