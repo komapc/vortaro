@@ -60,6 +60,19 @@ function trackSearch(term, direction, resultCount) {
     }, 1500);
 }
 
+// Dictionary loading state: 'idle' | 'loading' | 'ready' | 'error'.
+// Server-rendered word pages never need the 7MB dictionary to show their
+// content, so it is only fetched on the first real interaction there.
+let dictionaryState = 'idle';
+let dictionaryPromise = null;
+function ensureDictionary() {
+    if (!dictionaryPromise) {
+        dictionaryState = 'loading';
+        dictionaryPromise = loadDictionary();
+    }
+    return dictionaryPromise;
+}
+
 // Load dictionary data
 async function loadDictionary() {
     try {
@@ -111,10 +124,13 @@ async function loadDictionary() {
         // Initialize filters
         initializeFilters();
 
+        dictionaryState = 'ready';
+
         // Do NOT re-render the empty state here: it already painted at init,
         // and repainting identical content after the multi-MB dictionary load
         // resets the page's LCP to dictionary-load time (measured 5.6s).
     } catch (error) {
+        dictionaryState = 'error';
         console.error('Error loading dictionary:', error);
         document.getElementById('results').innerHTML =
             '<div class="no-results">Error loading dictionary. Please try again later.</div>';
@@ -150,6 +166,13 @@ function search(query) {
 
     if (!searchTerm) {
         showEmptyState();
+        return;
+    }
+
+    // Lazy dictionary (server-rendered word pages): load it, then run this
+    // search. 'error' falls through to the normal (empty) search path.
+    if (allEntries.length === 0 && (dictionaryState === 'idle' || dictionaryState === 'loading')) {
+        ensureDictionary().then(() => search(query));
         return;
     }
 
@@ -1103,8 +1126,18 @@ function handleInitialUrl() {
 
     if (query) {
         searchInput.value = query;
-        search(query);
+        // Skip the re-search when the worker already server-rendered this
+        // word: re-rendering the same content after the dictionary download
+        // only resets LCP to load time and burns main-thread time parsing 7MB.
+        if (!hasServerRenderedResult()) {
+            search(query);
+        }
     }
+}
+
+// True when #results already holds the worker's server-rendered definition.
+function hasServerRenderedResult() {
+    return Boolean(document.querySelector('#results .result-item'));
 }
 
 // Handle URL changes (browser back/forward)
@@ -1151,8 +1184,8 @@ function initializeVersion() {
 if (!parseUrl().query) {
     showEmptyState();
 }
-loadDictionary().then(() => {
-    // Initialize PullToRefresh after dictionary is loaded
+function startApp() {
+    // Initialize PullToRefresh once the dictionary state is settled
     initializePullToRefresh();
 
     // Handle initial URL (pretty paths or hash)
@@ -1160,5 +1193,24 @@ loadDictionary().then(() => {
 
     // Initialize version display
     initializeVersion();
-});
+}
+
+if (hasServerRenderedResult()) {
+    // Server-rendered word page: everything above is already on screen, so do
+    // not download/parse the dictionary until the user actually interacts.
+    // Plain link clicks (related words, browse) navigate away — skip those.
+    startApp();
+    const wake = (e) => {
+        if (e.target && e.target.closest && e.target.closest('a[href]')) { return; }
+        ['pointerdown', 'keydown', 'focusin', 'touchstart'].forEach(
+            (type) => document.removeEventListener(type, wake, true)
+        );
+        ensureDictionary();
+    };
+    ['pointerdown', 'keydown', 'focusin', 'touchstart'].forEach(
+        (type) => document.addEventListener(type, wake, { capture: true, passive: true })
+    );
+} else {
+    ensureDictionary().then(startApp);
+}
 
