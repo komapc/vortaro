@@ -878,3 +878,46 @@ footer a:hover {
 .related-words a {
     color: #1f3f7a;
 }
+
+/* Server-rendered word page extras: inflection table + word family */
+.forms,
+.word-family {
+    margin-top: 16px;
+}
+
+.forms h2,
+.word-family h2 {
+    font-size: 1rem;
+    color: #667eea;
+    margin-bottom: 6px;
+}
+
+.forms table {
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.forms th,
+.forms td {
+    text-align: left;
+    padding: 3px 16px 3px 0;
+    vertical-align: top;
+}
+
+.forms th {
+    font-weight: 600;
+    color: #555;
+    white-space: nowrap;
+}
+
+.word-family ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+}
+
+.word-family .eo {
+    color: #555;
+}
