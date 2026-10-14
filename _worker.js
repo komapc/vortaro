@@ -125,6 +125,10 @@ export default {
         let pos = '';
         let found = false;
         let relatedHtml = '';
+        // Real lemma spelling when the URL is a case variant (/io-eo/aachen ->
+        // "Aachen"): canonical must point at the lemma path, otherwise every
+        // case variant is a self-canonical duplicate of the same page.
+        let canonicalLemma = null;
         if (direction === 'io-eo') {
           const letter = shardKeyOf(rawWord);
           const shard = await getShard(env, request, letter);
@@ -135,6 +139,7 @@ export default {
           const entry = lemma && shard[lemma];
           if (entry && Array.isArray(entry.e)) {
             found = true; translations = entry.e; pos = posLabel(entry.m);
+            canonicalLemma = lemma;
             // Internal links: alphabetical neighbors + this word's exact browse
             // page. Word pages were sitemap-only orphans, which search engines
             // barely index — these links make the 38k pages a connected graph.
@@ -158,13 +163,17 @@ export default {
           ? `${decodedWord} (${langFrom}) → ${transStr} (${langTo})${pos ? ', ' + pos : ''}. Trovez "${decodedWord}" en la senpaga Ido-Esperanto vortaro kun morfologio-analizo.`
           : `Look up "${decodedWord}" in the Ido-Esperanto Dictionary (Vortaro / Vortlibro). Fast, comprehensive, and offline-ready.`;
 
+        const canonicalUrl = canonicalLemma
+          ? `${url.origin}/io-eo/${encodeURIComponent(canonicalLemma)}`
+          : `${url.origin}${url.pathname}`;
+
         const ld = [
           {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             "itemListElement": [
               { "@type": "ListItem", "position": 1, "name": "Vortaro", "item": "https://ido-vortaro.pages.dev/" },
-              { "@type": "ListItem", "position": 2, "name": decodedWord, "item": url.href }
+              { "@type": "ListItem", "position": 2, "name": decodedWord, "item": canonicalUrl }
             ]
           }
         ];
@@ -189,10 +198,10 @@ export default {
         const metaTags = `
     <title>${title}</title>
     <meta name="description" content="${description}">
-    ${direction === 'eo-io' ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${url.origin}${url.pathname}">`}
+    ${direction === 'eo-io' ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${canonicalUrl}">`}
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">
-    <meta property="og:url" content="${url.href}">
+    <meta property="og:url" content="${canonicalUrl}">
     <meta property="twitter:title" content="${title}">
     <meta property="twitter:description" content="${description}">
     ${ld.map((d) => `<script type="application/ld+json">${JSON.stringify(d)}</script>`).join('\n    ')}

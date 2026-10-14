@@ -203,6 +203,16 @@ describe('_worker.js SEO meta handling', () => {
     expect(html).toContain('<p class="site-title">📖 Vortaro</p>');
   });
 
+  test('case-variant URL canonicalises to the real lemma path (no self-canonical duplicates)', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hamburg'), makeEnv());
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).toContain('<link rel="canonical" href="https://ido-vortaro.pages.dev/io-eo/Hamburg">');
+    expect(html).toContain('<meta property="og:url" content="https://ido-vortaro.pages.dev/io-eo/Hamburg">');
+    expect(html).toContain('"item":"https://ido-vortaro.pages.dev/io-eo/Hamburg"');
+    expect(html).not.toContain('/io-eo/hamburg"');
+  });
+
   test('/favicon.ico serves the PNG bytes as an image, not the SPA shell', async () => {
     const res = await worker.fetch(
       new Request('https://ido-vortaro.pages.dev/favicon.ico'),
