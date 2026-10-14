@@ -28,5 +28,6 @@ npm-debug.log*
 # Generated at build time by generate_seo.js (npm run deploy regenerates them);
 # tracking them made every deploy dirty the working tree (issue #126)
 sitemap.xml
+sitemap-*.xml
 seo/
 browse/

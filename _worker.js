@@ -32,6 +32,12 @@ async function getShard(env, request, key) {
   shardCache.set(key, shard);
   return shard;
 }
+// Esperanto headword -> shard letter: diacritics stripped (ĉ -> c). MUST match
+// eoShardKey in generate_seo.js.
+const eoShardKeyOf = (word) => {
+  const c = ((word.normalize('NFD')[0]) || '_').toLowerCase();
+  return /[a-z]/.test(c) ? c : '_';
+};
 const shardKeyOf = (word) => {
   const c = (word[0] || '_').toLowerCase();
   return /[a-z]/.test(c) ? c : '_';
@@ -183,8 +189,9 @@ export default {
         const decodedWord = escapeHtml(rawWord);
 
         // Look up the actual translations so the page body has unique, indexable
-        // content (not just a distinct <title> over the same SPA shell). Only the
-        // io-eo direction is shard-indexed (the sitemap only lists io-eo URLs).
+        // content (not just a distinct <title> over the same SPA shell). Both
+        // directions are shard-indexed: seo/<letter>.json (Ido) and
+        // seo/eo-<letter>.json (inverted Esperanto -> Ido).
         let translations = [];
         let pos = '';
         let found = false;
@@ -223,18 +230,49 @@ export default {
               + `</nav>`;
           }
         }
+        if (direction === 'eo-io') {
+          const letter = eoShardKeyOf(rawWord);
+          const shardKey = `eo-${letter}`;
+          const shard = await getShard(env, request, shardKey);
+          const key = shard && [rawWord, rawWord.toLowerCase(),
+            rawWord.charAt(0).toUpperCase() + rawWord.slice(1)].find((c) => shard[c]);
+          const entry = key && shard[key];
+          if (entry && Array.isArray(entry.i) && entry.i.length) {
+            found = true; translations = entry.i; pos = posLabel(entry.m);
+            canonicalLemma = key;
+            const keys = sortedShardKeys(shardKey, shard);
+            const idx = keys.indexOf(key);
+            const neighbors = keys.slice(Math.max(0, idx - 4), idx + 5).filter((k) => k !== key);
+            const browsePageNo = Math.floor(idx / BROWSE_PAGE_SIZE) + 1;
+            relatedHtml = `<nav class="related-words"><h3>Altra vorti</h3>`
+              + neighbors.map((k) => `<a href="/eo-io/${encodeURIComponent(k)}">${escapeHtml(k)}</a>`).join(' · ')
+              + ` · <a href="/browse/eo-${letter}-${browsePageNo}">Plu multa vorti per "${letter === '_' ? '#' : letter.toUpperCase()}"</a>`
+              + `</nav>`;
+          } else {
+            // Esperanto word whose only Ido counterpart is the identical string
+            // is not given its own page (it would mirror /io-eo/<word>): send
+            // visitors and crawlers to that page instead of a 404.
+            const ioLetter = shardKeyOf(rawWord);
+            const ioShard = await getShard(env, request, ioLetter);
+            const ioLemma = ioShard && [rawWord, rawWord.toLowerCase(),
+              rawWord.charAt(0).toUpperCase() + rawWord.slice(1)].find((c) => ioShard[c]);
+            if (ioLemma) {
+              return Response.redirect(`${url.origin}/io-eo/${encodeURIComponent(ioLemma)}`, 301);
+            }
+          }
+        }
         const transStr = translations.slice(0, 5).map(escapeHtml).join(', ');
 
         // Richer title/description with the translation when known.
         const title = transStr
-          ? `${decodedWord} → ${transStr} — Ido-Esperanto Vortaro`
+          ? `${decodedWord} → ${transStr} — ${direction === 'eo-io' ? 'Esperanto-Ido' : 'Ido-Esperanto'} Vortaro`
           : `${decodedWord} — Ido-Esperanto Vortaro / Dictionary`;
         const description = transStr
           ? `${decodedWord} (${langFrom}) → ${transStr} (${langTo})${pos ? ', ' + pos : ''}. Trovez "${decodedWord}" en la senpaga Ido-Esperanto vortaro kun morfologio-analizo.`
           : `Look up "${decodedWord}" in the Ido-Esperanto Dictionary (Vortaro / Vortlibro). Fast, comprehensive, and offline-ready.`;
 
         const canonicalUrl = canonicalLemma
-          ? `${url.origin}/io-eo/${encodeURIComponent(canonicalLemma)}`
+          ? `${url.origin}/${direction}/${encodeURIComponent(canonicalLemma)}`
           : `${url.origin}${url.pathname}`;
 
         const ld = [
@@ -262,13 +300,13 @@ export default {
           });
         }
 
-        // eo-io pages have no shard data (no unique content) and are not in the
-        // sitemap — noindex them instead of offering 38k thin self-canonical
-        // duplicates of the io-eo pages.
+        // Unknown eo-io words are 404s with noindex (no self-canonical for the
+        // infinite /eo-io/<anything> space); known ones are real, indexable
+        // pages with their own shard content.
         const metaTags = `
     <title>${title}</title>
     <meta name="description" content="${description}">
-    ${direction === 'eo-io' ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${canonicalUrl}">`}
+    ${direction === 'eo-io' && !found ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${canonicalUrl}">`}
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">
     <meta property="og:url" content="${canonicalUrl}">
@@ -306,7 +344,9 @@ export default {
             : '';
           const bodyHtml = `<div class="result-item">`
             + `<h1 class="source-word">${decodedWord}</h1>`
-            + `<div class="target-words">→ ${transStr}</div>`
+            + `<div class="target-words">→ ${direction === 'eo-io'
+              ? translations.slice(0, 8).map((t) => `<a href="/io-eo/${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join(', ')
+              : transStr}</div>`
             + (pos ? `<div class="morfologio">${escapeHtml(pos)}</div>` : '')
             + formsHtml
             + familyHtml
@@ -318,11 +358,10 @@ export default {
           );
         }
 
-        // Unknown io-eo word: serve the working SPA page but with a 404 status,
-        // so the infinite /io-eo/<anything> space doesn't become soft-404s /
-        // crawl-budget waste. (eo-io can't be existence-checked — no shards —
-        // and is noindexed above instead.)
-        const status = direction === 'io-eo' && !found ? 404 : 200;
+        // Unknown word (either direction): serve the working SPA page but with
+        // a 404 status, so the infinite /<dir>/<anything> space doesn't become
+        // soft-404s / crawl-budget waste.
+        const status = !found ? 404 : 200;
 
         // Copy the asset headers into a Headers object so content-type is SET once
         // (spreading them next to a differently-cased 'Content-Type' sent it twice),

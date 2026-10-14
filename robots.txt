@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /eo-io/
 
 Sitemap: https://ido-vortaro.pages.dev/sitemap.xml
