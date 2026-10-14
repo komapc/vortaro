@@ -46,6 +46,10 @@ const INDEX_HTML = `<!doctype html><html><head>
 const HUNDO_SHARD = {
   hundo: { e: ['hundo'], m: ['o__n'] },
   Hamburg: { e: ['Hamburgo'], m: ['o__n'] },
+  hundeto: { e: ['hundeto'], m: ['o__n'] },
+  hunda: { e: ['hunda'], m: ['a__adj'] },
+  hundar: { e: ['hundi'], m: ['ar__vblex'] },
+  'hundo-ludo': { e: ['hundludo'], m: ['o__n'] },
 };
 
 // Minimal env.ASSETS mock. `behavior` lets each test steer what the "origin"
@@ -211,6 +215,35 @@ describe('_worker.js SEO meta handling', () => {
     expect(html).toContain('<meta property="og:url" content="https://ido-vortaro.pages.dev/io-eo/Hamburg">');
     expect(html).toContain('"item":"https://ido-vortaro.pages.dev/io-eo/Hamburg"');
     expect(html).not.toContain('/io-eo/hamburg"');
+  });
+
+  test('noun page renders a regular forms table and a same-stem word family', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hundo'), makeEnv());
+    const html = await res.text();
+    expect(html).toContain('<section class="forms">');
+    expect(html).toContain('<th scope="row">Pluralo</th><td>hundi</td>');
+    expect(html).toContain('hundon, hundin');
+    expect(html).toContain('<section class="word-family">');
+    expect(html).toContain('<a href="/io-eo/hundeto">hundeto</a>');
+    expect(html).toContain('<a href="/io-eo/hundar">hundar</a>');
+    // the page itself is not listed in its own family
+    expect(html).not.toMatch(/<section class="word-family">.*<a href="\/io-eo\/hundo">/s);
+  });
+
+  test('verb page renders tense forms, adjective page renders adverb form', async () => {
+    const verb = await (await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hundar'), makeEnv())).text();
+    expect(verb).toContain('<th scope="row">Prezento</th><td>hundas</td>');
+    expect(verb).toContain('<th scope="row">Futuro</th><td>hundos</td>');
+    expect(verb).toContain('hundanta, hundinta, hundonta');
+    const adj = await (await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hunda'), makeEnv())).text();
+    expect(adj).toContain('<th scope="row">Adverbo</th><td>hunde</td>');
+  });
+
+  test('multi-word and proper-noun lemmas get no forms table (no wrong inflection)', async () => {
+    const html = await (await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hundo-ludo'), makeEnv())).text();
+    expect(html).not.toContain('<section class="forms">');
+    const ham = await (await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/Hamburg'), makeEnv())).text();
+    expect(ham).not.toContain('<section class="forms">');
   });
 
   test('/favicon.ico serves the PNG bytes as an image, not the SPA shell', async () => {
