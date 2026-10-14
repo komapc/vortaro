@@ -81,6 +81,44 @@ wordData.forEach(({ lemma, data }) => {
   (shards[k] || (shards[k] = {}))[lemma] = data;
 });
 
+// --- Esperanto -> Ido inverted shards (/eo-io/<word>) -----------------------
+// Same data, other direction: every Esperanto translation becomes a headword
+// whose page lists the Ido lemmas translating to it. Case variants are merged
+// under one key (lowercase preferred) so they cannot become duplicate pages,
+// and entries whose only Ido translation is the identical string (proper
+// nouns: Aachen -> Aachen) are skipped — they would just mirror the io-eo page.
+const eoShardKey = (w) => {
+  const c = ((w.normalize('NFD')[0]) || '_').toLowerCase();
+  return /[a-z]/.test(c) ? c : '_';
+};
+const EO_IDO_MAX = 10;
+const eoGroups = new Map(); // lowercase -> { variants: Map(variant -> count), ido: [], m: [] }
+wordData.forEach(({ lemma, data }) => {
+  for (const raw of data.e) {
+    const w = String(raw).trim();
+    if (!w || w.length > 60 || /[/?#\\%]/.test(w)) continue;
+    const lc = w.toLowerCase();
+    let g = eoGroups.get(lc);
+    if (!g) { g = { variants: new Map(), ido: [], m: data.m }; eoGroups.set(lc, g); }
+    g.variants.set(w, (g.variants.get(w) || 0) + 1);
+    if (!g.ido.includes(lemma) && g.ido.length < EO_IDO_MAX) g.ido.push(lemma);
+  }
+});
+const eoShards = {};
+let eoSkippedIdentical = 0;
+for (const [lc, g] of eoGroups) {
+  const variants = [...g.variants.keys()];
+  const key = variants.includes(lc)
+    ? lc
+    : variants.sort((x, y) => (g.variants.get(y) - g.variants.get(x)) || (x < y ? -1 : 1))[0];
+  if (g.ido.every((i) => i.toLowerCase() === lc)) { eoSkippedIdentical++; continue; }
+  const k = eoShardKey(key);
+  (eoShards[k] || (eoShards[k] = {}))[key] = { i: g.ido, m: g.m };
+}
+const eoLetters = Object.keys(eoShards).sort();
+const eoCount = eoLetters.reduce((n, l) => n + Object.keys(eoShards[l]).length, 0);
+console.log(`✅ Esperanto→Ido: ${eoCount} headwords in ${eoLetters.length} shards (${eoSkippedIdentical} identical-string entries skipped).`);
+
 // --- A–Z browse pages (/browse/<letter>-<n>) --------------------------------
 // The word pages were sitemap-only orphans (zero internal links), which search
 // engines index reluctantly: Yandex had 1 of 38k pages searchable. These hub
@@ -94,17 +132,29 @@ const escapeHtml = (s) => String(s)
   .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 const letterLabel = (l) => (l === '_' ? '#' : l.toUpperCase());
 const letters = Object.keys(shards).sort();
-const letterNav = letters
-  .map((l) => `<a href="/browse/${l}-1">${letterLabel(l)}</a>`)
+// dir 'io-eo' (default, slug = letter) or 'eo-io' (slug = eo-<letter>).
+const browsePage = ({ letter, pageNo, pageCount, items, prev, next, dir = 'io-eo' }) => {
+const eo = dir === 'eo-io';
+const slug = eo ? `eo-${letter}` : letter;
+const nav = (eo ? eoLetters : letters)
+  .map((l) => `<a href="/browse/${eo ? 'eo-' : ''}${l}-1">${letterLabel(l)}</a>`)
   .join(' ');
-const browsePage = ({ letter, pageNo, pageCount, items, prev, next }) => `<!DOCTYPE html>
+const headWords = eo ? 'Esperanto-vorti' : 'Ido-vorti';
+const itemRows = items.map(({ lemma, data }) => {
+  const targets = eo ? data.i : data.e;
+  const targetLinks = eo
+    ? targets.slice(0, 3).map((t) => `<a href="/io-eo/${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join(', ')
+    : escapeHtml(targets.slice(0, 3).join(', '));
+  return `        <li><a href="/${dir}/${encodeURIComponent(lemma)}">${escapeHtml(lemma)}</a> <span class="eo">→ ${targetLinks}</span></li>`;
+}).join('\n');
+return `<!DOCTYPE html>
 <html lang="io">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ido-vorti per "${letterLabel(letter)}" (${pageNo}/${pageCount}) — Ido-Esperanto Vortaro</title>
-    <meta name="description" content="Listo di Ido-vorti komencanta per '${letterLabel(letter)}' kun Esperanto-traduki — pagino ${pageNo} de ${pageCount}. ${escapeHtml(items.slice(0, 5).map((i) => i.lemma).join(', '))}…">
-    <link rel="canonical" href="${DOMAIN}/browse/${letter}-${pageNo}">
+    <title>${headWords} per "${letterLabel(letter)}" (${pageNo}/${pageCount}) — ${eo ? 'Esperanto-Ido' : 'Ido-Esperanto'} Vortaro</title>
+    <meta name="description" content="Listo di ${headWords} komencanta per '${letterLabel(letter)}' kun ${eo ? 'Ido' : 'Esperanto'}-traduki — pagino ${pageNo} de ${pageCount}. ${escapeHtml(items.slice(0, 5).map((i) => i.lemma).join(', '))}…">
+    <link rel="canonical" href="${DOMAIN}/browse/${slug}-${pageNo}">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <style>
@@ -118,18 +168,19 @@ const browsePage = ({ letter, pageNo, pageCount, items, prev, next }) => `<!DOCT
 </head>
 <body>
     <p><a href="/">« Ido-Esperanto Vortaro</a> · <a href="/browse/">Indexo</a></p>
-    <nav class="letters">${letterNav}</nav>
-    <h1>Ido-vorti per "${letterLabel(letter)}" — pagino ${pageNo} de ${pageCount}</h1>
+    <nav class="letters">${nav}</nav>
+    <h1>${headWords} per "${letterLabel(letter)}" — pagino ${pageNo} de ${pageCount}</h1>
     <ul>
-${items.map(({ lemma, data }) => `        <li><a href="/io-eo/${encodeURIComponent(lemma)}">${escapeHtml(lemma)}</a> <span class="eo">→ ${escapeHtml(data.e.slice(0, 3).join(', '))}</span></li>`).join('\n')}
+${itemRows}
     </ul>
     <div class="pager">
-        ${prev ? `<a href="/browse/${letter}-${prev}">« Antea pagino</a>` : ''}
-        ${next ? `<a href="/browse/${letter}-${next}">Sequanta pagino »</a>` : ''}
+        ${prev ? `<a href="/browse/${slug}-${prev}">« Antea pagino</a>` : ''}
+        ${next ? `<a href="/browse/${slug}-${next}">Sequanta pagino »</a>` : ''}
     </div>
 </body>
 </html>
 `;
+};
 const browseDir = path.join(__dirname, 'browse');
 fs.mkdirSync(browseDir, { recursive: true });
 for (const f of fs.readdirSync(browseDir)) {
@@ -149,6 +200,20 @@ letters.forEach((letter) => {
       browsePage({ letter, pageNo: p, pageCount, items, prev: p > 1 ? p - 1 : null, next: p < pageCount ? p + 1 : null })
     );
     browseUrls.push(`/browse/${letter}-${p}`);
+  }
+});
+eoLetters.forEach((letter) => {
+  const lemmas = Object.keys(eoShards[letter]).sort(); // same default order as the worker
+  const pageCount = Math.ceil(lemmas.length / BROWSE_PAGE_SIZE);
+  for (let p = 1; p <= pageCount; p++) {
+    const items = lemmas
+      .slice((p - 1) * BROWSE_PAGE_SIZE, p * BROWSE_PAGE_SIZE)
+      .map((lemma) => ({ lemma, data: eoShards[letter][lemma] }));
+    fs.writeFileSync(
+      path.join(browseDir, `eo-${letter}-${p}.html`),
+      browsePage({ letter, pageNo: p, pageCount, items, dir: 'eo-io', prev: p > 1 ? p - 1 : null, next: p < pageCount ? p + 1 : null })
+    );
+    browseUrls.push(`/browse/eo-${letter}-${p}`);
   }
 });
 const browseIndex = `<!DOCTYPE html>
@@ -172,37 +237,70 @@ const browseIndex = `<!DOCTYPE html>
     <ul>
 ${letters.map((l) => `        <li><a href="/browse/${l}-1">${letterLabel(l)}</a> — ${Object.keys(shards[l]).length.toLocaleString('en-US')} vorti</li>`).join('\n')}
     </ul>
+    <h2>Indexo di Esperanto-vorti</h2>
+    <ul>
+${eoLetters.map((l) => `        <li><a href="/browse/eo-${l}-1">${letterLabel(l)}</a> — ${Object.keys(eoShards[l]).length.toLocaleString('en-US')} vorti</li>`).join('\n')}
+    </ul>
 </body>
 </html>
 `;
 fs.writeFileSync(path.join(browseDir, 'index.html'), browseIndex);
 console.log(`✅ Browse pages: ${browseUrls.length} letter pages + index in browse/.`);
 
-// Generate sitemap. No lastmod on word URLs: stamping 38k URLs with every
-// deploy date teaches Google to distrust lastmod site-wide.
-const now = new Date().toISOString().split('T')[0];
+// --- Sitemaps: one index + per-direction/per-letter files -------------------
+// lastmod = the dictionary's build date (data version), the same value for
+// every URL it covers: it moves only when the dictionary is regenerated, so
+// it stays a trustworthy "content changed" signal. Per-letter files keep each
+// file far below the 50k-URL / 50MB limits and give Search Console / Bing a
+// coverage breakdown by section.
+const buildDate = String((dictionary.metadata && dictionary.metadata.last_updated) || '').slice(0, 10)
+  || new Date().toISOString().split('T')[0];
+for (const f of fs.readdirSync(__dirname)) {
+  if (/^sitemap.*\.xml$/.test(f)) fs.unlinkSync(path.join(__dirname, f));
+}
+const sitemapFiles = [];
+const writeSitemap = (name, urls) => {
+  const body = urls
+    .map(({ loc, priority }) => `  <url><loc>${DOMAIN}${loc}</loc><lastmod>${buildDate}</lastmod><priority>${priority}</priority></url>`)
+    .join('\n');
+  fs.writeFileSync(
+    path.join(__dirname, name),
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`
+  );
+  sitemapFiles.push(name);
+  return urls.length;
+};
+const fileLetter = (l) => (l === '_' ? 'misc' : l);
 
-let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>${DOMAIN}/</loc><lastmod>${now}</lastmod><priority>1.0</priority></url>
-  <url><loc>${DOMAIN}/about-io</loc><priority>0.7</priority></url>
-  <url><loc>${DOMAIN}/about-en</loc><priority>0.7</priority></url>
-  <url><loc>${DOMAIN}/about-eo</loc><priority>0.7</priority></url>
-  <url><loc>${DOMAIN}/browse/</loc><priority>0.7</priority></url>
-`;
-
-browseUrls.forEach((u) => {
-  sitemap += `  <url><loc>${DOMAIN}${u}</loc><priority>0.5</priority></url>\n`;
+writeSitemap('sitemap-pages.xml', [
+  { loc: '/', priority: '1.0' },
+  { loc: '/about-io', priority: '0.7' },
+  { loc: '/about-en', priority: '0.7' },
+  { loc: '/about-eo', priority: '0.7' },
+  { loc: '/browse/', priority: '0.7' },
+  ...browseUrls.map((u) => ({ loc: u, priority: '0.5' })),
+]);
+let ioEoUrls = 0;
+letters.forEach((l) => {
+  ioEoUrls += writeSitemap(
+    `sitemap-io-eo-${fileLetter(l)}.xml`,
+    Object.keys(shards[l]).sort().map((lemma) => ({ loc: `/io-eo/${encodeURIComponent(lemma)}`, priority: '0.6' }))
+  );
 });
-
-wordData.forEach(({ lemma }) => {
-  sitemap += `  <url><loc>${DOMAIN}/io-eo/${encodeURIComponent(lemma)}</loc><priority>0.6</priority></url>\n`;
+let eoIoUrls = 0;
+eoLetters.forEach((l) => {
+  eoIoUrls += writeSitemap(
+    `sitemap-eo-io-${fileLetter(l)}.xml`,
+    Object.keys(eoShards[l]).sort().map((w) => ({ loc: `/eo-io/${encodeURIComponent(w)}`, priority: '0.5' }))
+  );
 });
-
-sitemap += '</urlset>';
-
-fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemap);
-console.log(`✅ SEO Generation complete: sitemap.xml updated with ${wordData.length}/${entries.length} dynamic routes (entries with translations).`);
+fs.writeFileSync(
+  path.join(__dirname, 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
+  + sitemapFiles.map((f) => `  <sitemap><loc>${DOMAIN}/${f}</loc><lastmod>${buildDate}</lastmod></sitemap>`).join('\n')
+  + `\n</sitemapindex>\n`
+);
+console.log(`✅ Sitemap index: ${sitemapFiles.length} files (${ioEoUrls} io-eo + ${eoIoUrls} eo-io word URLs, ${browseUrls.length + 5} pages), lastmod ${buildDate}.`);
 
 // --- Per-letter SEO shards for server-side rendering of word pages ---------
 // The _worker.js injects each /io-eo/<word> page's actual translations into the
@@ -219,6 +317,10 @@ for (const f of fs.readdirSync(seoDir)) {
 let shardCount = 0;
 for (const [k, obj] of Object.entries(shards)) {
   fs.writeFileSync(path.join(seoDir, `${k}.json`), JSON.stringify(obj));
+  shardCount++;
+}
+for (const [k, obj] of Object.entries(eoShards)) {
+  fs.writeFileSync(path.join(seoDir, `eo-${k}.json`), JSON.stringify(obj));
   shardCount++;
 }
 console.log(`✅ SEO shards: ${shardCount} files in seo/ (${wordData.length}/${entries.length} entries with translations) for body SSR.`);
