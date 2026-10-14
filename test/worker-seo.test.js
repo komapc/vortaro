@@ -52,6 +52,15 @@ const HUNDO_SHARD = {
   'hundo-ludo': { e: ['hundludo'], m: ['o__n'] },
 };
 
+// eo -> io shards. 'domo' is only reachable as eo (no io lemma 'domo'); 'hundo'
+// is intentionally absent (identical-string entry, redirected to io-eo).
+// Diacritic words shard under the stripped letter (ĉ -> c).
+const EO_D_SHARD = {
+  domo: { i: ['hundo', 'hundeto'], m: ['o__n'] },
+  doma: { i: ['hunda'], m: ['a__adj'] },
+};
+const EO_C_SHARD = { 'ĉevalo': { i: ['hundo'], m: ['o__n'] } };
+
 // Minimal env.ASSETS mock. `behavior` lets each test steer what the "origin"
 // static-asset fetch (first call, made with the real request) does, while
 // /index.html and /seo/*.json are served from fixtures. `spaFallback` mirrors
@@ -65,6 +74,15 @@ function makeEnv({ throwOnOrigin = false, originStatus = 404, indexStatus = 200,
       return indexStatus === 200
         ? new Response(INDEX_HTML, { status: 200, headers: { 'content-type': 'text/html' } })
         : new Response('server error', { status: indexStatus });
+    }
+    if (reqUrl.pathname === '/seo/eo-d.json') {
+      return new Response(JSON.stringify(EO_D_SHARD), { status: 200 });
+    }
+    if (reqUrl.pathname === '/seo/eo-c.json') {
+      return new Response(JSON.stringify(EO_C_SHARD), { status: 200 });
+    }
+    if (reqUrl.pathname === '/seo/eo-h.json') {
+      return new Response(JSON.stringify({ Hamburgo: { i: ['Hamburg'], m: ['o__n'] } }), { status: 200 });
     }
     if (reqUrl.pathname === '/seo/h.json') {
       return new Response(JSON.stringify(HUNDO_SHARD), { status: 200 });
@@ -178,12 +196,41 @@ describe('_worker.js SEO meta handling', () => {
     expect(html).toContain('Hamburgo');
   });
 
-  test('eo-io pages are noindexed (no shard data, not sitemapped) and carry no canonical', async () => {
-    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/eo-io/hundo'), makeEnv());
-    expect(res.status).toBe(200);
+  test('unknown eo-io word is an honest 404, noindexed, with no canonical', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/eo-io/neekzistas'), makeEnv());
+    expect(res.status).toBe(404);
     const html = await res.text();
     expect(html).toContain('<meta name="robots" content="noindex">');
     expect(html).not.toContain('rel="canonical"');
+  });
+
+  test('known eo-io word is an indexable page with Ido translations linked back to io-eo', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/eo-io/domo'), makeEnv());
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).not.toContain('name="robots"');
+    expect(html).toContain('<link rel="canonical" href="https://ido-vortaro.pages.dev/eo-io/domo">');
+    expect(html).toContain('domo → hundo, hundeto — Esperanto-Ido Vortaro');
+    expect(html).toContain('<h1 class="source-word">domo</h1>');
+    expect(html).toContain('<a href="/io-eo/hundo">hundo</a>');
+    expect(html).toContain('<a href="/eo-io/doma">doma</a>'); // eo neighbor
+    expect(html).toContain('<a href="/browse/eo-d-1">');
+    expect(html).toContain('"inLanguage":"eo"');
+  });
+
+  test('eo-io lookup is case- and diacritic-shard-aware, canonical uses the real key', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/eo-io/' + encodeURIComponent('ĉevalo')), makeEnv());
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).toContain('rel="canonical" href="https://ido-vortaro.pages.dev/eo-io/%C4%89evalo"');
+    const upper = await worker.fetch(new Request('https://ido-vortaro.pages.dev/eo-io/Domo'), makeEnv());
+    expect(await upper.text()).toContain('rel="canonical" href="https://ido-vortaro.pages.dev/eo-io/domo"');
+  });
+
+  test('eo word whose Ido counterpart is the identical string 301s to the io-eo page', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/eo-io/hundo'), makeEnv());
+    expect(res.status).toBe(301);
+    expect(res.headers.get('location')).toBe('https://ido-vortaro.pages.dev/io-eo/hundo');
   });
 
   test('rendered pages carry a single content-type header (no "a, b" duplicate)', async () => {
