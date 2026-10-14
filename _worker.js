@@ -57,6 +57,70 @@ const posLabel = (morf) => {
   return '';
 };
 
+// --- Regular inflection tables + word family (computed from shard data) -----
+// Ido inflection is fully regular, so the forms are derived from the lemma's
+// paradigm instead of being stored: no extra shard bytes, and every word page
+// gets unique, correct content. Single-word lemmas only (multi-word and
+// proper-noun entries do not necessarily inflect on their last token).
+const PARADIGM_ENDING = { o__n: 'o', a__adj: 'a', e__adv: 'e', ar__vblex: 'ar' };
+function stemOf(lemma, morf) {
+  for (const m of (morf || [])) {
+    const end = PARADIGM_ENDING[m];
+    if (end && lemma.length > end.length + 1 && lemma.endsWith(end) && !/[\s-]/.test(lemma)) {
+      return { stem: lemma.slice(0, -end.length), paradigm: m };
+    }
+  }
+  return null;
+}
+// [label, forms] rows; every string is escaped by the caller.
+function inflectionRows(lemma, morf) {
+  const st = stemOf(lemma, morf);
+  if (!st || st.paradigm === 'e__adv') return [];
+  const { stem, paradigm } = st;
+  if (paradigm === 'o__n') {
+    return [
+      ['Singularo', `${stem}o`],
+      ['Pluralo', `${stem}i`],
+      ['Akuzativo (facultativa)', `${stem}on, ${stem}in`],
+    ];
+  }
+  if (paradigm === 'a__adj') {
+    return [
+      ['Adjektivo', `${stem}a`],
+      ['Adverbo', `${stem}e`],
+      ['Akuzativo (facultativa)', `${stem}an`],
+    ];
+  }
+  // ar__vblex
+  return [
+    ['Infinitivo', `${stem}ar (prezenta), ${stem}ir (preterita), ${stem}or (futura)`],
+    ['Prezento', `${stem}as`],
+    ['Preterito', `${stem}is`],
+    ['Futuro', `${stem}os`],
+    ['Kondicionalo', `${stem}us`],
+    ['Imperativo', `${stem}ez`],
+    ['Aktiva participo', `${stem}anta, ${stem}inta, ${stem}onta`],
+    ['Pasiva participo', `${stem}ata, ${stem}ita, ${stem}ota`],
+  ];
+}
+// Same-stem lemmas from the same shard (derivations and POS siblings), nearest
+// first, capped. Stems under 3 chars would match half the dictionary — skipped.
+const FAMILY_MAX = 12;
+function wordFamily(lemma, morf, keys, shard) {
+  const st = stemOf(lemma, morf);
+  if (!st || st.stem.length < 3) return [];
+  const { stem } = st;
+  const out = [];
+  for (const k of keys) {
+    // Candidates must themselves be single-word regular lemmas (-o/-a/-e/-ar):
+    // this drops proper names (bonny, bonner) and multi-word entries that only
+    // share a prefix with the stem.
+    if (k !== lemma && k.startsWith(stem) && stemOf(k, shard[k] && shard[k].m)) out.push(k);
+  }
+  out.sort((a, b) => (a.length - b.length) || (a < b ? -1 : a > b ? 1 : 0));
+  return out.slice(0, FAMILY_MAX);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -129,6 +193,9 @@ export default {
         // "Aachen"): canonical must point at the lemma path, otherwise every
         // case variant is a self-canonical duplicate of the same page.
         let canonicalLemma = null;
+        let formRows = [];
+        let famKeys = [];
+        let famShard = null;
         if (direction === 'io-eo') {
           const letter = shardKeyOf(rawWord);
           const shard = await getShard(env, request, letter);
@@ -147,6 +214,9 @@ export default {
             const idx = keys.indexOf(lemma);
             const neighbors = keys.slice(Math.max(0, idx - 4), idx + 5).filter((k) => k !== lemma);
             const browsePageNo = Math.floor(idx / BROWSE_PAGE_SIZE) + 1;
+            famKeys = wordFamily(lemma, entry.m, keys, shard);
+            famShard = shard;
+            formRows = inflectionRows(lemma, entry.m);
             relatedHtml = `<nav class="related-words"><h3>Altra vorti</h3>`
               + neighbors.map((k) => `<a href="/io-eo/${encodeURIComponent(k)}">${escapeHtml(k)}</a>`).join(' · ')
               + ` · <a href="/browse/${letter}-${browsePageNo}">Plu multa vorti per "${letter === '_' ? '#' : letter.toUpperCase()}"</a>`
@@ -221,10 +291,25 @@ export default {
             /<h1>(📖 Vortaro)<\/h1>/,
             '<p class="site-title">$1</p>'
           );
+          const formsHtml = formRows.length
+            ? `<section class="forms"><h2>Formi di "${decodedWord}"</h2><table><tbody>`
+              + formRows.map(([label, forms]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(forms)}</td></tr>`).join('')
+              + `</tbody></table></section>`
+            : '';
+          const familyHtml = famKeys.length
+            ? `<section class="word-family"><h2>Vorti de la sama radiko</h2><ul>`
+              + famKeys.map((k) => {
+                const gloss = famShard && famShard[k] && famShard[k].e && famShard[k].e[0];
+                return `<li><a href="/io-eo/${encodeURIComponent(k)}">${escapeHtml(k)}</a>${gloss ? ` <span class="eo">→ ${escapeHtml(gloss)}</span>` : ''}</li>`;
+              }).join('')
+              + `</ul></section>`
+            : '';
           const bodyHtml = `<div class="result-item">`
             + `<h1 class="source-word">${decodedWord}</h1>`
             + `<div class="target-words">→ ${transStr}</div>`
             + (pos ? `<div class="morfologio">${escapeHtml(pos)}</div>` : '')
+            + formsHtml
+            + familyHtml
             + `</div>`
             + relatedHtml;
           html = html.replace(
