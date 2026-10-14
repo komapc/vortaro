@@ -205,8 +205,15 @@ export default {
         // the URL path on load and re-renders the same content, so this is
         // seamless for users and gives crawlers real per-word content.
         if (translations.length) {
+          // The word is the page's one <h1>: the shell's generic "📖 Vortaro" h1
+          // was identical on all 38k pages, so the site title is demoted to a
+          // styled <p> on word pages (same look via .site-title in style.css).
+          html = html.replace(
+            /<h1>(📖 Vortaro)<\/h1>/,
+            '<p class="site-title">$1</p>'
+          );
           const bodyHtml = `<div class="result-item">`
-            + `<h2 class="source-word">${decodedWord}</h2>`
+            + `<h1 class="source-word">${decodedWord}</h1>`
             + `<div class="target-words">→ ${transStr}</div>`
             + (pos ? `<div class="morfologio">${escapeHtml(pos)}</div>` : '')
             + `</div>`

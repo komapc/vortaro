@@ -24,8 +24,11 @@ header {
     position: relative;
 }
 
-header h1 {
+header h1,
+header .site-title {
     font-size: 3rem;
+    font-weight: bold;
+    margin-top: 0.67em;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -638,7 +641,8 @@ footer a:hover {
         padding: 10px 18px;
     }
 
-    header h1 {
+    header h1,
+    header .site-title {
         font-size: 2rem;
     }
 

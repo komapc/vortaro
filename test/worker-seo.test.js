@@ -41,7 +41,7 @@ const INDEX_HTML = `<!doctype html><html><head>
     <meta property="twitter:title" content="GENERIC TW TITLE">
     <meta property="twitter:description" content="GENERIC TW DESCRIPTION">
     <link rel="canonical" href="https://ido-vortaro.pages.dev/">
-  </head><body><div id="results" class="results"></div></body></html>`;
+  </head><body><header><h1>📖 Vortaro</h1></header><div id="results" class="results"></div></body></html>`;
 
 const HUNDO_SHARD = {
   hundo: { e: ['hundo'], m: ['o__n'] },
@@ -193,6 +193,14 @@ describe('_worker.js SEO meta handling', () => {
     expect(html).toContain('class="related-words"');
     expect(html).toContain('<a href="/io-eo/Hamburg">Hamburg</a>'); // shard neighbor
     expect(html).toContain('<a href="/browse/h-1">'); // idx 1, page size 500 -> page 1
+  });
+
+  test('word pages have exactly one <h1> and it is the word, not the generic site title', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hundo'), makeEnv());
+    const html = await res.text();
+    expect(html.match(/<h1[\s>]/g)).toHaveLength(1);
+    expect(html).toContain('<h1 class="source-word">hundo</h1>');
+    expect(html).toContain('<p class="site-title">📖 Vortaro</p>');
   });
 
   test('/favicon.ico serves the PNG bytes as an image, not the SPA shell', async () => {
