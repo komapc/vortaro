@@ -9,8 +9,9 @@
     "test:coverage": "jest --coverage",
     "lint": "eslint app.js",
     "postbuild": "node generate_seo.js",
-    "deploy": "npm run postbuild && npx wrangler pages deploy . --project-name ido-vortaro",
-    "serve": "python3 -m http.server 8000"
+    "deploy": "npm run postbuild && npx wrangler pages deploy . --project-name ido-vortaro && npm run indexnow",
+    "serve": "python3 -m http.server 8000",
+    "indexnow": "node scripts/indexnow.js"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",
