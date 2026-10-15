@@ -131,6 +131,11 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // Old *.pages.dev address: permanent redirect to the canonical domain.
+    if (url.hostname === 'ido-vortaro.pages.dev') {
+      return Response.redirect('https://vortaro.lipu.dev' + url.pathname + url.search, 301);
+    }
+
     // Yandex Webmaster verification: must serve at this exact .html path with
     // a 200, not the 308 Cloudflare Pages issues for .html extensions by default.
     if (url.pathname === '/yandex_a4663d340339ec30.html') {
@@ -280,7 +285,7 @@ export default {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             "itemListElement": [
-              { "@type": "ListItem", "position": 1, "name": "Vortaro", "item": "https://ido-vortaro.pages.dev/" },
+              { "@type": "ListItem", "position": 1, "name": "Vortaro", "item": "https://vortaro.lipu.dev/" },
               { "@type": "ListItem", "position": 2, "name": decodedWord, "item": canonicalUrl }
             ]
           }
@@ -295,7 +300,7 @@ export default {
             "inDefinedTermSet": {
               "@type": "DefinedTermSet",
               "name": "Ido-Esperanto Vortaro",
-              "url": "https://ido-vortaro.pages.dev/"
+              "url": "https://vortaro.lipu.dev/"
             }
           });
         }

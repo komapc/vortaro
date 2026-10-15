@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const HOST = 'ido-vortaro.pages.dev';
+const HOST = 'vortaro.lipu.dev';
 const KEY = 'd485a5188a78f9ba43783e4a9ea2ff1f'; // served at /<KEY>.txt
 const ROOT = path.join(__dirname, '..');
 const STATE = path.join(ROOT, 'indexnow-state.json');
