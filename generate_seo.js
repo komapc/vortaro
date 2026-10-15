@@ -186,6 +186,8 @@ ${itemRows}
         ${prev ? `<a href="/browse/${slug}-${prev}">« Antea pagino</a>` : ''}
         ${next ? `<a href="/browse/${slug}-${next}">Sequanta pagino »</a>` : ''}
     </div>
+    ${pageCount > 1 ? `<div class="pager pages">${Array.from({ length: pageCount }, (_, i) => i + 1)
+      .map((n) => (n === pageNo ? `<strong>${n}</strong>` : `<a href="/browse/${slug}-${n}">${n}</a>`)).join(' ')}</div>` : ''}
 </body>
 </html>
 `;
