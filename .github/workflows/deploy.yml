@@ -1,0 +1,37 @@
+# Deploys the site to Cloudflare Pages (vortaro.lipu.dev, project ido-vortaro) on every
+# push to main. Needs the repo secret CLOUDFLARE_API_TOKEN (Pages:Edit).
+# Without the token the deploy step is skipped, so the workflow stays green.
+# IndexNow is not run here: it records state in indexnow-state.json; run `npm run indexnow` locally.
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: a4f85dfdebcf5fa0a516297f9c6dc029 # not a secret
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - name: Generate SEO pages and sitemaps
+        run: npm run postbuild
+      - name: Deploy
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        run: npx wrangler pages deploy . --project-name ido-vortaro --branch main --commit-dirty=true
