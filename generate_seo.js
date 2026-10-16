@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DOMAIN = 'https://ido-vortaro.pages.dev';
+const DOMAIN = 'https://vortaro.lipu.dev';
 const DICTIONARY_PATH = path.join(__dirname, 'dictionary.json');
 const PKG = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf8'));
 const VERSION = PKG.version;
