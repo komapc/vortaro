@@ -43,8 +43,8 @@ indexHtml = indexHtml.replace(/[\d,.]+\+ (Entries|entries)/g, `${roundedCount}+ 
 indexHtml = indexHtml.replace(/(<span id="wordCount">)[^<]*(<\/span>)/, `$1${entries.length.toLocaleString('en-US')}$2`);
 // Footer project links come from projects.json (single place to edit).
 const projects = JSON.parse(fs.readFileSync(path.join(__dirname, 'projects.json'), 'utf8'));
-const projectsHtml = projects
-  .map((p) => `<a href="${p.url}">${p.name}</a> (<a href="${p.code}" target="_blank">kodo</a>)`)
+const projectsHtml = ['<a href="https://lipu.dev/">lipu.dev</a>']
+  .concat(projects.map((p) => `<a href="${p.url}">${p.name}</a> (<a href="${p.code}" target="_blank">kodo</a>)`))
   .join(' <span class="footer-separator">·</span>\n                ');
 indexHtml = indexHtml.replace(
   /(<!-- projects:start[^>]*-->)[\s\S]*?(<!-- projects:end -->)/,
