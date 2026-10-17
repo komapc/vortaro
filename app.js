@@ -934,7 +934,7 @@ function translateFooter(lang) {
         // Line 2: Resources & Info
         lines[1].innerHTML = `
             ${t.resources}: <a href="https://github.com/apertium" target="_blank">Apertium</a> <span class="footer-separator">·</span>
-            ${t.contact}: <a href="mailto:komapc@gmail.com">komapc@gmail.com</a> <span class="footer-separator">·</span>
+            ${t.contact}: <a href="https://github.com/komapc" target="_blank">GitHub</a> <span class="footer-separator">·</span>
             <a href="https://github.com/komapc/vortaro/issues/new?labels=bug&title=Error%3A+%5Bword%5D" target="_blank">${t.report}</a> <span class="footer-separator">·</span>
             <a href="/browse/" style="color:white; text-decoration:none; font-weight:600;">${t.browse}</a> <span class="footer-separator">·</span>
             <button onclick="showAboutModal('${lang}')" style="background:none; border:none; color:white; cursor:pointer; font:inherit; padding:0; font-weight:600;">${t.about}</button>
