@@ -1195,22 +1195,28 @@ function startApp() {
     initializeVersion();
 }
 
-if (hasServerRenderedResult()) {
-    // Server-rendered word page: everything above is already on screen, so do
-    // not download/parse the dictionary until the user actually interacts.
-    // Plain link clicks (related words, browse) navigate away — skip those.
-    startApp();
-    const wake = (e) => {
-        if (e.target && e.target.closest && e.target.closest('a[href]')) { return; }
-        ['pointerdown', 'keydown', 'focusin', 'touchstart'].forEach(
-            (type) => document.removeEventListener(type, wake, true)
-        );
-        ensureDictionary();
-    };
+// Everything above the dictionary (page content, empty state, search box) paints
+// first; the 7MB dictionary never blocks it. search() lazy-loads it on demand.
+// Server-rendered word page: do not download/parse the dictionary until the user
+// actually interacts. Home page: fetch it right after load, when the network is idle
+// (awaiting it before startApp() made the empty state repaint at dictionary-load
+// time, i.e. LCP ~5.5s on slow mobile).
+// Plain link clicks (related words, browse) navigate away: skip those.
+startApp();
+const wake = (e) => {
+    if (e.target && e.target.closest && e.target.closest('a[href]')) { return; }
     ['pointerdown', 'keydown', 'focusin', 'touchstart'].forEach(
-        (type) => document.addEventListener(type, wake, { capture: true, passive: true })
+        (type) => document.removeEventListener(type, wake, true)
     );
-} else {
-    ensureDictionary().then(startApp);
+    ensureDictionary();
+};
+['pointerdown', 'keydown', 'focusin', 'touchstart'].forEach(
+    (type) => document.addEventListener(type, wake, { capture: true, passive: true })
+);
+if (!hasServerRenderedResult()) {
+    window.addEventListener('load', () => {
+        if (window.requestIdleCallback) { requestIdleCallback(ensureDictionary, { timeout: 3000 }); }
+        else { setTimeout(ensureDictionary, 1500); }
+    }, { once: true });
 }
 
