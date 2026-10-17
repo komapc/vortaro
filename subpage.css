@@ -1,0 +1,6 @@
+/* Secondary pages (about-*, browse/*): same purple gradient as the main page, content on a white card. */
+html { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) fixed; min-height: 100%; }
+body { background: #fff !important; margin: 20px auto !important; padding: 30px !important; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, .2); box-sizing: border-box; }
+.card { background: transparent !important; box-shadow: none !important; padding: 0 !important; }
+h1, h2, h3, a, .back-link { color: #4c3f9e; }
+.lang-btn.active { background: #4c3f9e !important; border-color: #4c3f9e !important; color: #fff !important; }

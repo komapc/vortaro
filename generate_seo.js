@@ -174,6 +174,7 @@ return `<!DOCTYPE html>
         a { color: #1f3f7a; } .eo { color: #555; }
         .pager { margin: 16px 0; } .pager a { margin-right: 12px; }
     </style>
+    <link rel="stylesheet" href="/subpage.css">
 </head>
 <body>
     <p><a href="/">« Ido-Esperanto Vortaro</a> · <a href="/browse/">Indexo</a></p>
@@ -241,6 +242,7 @@ const browseIndex = `<!DOCTYPE html>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; color: #333; }
         h1 { color: #1f3f7a; } a { color: #1f3f7a; } li { margin-bottom: 4px; }
     </style>
+    <link rel="stylesheet" href="/subpage.css">
 </head>
 <body>
     <p><a href="/">« Ido-Esperanto Vortaro</a></p>

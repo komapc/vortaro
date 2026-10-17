@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vortaro-v1.3.5';
+const CACHE_NAME = 'vortaro-v1.3.6';
 // dictionary.json is deliberately NOT precached: at 7MB it would be
 // re-downloaded by every user on every version bump, and one flaky request
 // would fail the whole atomic cache.addAll install. The runtime
