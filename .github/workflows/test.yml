@@ -1,58 +1,43 @@
-name: Test and Deploy
+name: Test
 
+# Deploy lives in deploy.yml (Cloudflare Pages, runs the tests itself). The old
+# job here pushed the whole repo to a gh-pages branch that nothing serves
+# (GitHub Pages is the legacy-redirect branch), so it was removed.
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Run linting
-      run: npm run lint
-      continue-on-error: true  # Don't fail build on lint errors initially
-      
-    - name: Run tests
-      run: npm test
-      
-    - name: Run tests with coverage
-      run: npm run test:coverage
-      
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./coverage/lcov.info
-        fail_ci_if_error: false
+    - uses: actions/checkout@v4
 
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    permissions:
-      contents: write
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - uses: actions/setup-node@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./
-        exclude_assets: '.github,node_modules,test,package*.json,.gitignore'
+        node-version: 20
+        cache: npm
+
+    - run: npm ci --no-audit --no-fund
+
+    - name: Lint
+      run: npm run lint
+      continue-on-error: true  # advisory until the backlog is cleared
+
+    # One run covers both: coverage includes the plain test results.
+    - name: Tests with coverage
+      run: npm run test:coverage
+
+    - uses: codecov/codecov-action@v5
+      with:
+        files: ./coverage/lcov.info
+        fail_ci_if_error: false
