@@ -925,11 +925,9 @@ function translateFooter(lang) {
     if (lines.length >= 2) {
         // Line 1: Projects
         lines[0].innerHTML = `
-            ${t.projects}: 
             <a href="https://lipu.dev/">lipu.dev</a> <span class="footer-separator">·</span>
-            <a href="https://vortaro.lipu.dev/">Vortaro</a> (<a href="https://github.com/komapc/vortaro" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
-            <a href="https://tradukilo.lipu.dev/">Tradukilo</a> (<a href="https://github.com/komapc/ido-epo-translator" target="_blank">${t.code}</a>) <span class="footer-separator">·</span>
-            <a href="https://echodrift.lipu.dev/">EchoDrift</a> (<a href="https://github.com/komapc/phonomorph" target="_blank">${t.code}</a>)
+            <a href="https://tradukilo.lipu.dev/">Tradukilo</a> <span class="footer-separator">·</span>
+            <a href="https://github.com/komapc/vortaro" target="_blank">${t.code}</a>
         `;
 
         // Line 2: Resources & Info
