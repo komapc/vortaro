@@ -88,15 +88,9 @@
          a synchronous CDN script in <head> blocks first paint -->
     <script defer src="https://cdn.jsdelivr.net/npm/pulltorefreshjs@0.1.22/dist/index.umd.min.js"></script>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DMH4HKHLLS"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-DMH4HKHLLS');
-    </script>
+<!-- Google Analytics: loads only after consent (see consent.js) -->
+    <script>window.gtag=function(){};</script>
+    <script defer src="/consent.js" data-ga="G-DMH4HKHLLS"></script>
 </head>
 
 <body>
