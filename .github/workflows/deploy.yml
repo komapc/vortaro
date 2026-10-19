@@ -24,7 +24,7 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: a4f85dfdebcf5fa0a516297f9c6dc029 # not a secret
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: npm
