@@ -666,6 +666,8 @@ function toggleDirection() {
     const query = searchInput.value.trim();
     if (query) {
         window.history.replaceState(null, '', `/${currentDirection}/${encodeURIComponent(query)}`);
+    } else {
+        window.history.replaceState(null, '', currentDirection === 'eo-io' ? '/eo-io/' : '/');
     }
 
     // Re-run search if there's a query
@@ -1088,6 +1090,12 @@ function parseUrl() {
     const pathMatch = pathname.match(/^\/(io-eo|eo-io)\/(.+)$/);
     if (pathMatch) {
         return { direction: pathMatch[1], query: decodeURIComponent(pathMatch[2]) };
+    }
+
+    // 1b. Direction landing page without a word: /eo-io/
+    const dirMatch = pathname.match(/^\/(io-eo|eo-io)\/?$/);
+    if (dirMatch) {
+        return { direction: dirMatch[1], query: '' };
     }
 
     // 2. Try legacy hash: #io-eo:hundo

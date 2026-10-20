@@ -320,6 +320,29 @@ describe('_worker.js SEO meta handling', () => {
     expect(await res.text()).toContain('about');
   });
 
+  test('/eo-io/ is an indexable Esperanto→Ido landing page with its own title and canonical', async () => {
+    const res = await worker.fetch(new Request('https://vortaro.lipu.dev/eo-io/'), makeEnv());
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).toContain('<title>Esperanto-Ido Vortaro — Esperanta-Idala vortolibro</title>');
+    expect(html).toContain('<link rel="canonical" href="https://vortaro.lipu.dev/eo-io/">');
+    expect(html).not.toContain(GENERIC_TITLE);
+    expect(html).not.toContain('<link rel="canonical" href="https://vortaro.lipu.dev/">');
+  });
+
+  test('/eo-io 301s to /eo-io/, /io-eo and /io-eo/ 301 to the home page', async () => {
+    const cases = [
+      ['https://vortaro.lipu.dev/eo-io', 'https://vortaro.lipu.dev/eo-io/'],
+      ['https://vortaro.lipu.dev/io-eo', 'https://vortaro.lipu.dev/'],
+      ['https://vortaro.lipu.dev/io-eo/', 'https://vortaro.lipu.dev/'],
+    ];
+    for (const [from, to] of cases) {
+      const res = await worker.fetch(new Request(from), makeEnv());
+      expect(res.status).toBe(301);
+      expect(res.headers.get('location')).toBe(to);
+    }
+  });
+
   test('legacy /?q= URLs 301-redirect to the pretty path', async () => {
     const res = await worker.fetch(
       new Request('https://vortaro.lipu.dev/?q=hundo&dir=eo-io'),
