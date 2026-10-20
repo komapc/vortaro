@@ -23,7 +23,7 @@
   var T = {
     en: ['We use Google Analytics (cookies) to count visits and searched words.', 'Allow', 'Decline'],
     eo: ['Ni uzas Google Analytics (kuketojn) por kalkuli vizitojn kaj serĉitajn vortojn.', 'Permesi', 'Rifuzi'],
-    io: ['Ni uzas Google Analytics (kuketi) por kontar vizito e serchita vorti.', 'Permisar', 'Refuzar']
+    io: ['Ni uzas Google Analytics (kuketi) por kontar viziti e serchita vorti.', 'Permisar', 'Refuzar']
   };
 
   function banner() {
