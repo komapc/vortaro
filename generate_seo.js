@@ -278,6 +278,7 @@ const fileLetter = (l) => (l === '_' ? 'misc' : l);
 
 writeSitemap('sitemap-pages.xml', [
   { loc: '/', priority: '1.0' },
+  { loc: '/eo-io/', priority: '0.8' },
   { loc: '/about-io', priority: '0.7' },
   { loc: '/about-en', priority: '0.7' },
   { loc: '/about-eo', priority: '0.7' },

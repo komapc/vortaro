@@ -168,6 +168,38 @@ export default {
       return Response.redirect(newUrl, 301);
     }
 
+    // 1a. Direction landing pages. /io-eo is the default direction, i.e. the
+    // home page; /eo-io/ is its own indexable page that opens the dictionary
+    // Esperanto → Ido (app.js reads the direction from the path).
+    if (url.pathname === '/io-eo' || url.pathname === '/io-eo/') {
+      return Response.redirect(`${url.origin}/${url.search}`, 301);
+    }
+    if (url.pathname === '/eo-io') {
+      return Response.redirect(`${url.origin}/eo-io/${url.search}`, 301);
+    }
+    if (url.pathname === '/eo-io/') {
+      const response = await env.ASSETS.fetch(new URL('/index.html', url.origin));
+      if (!response.ok) return response;
+      const title = 'Esperanto-Ido Vortaro — Esperanta-Idala vortolibro';
+      const description = 'Free Esperanto-Ido dictionary with 37,000+ entries. Senpaga Esperanta-Idala vortaro: trovez la Ido-vorton por ula Esperanta vorto.';
+      const canonicalUrl = `${url.origin}/eo-io/`;
+      const metaTags = `
+    <title>${title}</title>
+    <meta name="description" content="${description}">
+    <link rel="canonical" href="${canonicalUrl}">
+    <meta property="og:title" content="${title}">
+    <meta property="og:description" content="${description}">
+    <meta property="og:url" content="${canonicalUrl}">
+    <meta property="twitter:title" content="${title}">
+    <meta property="twitter:description" content="${description}">
+        `;
+      const html = stripDefaultSeoTags(await response.text()).replace('</head>', `${metaTags}\n  </head>`);
+      const headers = new Headers(response.headers);
+      headers.set('content-type', 'text/html;charset=UTF-8');
+      headers.delete('content-length');
+      return new Response(html, { status: 200, headers });
+    }
+
     // 1. Handle Pretty URLs for SPA
     // Paths like /io-eo/hundo or /eo-io/hundo should serve index.html
     const prettyUrlMatch = url.pathname.match(/^\/(io-eo|eo-io)\/(.+)$/);
