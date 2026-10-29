@@ -921,3 +921,65 @@ footer a:hover {
 .word-family .eo {
     color: #555;
 }
+
+/* Homepage static content (#home-intro, stripped from word pages by _worker.js) */
+header h1 .h1-sub,
+header .site-title .h1-sub {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 500;
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+.home-intro {
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: white;
+    border-radius: 12px;
+    line-height: 1.6;
+}
+
+.home-intro h2 {
+    font-size: 1.1rem;
+    color: #1f3f7a;
+    margin: 18px 0 8px;
+}
+
+.home-intro h2:first-child {
+    margin-top: 0;
+}
+
+.home-intro p {
+    margin-bottom: 10px;
+}
+
+.home-intro a,
+.cross-link a {
+    color: #1f3f7a;
+}
+
+.home-intro .core-words {
+    list-style: none;
+    padding: 0;
+    columns: 4 9em;
+    column-gap: 18px;
+}
+
+.home-intro .core-words li {
+    break-inside: avoid;
+}
+
+.home-intro .gloss {
+    color: #555;
+}
+
+.home-intro .letter-links {
+    line-height: 2;
+    word-spacing: 4px;
+}
+
+.cross-link {
+    margin-top: 12px;
+    font-size: 0.95rem;
+}

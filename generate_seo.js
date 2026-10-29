@@ -119,6 +119,48 @@ const eoLetters = Object.keys(eoShards).sort();
 const eoCount = eoLetters.reduce((n, l) => n + Object.keys(eoShards[l]).length, 0);
 console.log(`✅ Esperanto→Ido: ${eoCount} headwords in ${eoLetters.length} shards (${eoSkippedIdentical} identical-string entries skipped).`);
 
+// --- Thin pages + cross-direction links (encoded in the shards) -------------
+// Multi-word headwords (mostly Wikipedia titles: "AFK Ajax", "Gottlob Frege")
+// and Capitalized single words whose only translation is the same string
+// (Aachen -> Aachen) carry no dictionary content beyond the name itself. Their
+// pages keep working but are flagged t:1: the worker marks them noindex,follow
+// and they are left out of the sitemaps. Decided here ONCE so the worker never
+// re-implements the heuristic.
+const isThin = (headword, targets) => /\s/.test(headword)
+  || (/^\p{Lu}/u.test(headword) && targets.length > 0
+    && targets.every((t) => String(t).toLowerCase() === headword.toLowerCase()));
+const eoKeyOf = (w) => {
+  const s = eoShards[eoShardKey(w)];
+  if (!s) return null;
+  return [w, w.toLowerCase()].find((c) => s[c]) || null;
+};
+const ioKeyOf = (w) => {
+  const s = shards[shardKey(w)];
+  if (!s) return null;
+  return [w, w.toLowerCase(), w.charAt(0).toUpperCase() + w.slice(1)].find((c) => s[c]) || null;
+};
+let thinIo = 0; let thinEo = 0; let pairCount = 0;
+for (const shard of Object.values(shards)) {
+  for (const [lemma, data] of Object.entries(shard)) {
+    if (isThin(lemma, data.e)) { data.t = 1; thinIo++; }
+    // r: translations that have their own /eo-io/ page (linked from the gloss).
+    const r = data.e.filter((w) => eoKeyOf(String(w).trim()) === String(w).trim());
+    if (r.length) data.r = r;
+    // x: the same string is also an Esperanto headword (/eo-io/<x>) — a
+    // different word in the other direction, cross-linked from this page.
+    const x = eoKeyOf(lemma);
+    if (x) { data.x = x; pairCount++; }
+  }
+}
+for (const shard of Object.values(eoShards)) {
+  for (const [key, data] of Object.entries(shard)) {
+    if (isThin(key, data.i)) { data.t = 1; thinEo++; }
+    const x = ioKeyOf(key);
+    if (x) data.x = x;
+  }
+}
+console.log(`✅ Thin (noindex, not sitemapped): ${thinIo} io-eo + ${thinEo} eo-io pages; ${pairCount} io-eo/eo-io same-string pairs cross-linked.`);
+
 // --- A–Z browse pages (/browse/<letter>-<n>) --------------------------------
 // The word pages were sitemap-only orphans (zero internal links), which search
 // engines index reluctantly: Yandex had 1 of 38k pages searchable. These hub
@@ -251,6 +293,62 @@ ${eoLetters.map((l) => `        <li><a href="/browse/eo-${l}-1">${letterLabel(l)
 fs.writeFileSync(path.join(browseDir, 'index.html'), browseIndex);
 console.log(`✅ Browse pages: ${browseUrls.length} letter pages + index in browse/.`);
 
+// --- Homepage static content (index.html, between <!-- seo:* --> markers) ---
+// The homepage was ~66 words of SPA chrome ("Crawled – currently not indexed").
+// The prose lives in index.html; the data-dependent parts — counts, A–Z hub
+// links, a core-vocabulary list — are regenerated here between markers, so
+// reruns are idempotent. The worker strips the whole #home-intro block from
+// word pages (it would otherwise repeat on all of them).
+// No frequency data in the dictionary: hand-picked everyday words, kept only
+// when they have a real page (no 404s, no identical-string 301s).
+const CORE_IDO = [
+  'la', 'e', 'di', 'en', 'kun', 'por', 'ne', 'yes', 'me', 'tu', 'il', 'el', 'ni', 'li',
+  'esar', 'havar', 'facar', 'irar', 'venar', 'vidar', 'parolar', 'dicar', 'savar', 'povar',
+  'volar', 'donar', 'manjar', 'drinkar', 'dormar', 'laborar', 'lernar', 'skribar', 'lektar', 'amar',
+  'homo', 'viro', 'muliero', 'infanto', 'amiko', 'familio', 'patro', 'matro', 'domo', 'urbo',
+  'lando', 'linguo', 'vorto', 'libro', 'skolo', 'aquo', 'pano', 'dio', 'nokto', 'yaro',
+  'tempo', 'suno', 'arboro', 'hundo', 'kato', 'bona', 'mala', 'granda', 'mikra', 'nova',
+  'bela', 'yuna', 'olda', 'multa',
+];
+const CORE_EO = [
+  'esti', 'havi', 'fari', 'iri', 'veni', 'vidi', 'paroli', 'diri', 'scii', 'povi',
+  'voli', 'doni', 'manĝi', 'trinki', 'dormi', 'labori', 'lerni', 'skribi', 'legi', 'ami',
+  'virino', 'infano', 'patrino', 'lingvo', 'lernejo', 'akvo', 'tago', 'jaro', 'arbo', 'malgranda',
+  'juna', 'maljuna', 'ankaŭ', 'kaj', 'sed', 'kiu',
+];
+const HOME_CORE_MAX = 70;
+const coreIo = CORE_IDO
+  .map((w) => [w, shards[shardKey(w)] && shards[shardKey(w)][w]])
+  .filter(([, d]) => d && !d.t)
+  .slice(0, HOME_CORE_MAX);
+const coreEo = CORE_EO
+  .map((w) => [w, eoShards[eoShardKey(w)] && eoShards[eoShardKey(w)][w]])
+  .filter(([, d]) => d && !d.t)
+  .slice(0, HOME_CORE_MAX);
+const coreList = (pairs, dir) => pairs.map(([w, d]) => {
+  const gloss = (dir === 'io-eo' ? d.e : d.i)[0]; // primary (most reliable) translation
+  return `<li><a href="/${dir}/${encodeURIComponent(w)}">${escapeHtml(w)}</a> <span class="gloss">→ ${escapeHtml(gloss)}</span></li>`;
+}).join('\n                ');
+const letterLinks = (ls, prefix) => ls
+  .map((l) => `<a href="/browse/${prefix}${l}-1">${letterLabel(l)}</a>`)
+  .join(' ');
+const homeBlocks = {
+  'io-count': wordData.length.toLocaleString('en-US'),
+  'eo-count': eoCount.toLocaleString('en-US'),
+  'core-io': `\n                ${coreList(coreIo, 'io-eo')}\n                `,
+  'core-eo': `\n                ${coreList(coreEo, 'eo-io')}\n                `,
+  'letters-io': letterLinks(letters, ''),
+  'letters-eo': letterLinks(eoLetters, 'eo-'),
+};
+let homeHtml = fs.readFileSync(indexPath, 'utf8');
+for (const [name, content] of Object.entries(homeBlocks)) {
+  const re = new RegExp(`(<!-- seo:${name} -->)[\\s\\S]*?(<!-- /seo:${name} -->)`);
+  if (!re.test(homeHtml)) throw new Error(`index.html is missing the <!-- seo:${name} --> marker`);
+  homeHtml = homeHtml.replace(re, (_, open, close) => `${open}${content}${close}`);
+}
+fs.writeFileSync(indexPath, homeHtml);
+console.log(`✅ Homepage content: ${coreIo.length}/${CORE_IDO.length} core Ido + ${coreEo.length}/${CORE_EO.length} core Esperanto words linked.`);
+
 // --- Sitemaps: one index + per-direction/per-letter files -------------------
 // lastmod = the dictionary's build date (data version), the same value for
 // every URL it covers: it moves only when the dictionary is regenerated, so
@@ -264,6 +362,7 @@ for (const f of fs.readdirSync(__dirname)) {
 }
 const sitemapFiles = [];
 const writeSitemap = (name, urls) => {
+  if (!urls.length) return 0; // a letter with only thin entries gets no file
   const body = urls
     .map(({ loc, priority }) => `  <url><loc>${DOMAIN}${loc}</loc><lastmod>${buildDate}</lastmod><priority>${priority}</priority></url>`)
     .join('\n');
@@ -288,14 +387,16 @@ let ioEoUrls = 0;
 letters.forEach((l) => {
   ioEoUrls += writeSitemap(
     `sitemap-io-eo-${fileLetter(l)}.xml`,
-    Object.keys(shards[l]).sort().map((lemma) => ({ loc: `/io-eo/${encodeURIComponent(lemma)}`, priority: '0.6' }))
+    Object.keys(shards[l]).sort().filter((lemma) => !shards[l][lemma].t)
+      .map((lemma) => ({ loc: `/io-eo/${encodeURIComponent(lemma)}`, priority: '0.6' }))
   );
 });
 let eoIoUrls = 0;
 eoLetters.forEach((l) => {
   eoIoUrls += writeSitemap(
     `sitemap-eo-io-${fileLetter(l)}.xml`,
-    Object.keys(eoShards[l]).sort().map((w) => ({ loc: `/eo-io/${encodeURIComponent(w)}`, priority: '0.5' }))
+    Object.keys(eoShards[l]).sort().filter((w) => !eoShards[l][w].t)
+      .map((w) => ({ loc: `/eo-io/${encodeURIComponent(w)}`, priority: '0.5' }))
   );
 });
 fs.writeFileSync(
