@@ -38,10 +38,15 @@ const INDEX_HTML = `<!doctype html><html><head>
     <meta property="og:url" content="https://vortaro.lipu.dev/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://vortaro.lipu.dev/og-image.png">
-    <meta property="twitter:title" content="GENERIC TW TITLE">
-    <meta property="twitter:description" content="GENERIC TW DESCRIPTION">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GENERIC TW TITLE">
+    <meta name="twitter:description" content="GENERIC TW DESCRIPTION">
     <link rel="canonical" href="https://vortaro.lipu.dev/">
-  </head><body><header><h1>📖 Vortaro</h1></header><div id="results" class="results"></div></body></html>`;
+  </head><body><header><h1>📖 Vortaro</h1></header><input id="searchInput"><div id="results" class="results"></div>
+        <!-- home-intro: static homepage content -->
+        <section id="home-intro">HOME INTRO TEXT</section>
+        <!-- /home-intro -->
+</body></html>`;
 
 const HUNDO_SHARD = {
   hundo: { e: ['hundo'], m: ['o__n'] },
@@ -51,12 +56,20 @@ const HUNDO_SHARD = {
   hundar: { e: ['hundi'], m: ['ar__vblex'] },
   'hundo-ludo': { e: ['hundludo'], m: ['o__n'] },
 };
+// Flags set by generate_seo.js: t = thin (noindex), r = glosses that have an
+// eo-io page, x = the same string is also an eo-io headword.
+const Z_SHARD = {
+  'Zed Zulu': { e: ['Zed Zulu'], m: [], t: 1 },
+  zom: { e: ['domo', 'homo'], m: [], r: ['domo'], x: 'zom' },
+  zz: { e: ['zz'], m: [], r: ['zz'], x: 'zz' },
+};
 
 // eo -> io shards. 'domo' is only reachable as eo (no io lemma 'domo'); 'hundo'
 // is intentionally absent (identical-string entry, redirected to io-eo).
 // Diacritic words shard under the stripped letter (ĉ -> c).
 const EO_D_SHARD = {
   domo: { i: ['hundo', 'hundeto'], m: ['o__n'] },
+  'dua vorto': { i: ['hundeto'], m: [], t: 1 },
   doma: { i: ['hunda'], m: ['a__adj'] },
 };
 const EO_C_SHARD = { 'ĉevalo': { i: ['hundo'], m: ['o__n'] } };
@@ -82,7 +95,15 @@ function makeEnv({ throwOnOrigin = false, originStatus = 404, indexStatus = 200,
       return new Response(JSON.stringify(EO_C_SHARD), { status: 200 });
     }
     if (reqUrl.pathname === '/seo/eo-h.json') {
-      return new Response(JSON.stringify({ Hamburgo: { i: ['Hamburg'], m: ['o__n'] } }), { status: 200 });
+      return new Response(JSON.stringify({
+        Hamburgo: { i: ['Hamburg'], m: ['o__n'] },
+      }), { status: 200 });
+    }
+    if (reqUrl.pathname === '/seo/z.json') {
+      return new Response(JSON.stringify(Z_SHARD), { status: 200 });
+    }
+    if (reqUrl.pathname === '/seo/eo-z.json') {
+      return new Response(JSON.stringify({ zom: { i: ['hundo'], m: [], x: 'zom' } }), { status: 200 });
     }
     if (reqUrl.pathname === '/seo/h.json') {
       return new Response(JSON.stringify(HUNDO_SHARD), { status: 200 });
@@ -124,19 +145,22 @@ describe('_worker.js fetch handler — ASSETS.fetch call sites', () => {
     expect(indexCall[0]).not.toBeInstanceOf(Request);
   });
 
-  test('(b) unmatched extensionless route falls back to a clean index.html fetch', async () => {
-    const env = makeEnv({ originStatus: 404 });
-    const request = new Request('https://vortaro.lipu.dev/some-unknown-route');
+  test('(b) unknown extensionless route is a real 404 page, whether ASSETS 404s or SPA-falls back', async () => {
+    for (const env of [makeEnv({ originStatus: 404 }), makeEnv({ spaFallback: true })]) {
+      const res = await worker.fetch(new Request('https://vortaro.lipu.dev/zz-garbage-path-123'), env);
+      expect(res.status).toBe(404);
+      expect(res.headers.get('content-type')).toBe('text/html;charset=UTF-8');
+      const html = await res.text();
+      expect(html).toContain('<meta name="robots" content="noindex">');
+      expect(html).toContain('<a href="/">');
+      expect(html).not.toContain('id="searchInput"');
+    }
+  });
 
-    const res = await worker.fetch(request, env);
+  test('homepage is served as-is (200, with its static intro)', async () => {
+    const res = await worker.fetch(new Request('https://vortaro.lipu.dev/'), makeEnv({ spaFallback: true }));
     expect(res.status).toBe(200);
-    const html = await res.text();
-    expect(html).toContain(GENERIC_TITLE); // unmodified SPA shell is correct here
-
-    expect(env.ASSETS.fetch).toHaveBeenCalledTimes(2);
-    const secondArg = env.ASSETS.fetch.mock.calls[1][0];
-    expect(secondArg).not.toBeInstanceOf(Request);
-    expect(new URL(secondArg).pathname).toBe('/index.html');
+    expect(await res.text()).toContain('HOME INTRO TEXT');
   });
 
   test('(c) exception during the static-asset fetch is caught and falls back cleanly', async () => {
@@ -187,6 +211,64 @@ describe('_worker.js SEO meta handling', () => {
     expect(res.status).toBe(404);
     const html = await res.text();
     expect(html).toContain('<div id="results" class="results">'); // page still works for humans
+    expect(html).toContain('<meta name="robots" content="noindex">');
+    expect(html).not.toContain('rel="canonical"');
+    expect(html).not.toContain('application/ld+json');
+    expect(html).toContain('<meta name="description" content="„zzznotaword“ ne trovesas en la vortaro.');
+    expect(html).not.toContain('HOME INTRO TEXT');
+  });
+
+  test('blank or malformed word is a 404, not an empty title or a crash', async () => {
+    for (const p of ['/io-eo/%20', '/io-eo/%E0', '/eo-io/%20']) {
+      const res = await worker.fetch(new Request('https://vortaro.lipu.dev' + p), makeEnv());
+      expect(res.status).toBe(404);
+      const html = await res.text();
+      expect(html).toContain('<title>Ido-Esperanto Vortaro</title>');
+      expect(html).toContain('<meta name="robots" content="noindex">');
+    }
+  });
+
+  test('description attribute is never cut short by a literal quote', async () => {
+    const html = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/hundo'), makeEnv())).text();
+    const desc = html.match(/<meta name="description" content="([^"]*)">/);
+    expect(desc).not.toBeNull();
+    expect(desc[1]).toContain('Trovez „hundo“ en la senpaga');
+  });
+
+  test('word pages drop the homepage intro block and keep a single twitter:card', async () => {
+    const html = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/hundo'), makeEnv())).text();
+    expect(html).not.toContain('HOME INTRO TEXT');
+    expect(html).not.toContain('home-intro');
+    expect(html.match(/name="twitter:card"/g)).toHaveLength(1);
+    expect(html.match(/twitter:title/g)).toHaveLength(1);
+    expect(html).toContain('<meta name="twitter:title" content="hundo → hundo — Ido-Esperanto Vortaro">');
+  });
+
+  test('thin entries (t:1) are working 200 pages marked noindex,follow without canonical', async () => {
+    for (const p of ['/io-eo/' + encodeURIComponent('Zed Zulu'), '/eo-io/' + encodeURIComponent('dua vorto')]) {
+      const res = await worker.fetch(new Request('https://vortaro.lipu.dev' + p), makeEnv());
+      expect(res.status).toBe(200);
+      const html = await res.text();
+      expect(html).toContain('<meta name="robots" content="noindex,follow">');
+      expect(html).not.toContain('rel="canonical"');
+      expect(html).toContain('class="result-item"');
+    }
+    const normal = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/hundo'), makeEnv())).text();
+    expect(normal).not.toContain('name="robots"');
+  });
+
+  test('io-eo and eo-io pages of the same string cross-link; glosses with an eo page are linked', async () => {
+    const io = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/zom'), makeEnv())).text();
+    expect(io).toContain('<p class="cross-link">Anke en Esperanto: <a href="/eo-io/zom">zom</a>');
+    expect(io).toContain('→ <a href="/eo-io/domo">domo</a>, homo</div>');
+    const eo = await (await worker.fetch(new Request('https://vortaro.lipu.dev/eo-io/zom'), makeEnv())).text();
+    expect(eo).toContain('<p class="cross-link">Anke en Ido: <a href="/io-eo/zom">zom</a>');
+    const plain = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/hundo'), makeEnv())).text();
+    expect(plain).not.toContain('class="cross-link"');
+    // same-string page already linked as a gloss: no second, redundant link
+    const dup = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/zz'), makeEnv())).text();
+    expect(dup).toContain('→ <a href="/eo-io/zz">zz</a></div>');
+    expect(dup).not.toContain('class="cross-link"');
   });
 
   test('capitalized lemma is found from a lowercase URL', async () => {

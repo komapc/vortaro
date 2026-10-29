@@ -12,11 +12,39 @@ const escapeHtml = (s) => String(s)
 // originals in place means two <meta name="description"> / og:* sets per page,
 // and OG parsers take the FIRST occurrence — so shared word links showed the
 // generic homepage card. og:type/og:image/twitter:card are kept (not re-injected).
+// The homepage's static intro (#home-intro) is removed too: repeated on every
+// word page it would be ~400 words of identical boilerplate.
 const stripDefaultSeoTags = (html) => html
   .replace(/<title>.*?<\/title>\s*/s, '')
   .replace(/[ \t]*<meta name="description"[^>]*>\n?/, '')
-  .replace(/[ \t]*<meta property="(?:og|twitter):(?:title|description|url)"[^>]*>\n?/g, '')
+  .replace(/[ \t]*<meta (?:name|property)="(?:og|twitter):(?:title|description|url)"[^>]*>\n?/g, '')
   .replace(/[ \t]*<link rel="canonical"[^>]*>\n?/, '')
+  .replace(/[ \t]*<!-- home-intro:[\s\S]*?<!-- \/home-intro -->\n?/, '')
+
+// Small standalone page for unknown top-level paths (real 404, not the SPA shell).
+const NOT_FOUND_HTML = `<!DOCTYPE html>
+<html lang="io">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagino ne trovita (404) — Ido-Esperanto Vortaro</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="stylesheet" href="/subpage.css">
+</head>
+<body>
+    <h1>Pagino ne trovita (404)</h1>
+    <p>Ca pagino ne existas. / This page does not exist.</p>
+    <p><a href="/">« Ido-Esperanto Vortaro</a> · <a href="/browse/">Indexo di vorti</a></p>
+</body>
+</html>
+`;
+// Present only in index.html (the SPA shell), never in about/browse pages.
+const SHELL_MARKER = 'id="searchInput"';
+const notFound = () => new Response(NOT_FOUND_HTML, {
+  status: 404,
+  headers: { 'content-type': 'text/html;charset=UTF-8' },
+});
 
 // Per-letter SEO shards (built by generate_seo.js), cached per isolate so the
 // 7MB dictionary is never parsed per request — only the ~200KB first-letter
@@ -222,7 +250,10 @@ export default {
 
         const langFrom = direction === 'io-eo' ? 'Ido' : 'Esperanto';
         const langTo = direction === 'io-eo' ? 'Esperanto' : 'Ido';
-        const rawWord = decodeURIComponent(word);
+        // Malformed escapes (/io-eo/%E0) and blank words (/io-eo/%20) are
+        // simply unknown words: 404 below, never a 500 or an empty-title page.
+        let rawWord = '';
+        try { rawWord = decodeURIComponent(word).trim(); } catch (e) { rawWord = ''; }
         const decodedWord = escapeHtml(rawWord);
 
         // Look up the actual translations so the page body has unique, indexable
@@ -240,7 +271,11 @@ export default {
         let formRows = [];
         let famKeys = [];
         let famShard = null;
-        if (direction === 'io-eo') {
+        // Thin entry (t:1, decided in generate_seo.js): working page, noindex.
+        let thin = false;
+        let crossHtml = '';
+        let linkedGloss = null; // io-eo: translations that have their own eo-io page
+        if (direction === 'io-eo' && rawWord) {
           const letter = shardKeyOf(rawWord);
           const shard = await getShard(env, request, letter);
           // Shard keys are exact lemmas; also try lowercase and Capitalized so
@@ -251,6 +286,12 @@ export default {
           if (entry && Array.isArray(entry.e)) {
             found = true; translations = entry.e; pos = posLabel(entry.m);
             canonicalLemma = lemma;
+            thin = entry.t === 1;
+            linkedGloss = new Set(entry.r || []);
+            // (Skipped when that page is already linked as a gloss.)
+            if (entry.x && !linkedGloss.has(entry.x)) {
+              crossHtml = `<p class="cross-link">Anke en Esperanto: <a href="/eo-io/${encodeURIComponent(entry.x)}">${escapeHtml(entry.x)}</a> (Esperanto → Ido)</p>`;
+            }
             // Internal links: alphabetical neighbors + this word's exact browse
             // page. Word pages were sitemap-only orphans, which search engines
             // barely index — these links make the 38k pages a connected graph.
@@ -267,7 +308,7 @@ export default {
               + `</nav>`;
           }
         }
-        if (direction === 'eo-io') {
+        if (direction === 'eo-io' && rawWord) {
           const letter = eoShardKeyOf(rawWord);
           const shardKey = `eo-${letter}`;
           const shard = await getShard(env, request, shardKey);
@@ -277,6 +318,10 @@ export default {
           if (entry && Array.isArray(entry.i) && entry.i.length) {
             found = true; translations = entry.i; pos = posLabel(entry.m);
             canonicalLemma = key;
+            thin = entry.t === 1;
+            if (entry.x) {
+              crossHtml = `<p class="cross-link">Anke en Ido: <a href="/io-eo/${encodeURIComponent(entry.x)}">${escapeHtml(entry.x)}</a> (Ido → Esperanto)</p>`;
+            }
             const keys = sortedShardKeys(shardKey, shard);
             const idx = keys.indexOf(key);
             const neighbors = keys.slice(Math.max(0, idx - 4), idx + 5).filter((k) => k !== key);
@@ -300,19 +345,21 @@ export default {
         }
         const transStr = translations.slice(0, 5).map(escapeHtml).join(', ');
 
-        // Richer title/description with the translation when known.
+        // Richer title/description with the translation when known. Quotes
+        // are typographic: a literal " would end the content="..." attribute
+        // (descriptions were being cut off at `Trovez ` / `Look up `).
         const title = transStr
           ? `${decodedWord} → ${transStr} — ${direction === 'eo-io' ? 'Esperanto-Ido' : 'Ido-Esperanto'} Vortaro`
-          : `${decodedWord} — Ido-Esperanto Vortaro / Dictionary`;
+          : `${decodedWord ? `„${decodedWord}“ ne trovita — ` : ''}Ido-Esperanto Vortaro`;
         const description = transStr
-          ? `${decodedWord} (${langFrom}) → ${transStr} (${langTo})${pos ? ', ' + pos : ''}. Trovez "${decodedWord}" en la senpaga Ido-Esperanto vortaro kun morfologio-analizo.`
-          : `Look up "${decodedWord}" in the Ido-Esperanto Dictionary (Vortaro / Vortlibro). Fast, comprehensive, and offline-ready.`;
+          ? `${decodedWord} (${langFrom}) → ${transStr} (${langTo})${pos ? ', ' + pos : ''}. Trovez „${decodedWord}“ en la senpaga Ido-Esperanto vortaro kun morfologio-analizo.`
+          : `${decodedWord ? `„${decodedWord}“ ne trovesas en la vortaro. ` : ''}Serchez altra vorto en la senpaga Ido-Esperanto vortaro (${langFrom} → ${langTo}).`;
 
         const canonicalUrl = canonicalLemma
           ? `${url.origin}/${direction}/${encodeURIComponent(canonicalLemma)}`
           : `${url.origin}${url.pathname}`;
 
-        const ld = [
+        const ld = !found ? [] : [
           {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
@@ -337,18 +384,24 @@ export default {
           });
         }
 
-        // Unknown eo-io words are 404s with noindex (no self-canonical for the
-        // infinite /eo-io/<anything> space); known ones are real, indexable
-        // pages with their own shard content.
+        // Unknown words (either direction) are 404s with noindex and no
+        // self-canonical (the /<dir>/<anything> space is infinite). Thin
+        // entries are working pages kept out of the index (noindex,follow, no
+        // canonical: the two signals conflict). Others are indexable.
+        const robotsTag = !found
+          ? '<meta name="robots" content="noindex">'
+          : thin
+            ? '<meta name="robots" content="noindex,follow">'
+            : `<link rel="canonical" href="${canonicalUrl}">`;
         const metaTags = `
     <title>${title}</title>
     <meta name="description" content="${description}">
-    ${direction === 'eo-io' && !found ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${canonicalUrl}">`}
+    ${robotsTag}
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">
     <meta property="og:url" content="${canonicalUrl}">
-    <meta property="twitter:title" content="${title}">
-    <meta property="twitter:description" content="${description}">
+    <meta name="twitter:title" content="${title}">
+    <meta name="twitter:description" content="${description}">
     ${ld.map((d) => `<script type="application/ld+json">${JSON.stringify(d)}</script>`).join('\n    ')}
         `;
 
@@ -363,7 +416,7 @@ export default {
           // was identical on all 38k pages, so the site title is demoted to a
           // styled <p> on word pages (same look via .site-title in style.css).
           html = html.replace(
-            /<h1>(📖 Vortaro)<\/h1>/,
+            /<h1>([\s\S]*?)<\/h1>/,
             '<p class="site-title">$1</p>'
           );
           const formsHtml = formRows.length
@@ -383,8 +436,11 @@ export default {
             + `<h1 class="source-word">${decodedWord}</h1>`
             + `<div class="target-words">→ ${direction === 'eo-io'
               ? translations.slice(0, 8).map((t) => `<a href="/io-eo/${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join(', ')
-              : transStr}</div>`
+              : translations.slice(0, 5).map((t) => (linkedGloss && linkedGloss.has(t)
+                ? `<a href="/eo-io/${encodeURIComponent(t)}">${escapeHtml(t)}</a>`
+                : escapeHtml(t))).join(', ')}</div>`
             + (pos ? `<div class="morfologio">${escapeHtml(pos)}</div>` : '')
+            + crossHtml
             + formsHtml
             + familyHtml
             + `</div>`
@@ -434,11 +490,19 @@ export default {
         return new Response(null, { status: 404 });
       }
 
-      // Fallback to index.html for SPA-like routing (if we decide to use pretty URLs later)
-      if (!response.ok && !url.pathname.includes('.')) {
-        // Clean GET (see fix above) — a rehomed Request here also returns a
-        // non-200 from ASSETS, which would 404 the SPA fallback itself.
-        return await env.ASSETS.fetch(new URL('/index.html', url.origin));
+      // Unknown extensionless path (/zz-garbage, /browse/a-99): a real 404
+      // page. Whether ASSETS 404s or (Pages SPA mode) answers 200 with the
+      // index.html shell, the status cannot be trusted — check the content:
+      // anything but the homepage that comes back as the shell is missing.
+      // Real pages (/about-en, /browse/a-1) are different documents.
+      const isHome = url.pathname === '/' || url.pathname === '/index.html';
+      if (!ext && !isHome) {
+        if (!response.ok) return response.status === 404 ? notFound() : response;
+        if ((response.headers.get('content-type') || '').includes('text/html')) {
+          const body = await response.text();
+          if (body.includes(SHELL_MARKER)) return notFound();
+          return new Response(body, { status: response.status, headers: response.headers });
+        }
       }
 
       return response;
