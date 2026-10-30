@@ -84,6 +84,11 @@ vortaro/
 (via its `postbuild`) regenerates them before upload. For local serving after a fresh
 clone, run `node generate_seo.js` once first.
 
+The `yandex_*.html` files at the repo root are Yandex Webmaster ownership checks
+(`yandex_f7ea06667ea3f0ff.html` for vortaro.lipu.dev, `yandex_a4663d340339ec30.html`
+for the old ido-vortaro.pages.dev host) and are deployed as-is — don't delete them,
+or the host loses verification.
+
 ## Related Projects
 
 - [ido-tradukilo](https://github.com/komapc/ido-tradukilo) - Full Apertium translator
