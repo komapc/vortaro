@@ -490,13 +490,13 @@ export default {
         return new Response(null, { status: 404 });
       }
 
-      // Unknown extensionless path (/zz-garbage, /browse/a-99): a real 404
-      // page. Whether ASSETS 404s or (Pages SPA mode) answers 200 with the
+      // Unknown extensionless or .html path (/zz-garbage, /browse/a-99,
+      // /pri.html): a real 404 page. Whether ASSETS 404s or (Pages SPA mode) answers 200 with the
       // index.html shell, the status cannot be trusted — check the content:
       // anything but the homepage that comes back as the shell is missing.
       // Real pages (/about-en, /browse/a-1) are different documents.
       const isHome = url.pathname === '/' || url.pathname === '/index.html';
-      if (!ext && !isHome) {
+      if ((!ext || /^html?$/i.test(ext)) && !isHome) {
         if (!response.ok) return response.status === 404 ? notFound() : response;
         if ((response.headers.get('content-type') || '').includes('text/html')) {
           const body = await response.text();
