@@ -176,6 +176,22 @@ describe('_worker.js fetch handler — ASSETS.fetch call sites', () => {
     expect(new URL(secondArg).pathname).toBe('/index.html');
   });
 
+  test('unknown .html path is a real 404 page, whether ASSETS 404s or SPA-falls back', async () => {
+    for (const env of [makeEnv({ originStatus: 404 }), makeEnv({ spaFallback: true })]) {
+      const res = await worker.fetch(new Request('https://vortaro.lipu.dev/pri.html'), env);
+      expect(res.status).toBe(404);
+      const html = await res.text();
+      expect(html).toContain('<meta name="robots" content="noindex">');
+      expect(html).not.toContain('id="searchInput"');
+    }
+  });
+
+  test('real .html file is still served', async () => {
+    const res = await worker.fetch(new Request('https://vortaro.lipu.dev/about-en.html'), makeEnv({ spaFallback: true }));
+    expect(res.status).toBe(200);
+    expect(await res.text()).toBe('<html>about</html>');
+  });
+
   test('genuine index.html failure on the pretty-URL path is passed through, not faked as 200', async () => {
     const env = makeEnv({ indexStatus: 500 });
     const request = new Request('https://vortaro.lipu.dev/io-eo/hundo');

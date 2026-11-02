@@ -989,7 +989,12 @@ document.getElementById('randomBtn').addEventListener('keydown', (e) => {
 });
 
 // About modal
-document.getElementById('infoButton').addEventListener('click', showAboutModal);
+// A real link for crawlers and new-tab clicks; a plain click opens the modal.
+document.getElementById('infoButton').addEventListener('click', (e) => {
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) { return; }
+    e.preventDefault();
+    showAboutModal();
+});
 document.getElementById('closeModal').addEventListener('click', closeModal);
 
 // Keyboard support for modal buttons
