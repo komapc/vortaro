@@ -50,13 +50,23 @@ const notFound = () => new Response(NOT_FOUND_HTML, {
 // 7MB dictionary is never parsed per request — only the ~200KB first-letter
 // shard for the requested word, and only once per isolate.
 const shardCache = new Map();
+class ShardUnavailable extends Error {}
+// null means the shard does not exist. A failed read throws and is not cached: a brief
+// asset error must not turn real words into 404 + noindex for the isolate's lifetime.
 async function getShard(env, request, key) {
   if (shardCache.has(key)) return shardCache.get(key);
   let shard = null;
   try {
     const res = await env.ASSETS.fetch(new URL(`/seo/${encodeURIComponent(key)}.json`, request.url));
-    if (res.status === 200) shard = await res.json();
-  } catch (e) { /* fall through to null */ }
+    // Pages SPA mode answers a missing file with index.html + 200.
+    const missing = res.status === 404 || (res.ok && (res.headers.get('content-type') || '').includes('text/html'));
+    if (!missing) {
+      if (!res.ok) throw new Error(`status ${res.status}`);
+      shard = await res.json();
+    }
+  } catch (e) {
+    throw new ShardUnavailable(`shard ${key}: ${e.message}`);
+  }
   shardCache.set(key, shard);
   return shard;
 }
@@ -157,6 +167,20 @@ function wordFamily(lemma, morf, keys, shard) {
 
 export default {
   async fetch(request, env) {
+    try {
+      return await handleRequest(request, env);
+    } catch (e) {
+      if (!(e instanceof ShardUnavailable)) throw e;
+      console.error(e.message);
+      return new Response('Temporarily unavailable', {
+        status: 503,
+        headers: { 'content-type': 'text/plain;charset=UTF-8', 'retry-after': '120', 'cache-control': 'no-store' },
+      });
+    }
+  },
+};
+
+async function handleRequest(request, env) {
     const url = new URL(request.url);
 
     // Old *.pages.dev address: permanent redirect to the canonical domain.
@@ -406,7 +430,8 @@ export default {
         `;
 
         html = stripDefaultSeoTags(html);
-        html = html.replace('</head>', `${metaTags}\n  </head>`);
+        // A function: a replacement string would treat $` and $& from the URL as patterns.
+        html = html.replace('</head>', () => `${metaTags}\n  </head>`);
 
         // Server-render the definition into the #results container. app.js reads
         // the URL path on load and re-renders the same content, so this is
@@ -509,5 +534,4 @@ export default {
     } catch (_) {
       return await env.ASSETS.fetch(new URL('/index.html', url.origin));
     }
-  },
-};
+}
