@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "last_updated": "2026-10-06T16:42:48.147807",
-    "total_unique_ido_words": 37834,
+    "last_updated": "2026-11-03T22:04:21.437038",
+    "total_unique_ido_words": 37837,
     "source_stats": {
       "bert_embeddings": 4323,
       "closed_class_tables": 87,
@@ -13,14 +13,14 @@
       "function_word_override": 12,
       "function_words_seed": 3,
       "io_wikipedia": 330,
-      "io_wiktionary": 15002,
+      "io_wiktionary": 15005,
       "morphological_expansion": 10065,
       "wikidata_labels": 11097,
       "wikipedia_langlinks": 14194
     },
     "version": "3.2",
     "junk_removed": 0,
-    "case_pairs_merged": 4416
+    "case_pairs_merged": 4420
   },
   "a": {
     "esperanto_words": [
@@ -3335,8 +3335,7 @@
   },
   "Aconcagua": {
     "esperanto_words": [
-      "Akonkagvo",
-      "Aconcagua"
+      "Akonkagvo"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -14332,9 +14331,7 @@
   },
   "alpako": {
     "esperanto_words": [
-      "alpako",
-      "Lama pacos",
-      "Vicugna pacos"
+      "alpako"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -19996,23 +19993,9 @@
       "o__n"
     ]
   },
-  "Anemone": {
-    "esperanto_words": [
-      "Anemono",
-      "Anemone",
-      "Anemona"
-    ],
-    "sources": [
-      "wikidata_labels"
-    ],
-    "morfologio": [
-      "e__adv"
-    ]
-  },
   "anemono": {
     "esperanto_words": [
       "anemono",
-      "Anemone",
       "Anemona"
     ],
     "sources": [
@@ -27417,7 +27400,6 @@
     ],
     "sources": [
       "eowiki_langlinks",
-      "wikidata_labels",
       "wikipedia_langlinks"
     ],
     "morfologio": [
@@ -37350,6 +37332,7 @@
   },
   "autotomio": {
     "esperanto_words": [
+      "aŭtotomio",
       "memdistranĉo"
     ],
     "sources": [
@@ -41567,7 +41550,6 @@
     ],
     "sources": [
       "eowiki_langlinks",
-      "wikidata_labels",
       "wikipedia_langlinks"
     ],
     "morfologio": [
@@ -45923,6 +45905,17 @@
     "sources": [
       "eowiki_langlinks",
       "wikipedia_langlinks"
+    ],
+    "morfologio": [
+      "o__n"
+    ]
+  },
+  "Bengaluru": {
+    "esperanto_words": [
+      "Bengaluro"
+    ],
+    "sources": [
+      "wikidata_labels"
     ],
     "morfologio": [
       "o__n"
@@ -73069,8 +73062,7 @@
   },
   "Connecticut": {
     "esperanto_words": [
-      "Konektikuto",
-      "CT"
+      "Konektikuto"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -92215,6 +92207,17 @@
       "ar__vblex"
     ]
   },
+  "Divine": {
+    "esperanto_words": [
+      "Divine"
+    ],
+    "sources": [
+      "wikidata_labels"
+    ],
+    "morfologio": [
+      "e__adv"
+    ]
+  },
   "divinisto": {
     "esperanto_words": [
       "divenisto"
@@ -93668,7 +93671,7 @@
       "o__n"
     ]
   },
-  "Dolospionado": {
+  "dolospionado": {
     "esperanto_words": [
       "ŝtelsekvado"
     ],
@@ -100096,14 +100099,14 @@
       "bredado",
       "eduko",
       "edukado",
-      "Brutobredado",
-      "Hejmigita",
-      "Bestobredado",
-      "Brutbredado",
-      "Gregaro",
-      "Kaptiva bredado",
-      "Kaptivbredado",
-      "Bestbredado"
+      "brutobredado",
+      "hejmigita",
+      "bestobredado",
+      "brutbredado",
+      "gregaro",
+      "kaptiva bredado",
+      "kaptivbredado",
+      "bestbredado"
     ],
     "sources": [
       "en_wiktionary_via",
@@ -109678,6 +109681,7 @@
   },
   "episkopio-tituliero": {
     "esperanto_words": [
+      "titulara episkopujo",
       "titola sidejo"
     ],
     "sources": [
@@ -115268,8 +115272,7 @@
   },
   "Euforbio": {
     "esperanto_words": [
-      "Eŭforbio",
-      "Euphorbia"
+      "Eŭforbio"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -115568,18 +115571,6 @@
       "io_wiktionary",
       "wikidata_labels",
       "wikipedia_langlinks"
-    ],
-    "morfologio": [
-      "o__n"
-    ]
-  },
-  "Euphorbia": {
-    "esperanto_words": [
-      "Eŭforbio",
-      "Euphorbia"
-    ],
-    "sources": [
-      "wikidata_labels"
     ],
     "morfologio": [
       "o__n"
@@ -116041,7 +116032,6 @@
   "Europol": {
     "esperanto_words": [
       "Eŭropolo",
-      "Europol",
       "Evropol"
     ],
     "sources": [
@@ -142862,9 +142852,7 @@
   },
   "Galway": {
     "esperanto_words": [
-      "Galivo",
-      "Gaillimh",
-      "Galway"
+      "Galivo"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -156167,8 +156155,7 @@
   "Guernsey": {
     "esperanto_words": [
       "Gernezejo",
-      "Gvernsejo",
-      "Guernsey"
+      "Gvernsejo"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -158294,8 +158281,7 @@
   },
   "Halifax": {
     "esperanto_words": [
-      "Halifakso",
-      "Halifax"
+      "Halifakso"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -162340,12 +162326,10 @@
   },
   "hemiptera": {
     "esperanto_words": [
-      "hemiptera",
-      "hemipteroj"
+      "hemiptera"
     ],
     "sources": [
-      "morphological_expansion",
-      "wikidata_labels"
+      "morphological_expansion"
     ],
     "morfologio": [
       "a__adj"
@@ -162354,7 +162338,6 @@
   "hemiptero": {
     "esperanto_words": [
       "hemiptero",
-      "Hemiptera",
       "Hemipteroj"
     ],
     "sources": [
@@ -167854,7 +167837,8 @@
     "esperanto_words": [
       "homofobio",
       "gejfobio",
-      "kontraŭgejismo"
+      "kontraŭgejismo",
+      "kontraŭsamseksemo"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -203254,7 +203238,8 @@
   "karbonaro": {
     "esperanto_words": [
       "karbaro",
-      "Carbonari"
+      "Karbonario",
+      "karbonarismo"
     ],
     "sources": [
       "io_wiktionary",
@@ -215535,7 +215520,6 @@
   "Kolhida": {
     "esperanto_words": [
       "Kolĥido",
-      "Colchis",
       "Kolĥeti",
       "Kolĉido"
     ],
@@ -240342,13 +240326,14 @@
       "o__n"
     ]
   },
-  "Kuskuto": {
+  "kuskuto": {
     "esperanto_words": [
-      "Kuskuto",
+      "kuskuto",
       "Cuscuta"
     ],
     "sources": [
       "eowiki_langlinks",
+      "io_wiktionary",
       "wikidata_labels",
       "wikipedia_langlinks"
     ],
@@ -258816,8 +258801,7 @@
   },
   "Mainz": {
     "esperanto_words": [
-      "Majenco",
-      "Mainz"
+      "Majenco"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -267874,6 +267858,17 @@
     "sources": [
       "io_wiktionary",
       "morphological_expansion"
+    ],
+    "morfologio": [
+      "o__n"
+    ]
+  },
+  "Matutino": {
+    "esperanto_words": [
+      "matutino"
+    ],
+    "sources": [
+      "wikidata_labels"
     ],
     "morfologio": [
       "o__n"
@@ -292174,8 +292169,7 @@
     "esperanto_words": [
       "fadenvermo",
       "nematodo",
-      "Nematodoj",
-      "fadenvermoj"
+      "Nematodoj"
     ],
     "sources": [
       "en_wiktionary_via",
@@ -294748,6 +294742,17 @@
     ],
     "morfologio": [
       "e__adv"
+    ]
+  },
+  "Nieszawa": {
+    "esperanto_words": [
+      "Nieszawa"
+    ],
+    "sources": [
+      "wikidata_labels"
+    ],
+    "morfologio": [
+      "a__adj"
     ]
   },
   "nietzsche": {
@@ -310183,17 +310188,6 @@
     ],
     "morfologio": []
   },
-  "Otho": {
-    "esperanto_words": [
-      "Oto"
-    ],
-    "sources": [
-      "wikidata_labels"
-    ],
-    "morfologio": [
-      "o__n"
-    ]
-  },
   "Otis Redding": {
     "esperanto_words": [
       "Otis Redding"
@@ -314759,14 +314753,15 @@
       "o__n"
     ]
   },
-  "Parafilio": {
+  "parafilio": {
     "esperanto_words": [
-      "Parafilio",
+      "parafilio",
       "seksa aberacio",
       "perversio"
     ],
     "sources": [
       "eowiki_langlinks",
+      "io_wiktionary",
       "wikidata_labels",
       "wikipedia_langlinks"
     ],
@@ -317546,7 +317541,8 @@
       "Paŝtoa",
       "Paŝtua",
       "Paŝtue",
-      "Paŝtoe"
+      "Paŝtoe",
+      "puŝtua lingvo"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -319058,9 +319054,7 @@
   },
   "Pau": {
     "esperanto_words": [
-      "Paŭo",
-      "Pau",
-      "Paue"
+      "Paŭo"
     ],
     "sources": [
       "wikidata_labels"
@@ -354327,6 +354321,18 @@
     ],
     "sources": [
       "io_wiktionary"
+    ],
+    "morfologio": [
+      "o__n"
+    ]
+  },
+  "Quinquagezimo": {
+    "esperanto_words": [
+      "Karnavala dimanĉo",
+      "porkaĵa dimanĉo"
+    ],
+    "sources": [
+      "wikidata_labels"
     ],
     "morfologio": [
       "o__n"
@@ -389660,6 +389666,17 @@
       "o__n"
     ]
   },
+  "Seymour": {
+    "esperanto_words": [
+      "Seymour"
+    ],
+    "sources": [
+      "wikidata_labels"
+    ],
+    "morfologio": [
+      "o__n"
+    ]
+  },
   "sezamo": {
     "esperanto_words": [
       "sezamo",
@@ -404686,9 +404703,9 @@
       "a__adj"
     ]
   },
-  "Spiritaleso": {
+  "spiritaleso": {
     "esperanto_words": [
-      "Spiriteco"
+      "spiriteco"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -414673,7 +414690,6 @@
     "esperanto_words": [
       "Sukarno",
       "Aĥmed Sukarno",
-      "Soekarno",
       "Kusno Sosrodihardj",
       "Aĥmad Sukarno"
     ],
@@ -428571,8 +428587,7 @@
   },
   "Tocantins": {
     "esperanto_words": [
-      "Tokantinso",
-      "Tocantins"
+      "Tokantinso"
     ],
     "sources": [
       "wikidata_labels"
@@ -437207,8 +437222,7 @@
   },
   "Tyrannosaurus": {
     "esperanto_words": [
-      "Tiranosaŭro",
-      "Tyrannosaurus"
+      "Tiranosaŭro"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -447489,8 +447503,7 @@
   },
   "Vespasianus": {
     "esperanto_words": [
-      "Vespaziano",
-      "Vespasianus"
+      "Vespaziano"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -452484,12 +452497,13 @@
       "o__n"
     ]
   },
-  "Viziro": {
+  "viziro": {
     "esperanto_words": [
-      "Veziro"
+      "veziro"
     ],
     "sources": [
       "eowiki_langlinks",
+      "io_wiktionary",
       "wikidata_labels",
       "wikipedia_langlinks"
     ],
@@ -462789,9 +462803,9 @@
       "o__n"
     ]
   },
-  "Zoofilio": {
+  "zoofilio": {
     "esperanto_words": [
-      "Zoofilio"
+      "zoofilio"
     ],
     "sources": [
       "eowiki_langlinks",
