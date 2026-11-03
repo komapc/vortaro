@@ -1,5 +1,10 @@
 {
   "version": 1,
   "include": ["/*"],
-  "exclude": ["/sitemap.xml", "/sitemap-*.xml", "/robots.txt"]
+  "exclude": [
+    "/sitemap.xml", "/sitemap-*.xml", "/robots.txt",
+    "/app.js", "/consent.js", "/sw.js", "/style.css", "/subpage.css",
+    "/dictionary.json", "/manifest.json",
+    "/favicon.png", "/favicon.svg", "/icon-192.png", "/icon-512.png", "/og-image.png"
+  ]
 }

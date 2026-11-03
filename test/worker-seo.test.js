@@ -458,3 +458,49 @@ describe('legacy pages.dev host', () => {
     expect(res.headers.get('location')).toBe('https://vortaro.lipu.dev/io-eo/hundo?x=1');
   });
 });
+
+describe('failed shard reads', () => {
+  const shardResponses = (word, first) => {
+    let calls = 0;
+    return {
+      ASSETS: {
+        fetch: async (input) => {
+          const pathname = new URL(input.url || input).pathname;
+          if (pathname === '/index.html' || pathname === '/') {
+            return new Response(INDEX_HTML, { headers: { 'content-type': 'text/html' } });
+          }
+          calls += 1;
+          if (calls === 1) return first();
+          return new Response(JSON.stringify({ [word]: { e: ['vorto'], m: ['o__n'] } }), {
+            headers: { 'content-type': 'application/json' },
+          });
+        },
+      },
+    };
+  };
+
+  test.each([
+    // Different first letters, so each case reads its own shard: the cache outlives a test.
+    ['an error status', 'qretry', () => new Response('', { status: 503 })],
+    ['a network error', 'wretry', () => { throw new Error('down'); }],
+    ['broken JSON', 'xretry', () => new Response('{', { headers: { 'content-type': 'application/json' } })],
+  ])('%s gives a 503 that is not cached, not a 404', async (_, word, first) => {
+    const env = shardResponses(word, first);
+    const url = `https://vortaro.lipu.dev/io-eo/${word}`;
+    const failed = await worker.fetch(new Request(url), env);
+    expect(failed.status).toBe(503);
+    expect(failed.headers.get('retry-after')).toBeTruthy();
+    const recovered = await worker.fetch(new Request(url), env);
+    expect(recovered.status).toBe(200);
+    expect(await recovered.text()).toContain(word);
+  });
+});
+
+describe('$ patterns in the URL', () => {
+  test('are not expanded in the page', async () => {
+    const res = await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/zz%24%60yy'), makeEnv());
+    const html = await res.text();
+    // $` would paste the start of the page back into the head.
+    expect((html.match(/<head>/g) || []).length).toBe(1);
+  });
+});
