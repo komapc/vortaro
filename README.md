@@ -84,6 +84,9 @@ vortaro/
 (via its `postbuild`) regenerates them before upload. For local serving after a fresh
 clone, run `node generate_seo.js` once first.
 
+The sitemaps list only common words with at least two translations, plus the homepage's
+core vocabulary (`scripts/sitemap-filter.js`). Other word pages stay live and indexable.
+
 The `yandex_*.html` files at the repo root are Yandex Webmaster ownership checks
 (`yandex_f7ea06667ea3f0ff.html` for vortaro.lipu.dev, `yandex_a4663d340339ec30.html`
 for the old ido-vortaro.pages.dev host) and are deployed as-is — don't delete them,
