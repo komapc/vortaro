@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { isSitemapWorthy } = require('./scripts/sitemap-filter');
 
 const DOMAIN = 'https://vortaro.lipu.dev';
 const DICTIONARY_PATH = path.join(__dirname, 'dictionary.json');
@@ -384,11 +385,14 @@ writeSitemap('sitemap-pages.xml', [
   { loc: '/browse/', priority: '0.7' },
   ...browseUrls.map((u) => ({ loc: u, priority: '0.5' })),
 ]);
+const coreIoWords = new Set(coreIo.map(([w]) => w));
+const coreEoWords = new Set(coreEo.map(([w]) => w));
 let ioEoUrls = 0;
 letters.forEach((l) => {
   ioEoUrls += writeSitemap(
     `sitemap-io-eo-${fileLetter(l)}.xml`,
-    Object.keys(shards[l]).sort().filter((lemma) => !shards[l][lemma].t)
+    Object.keys(shards[l]).sort().filter((lemma) => !shards[l][lemma].t
+      && isSitemapWorthy(lemma, shards[l][lemma].e, coreIoWords))
       .map((lemma) => ({ loc: `/io-eo/${encodeURIComponent(lemma)}`, priority: '0.6' }))
   );
 });
@@ -396,7 +400,8 @@ let eoIoUrls = 0;
 eoLetters.forEach((l) => {
   eoIoUrls += writeSitemap(
     `sitemap-eo-io-${fileLetter(l)}.xml`,
-    Object.keys(eoShards[l]).sort().filter((w) => !eoShards[l][w].t)
+    Object.keys(eoShards[l]).sort().filter((w) => !eoShards[l][w].t
+      && isSitemapWorthy(w, eoShards[l][w].i, coreEoWords))
       .map((w) => ({ loc: `/eo-io/${encodeURIComponent(w)}`, priority: '0.5' }))
   );
 });
