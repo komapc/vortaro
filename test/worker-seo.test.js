@@ -49,7 +49,7 @@ const INDEX_HTML = `<!doctype html><html><head>
 </body></html>`;
 
 const HUNDO_SHARD = {
-  hundo: { e: ['hundo'], m: ['o__n'] },
+  hundo: { e: ['hundo'], m: ['o__n'], s: ['perro', 'can'] },
   Hamburg: { e: ['Hamburgo'], m: ['o__n'] },
   hundeto: { e: ['hundeto'], m: ['o__n'] },
   hunda: { e: ['hunda'], m: ['a__adj'] },
@@ -285,6 +285,24 @@ describe('_worker.js SEO meta handling', () => {
     const dup = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/zz'), makeEnv())).text();
     expect(dup).toContain('→ <a href="/eo-io/zz">zz</a></div>');
     expect(dup).not.toContain('class="cross-link"');
+  });
+
+  test('io-eo page shows the Spanish glosses; pages without them show none', async () => {
+    const html = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/hundo'), makeEnv())).text();
+    expect(html).toContain('<div class="es-words" lang="es">Hispane: perro, can</div>');
+    const none = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/hunda'), makeEnv())).text();
+    expect(none).not.toContain('class="es-words"');
+  });
+
+  test('es-io serves the app shell, noindex; bare /es-io redirects', async () => {
+    const res = await worker.fetch(new Request('https://vortaro.lipu.dev/es-io/perro'), makeEnv());
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).toContain('id="searchInput"');
+    expect(html).toContain('<meta name="robots" content="noindex,follow">');
+    const bare = await worker.fetch(new Request('https://vortaro.lipu.dev/es-io'), makeEnv());
+    expect(bare.status).toBe(301);
+    expect(bare.headers.get('location')).toBe('https://vortaro.lipu.dev/es-io/');
   });
 
   test('capitalized lemma is found from a lowercase URL', async () => {

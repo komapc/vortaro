@@ -6,7 +6,15 @@ let dictionary = {};
 let allEntries = [];
 let idoLemmaSet = new Set(); // lowercased Ido lemmas, for inflected-form lookup
 let metadata = null;
-let currentDirection = 'io-eo'; // 'io-eo' or 'eo-io'
+let currentDirection = 'io-eo'; // 'io-eo', 'eo-io' or 'es-io'
+// Toggle order, button label and search placeholder per direction. es-io
+// searches the Spanish glosses that io.wiktionary gives for Ido words.
+const DIRECTIONS = {
+    'io-eo': { next: 'eo-io', label: 'Ido → Esperanto', placeholder: 'Serchez en Ido...' },
+    'eo-io': { next: 'es-io', label: 'Esperanto → Ido', placeholder: 'Serchez en Esperanto...' },
+    'es-io': { next: 'io-eo', label: 'Español → Ido', placeholder: 'Busca en español...' },
+};
+const DIRECTION_RE = 'io-eo|eo-io|es-io';
 
 // Touch/swipe handling
 let touchStartX = 0;
@@ -91,6 +99,7 @@ async function loadDictionary() {
             allEntries = data.entries.map(entry => ({
                 ido: entry.lemma,
                 esperanto: (entry.translations || []).filter(t => t.lang === 'eo').map(t => t.term),
+                spanish: [],
                 morfologio: entry.morphology?.paradigm ? [entry.morphology.paradigm] : [],
                 sources: (entry.source_details || {}).all_sources || []
             }));
@@ -102,6 +111,7 @@ async function loadDictionary() {
             allEntries = Object.entries(dictionary).map(([idoWord, entryData]) => ({
                 ido: idoWord,
                 esperanto: entryData.esperanto_words || [],
+                spanish: entryData.spanish_words || [],
                 morfologio: entryData.morfologio || [],
                 sources: entryData.sources || []
             }));
@@ -181,6 +191,9 @@ function search(query) {
         if (currentDirection === 'io-eo') {
             // Ido → Esperanto: search only in Ido words
             return entry.ido.toLowerCase().includes(searchTerm);
+        } else if (currentDirection === 'es-io') {
+            // Español → Ido: search the Spanish glosses
+            return entry.spanish.some(esWord => esWord.toLowerCase().includes(searchTerm));
         } else {
             // Esperanto → Ido: search only in Esperanto translations
             return entry.esperanto.some(eoWord => eoWord.toLowerCase().includes(searchTerm));
@@ -228,7 +241,8 @@ function sortByRelevance(results, searchTerm, direction, lemmas) {
         return 3;
     };
     const keyed = results.map((entry, i) => {
-        const words = direction === 'io-eo' ? [entry.ido] : entry.esperanto;
+        const words = direction === 'io-eo' ? [entry.ido]
+            : direction === 'es-io' ? entry.spanish : entry.esperanto;
         let best = 4, len = Infinity;
         for (const word of words) {
             const r = rank(word);
@@ -293,12 +307,28 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
                     <div class="target-words">
                         → ${entry.esperanto.map(esc).join(', ') || '<em>nula traduko</em>'}
                     </div>
+                    ${spanishLine(entry)}
                     ${generatePosBadges(entry.morfologio)}
                     ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
                     ${entry.morfologio.length > 0 ?
                     `<div class="morfologio">Morfologio: ${esc(entry.morfologio.join(' + '))}</div>` :
                     ''
                 }
+                </div>
+            `;
+        } else if (currentDirection === 'es-io') {
+            // Español → Ido
+            return `
+                <div class="result-item">
+                    <div class="target-words" lang="es">
+                        ${entry.spanish.map(word => highlightMatch(word, searchTerm)).join(', ')}
+                    </div>
+                    <div class="source-word">
+                        → ${esc(entry.ido)}
+                    </div>
+                    <div class="eo-line">Esperanto: ${entry.esperanto.map(esc).join(', ')}</div>
+                    ${generatePosBadges(entry.morfologio)}
+                    ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
                 </div>
             `;
         } else {
@@ -323,6 +353,21 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
     }).join('');
 
     resultsContainer.innerHTML = html;
+}
+
+// Spanish glosses under an Ido → Esperanto result (io.wiktionary "{{es}}" lines).
+function spanishLine(entry) {
+    if (!entry.spanish || entry.spanish.length === 0) {return '';}
+    return `<div class="es-words" lang="es">Hispane: ${entry.spanish.slice(0, 5).map(esc).join(', ')}</div>`;
+}
+
+// Apply a direction to the toggle button and the search placeholder.
+function applyDirectionUi() {
+    const d = DIRECTIONS[currentDirection];
+    const toggleBtn = document.getElementById('directionToggle');
+    toggleBtn.setAttribute('data-direction', currentDirection);
+    toggleBtn.querySelector('.toggle-text').textContent = d.label;
+    document.getElementById('searchInput').placeholder = d.placeholder;
 }
 
 // Initialize filters
@@ -648,26 +693,16 @@ function showEmptyState() {
 
 // Toggle translation direction
 function toggleDirection() {
-    currentDirection = currentDirection === 'io-eo' ? 'eo-io' : 'io-eo';
-
-    // Update button
-    const toggleBtn = document.getElementById('directionToggle');
-    const toggleText = toggleBtn.querySelector('.toggle-text');
-    toggleBtn.setAttribute('data-direction', currentDirection);
-    toggleText.textContent = currentDirection === 'io-eo' ? 'Ido → Esperanto' : 'Esperanto → Ido';
-
-    // Update placeholder
+    currentDirection = DIRECTIONS[currentDirection].next;
+    applyDirectionUi();
     const searchInput = document.getElementById('searchInput');
-    searchInput.placeholder = currentDirection === 'io-eo'
-        ? 'Serchez en Ido...'
-        : 'Serchez en Esperanto...';
 
     // Update URL with new direction using pretty paths
     const query = searchInput.value.trim();
     if (query) {
         window.history.replaceState(null, '', `/${currentDirection}/${encodeURIComponent(query)}`);
     } else {
-        window.history.replaceState(null, '', currentDirection === 'eo-io' ? '/eo-io/' : '/');
+        window.history.replaceState(null, '', currentDirection === 'io-eo' ? '/' : `/${currentDirection}/`);
     }
 
     // Re-run search if there's a query
@@ -688,6 +723,10 @@ function showRandomWord() {
         availableEntries = applyFilters(allEntries);
     }
 
+    if (currentDirection === 'es-io') {
+        availableEntries = availableEntries.filter(e => e.spanish.length > 0);
+    }
+
     if (availableEntries.length === 0) {
         document.getElementById('results').innerHTML = '<div class="no-results">Nula vorti kun ca filtri</div>';
         document.getElementById('searchInfo').textContent = '0 rezulti';
@@ -700,8 +739,9 @@ function showRandomWord() {
 
     // Set search input to random word
     const searchInput = document.getElementById('searchInput');
-    const randomWord = currentDirection === 'io-eo' ? randomEntry.ido :
-        (randomEntry.esperanto[0] || randomEntry.ido);
+    const randomWord = currentDirection === 'io-eo' ? randomEntry.ido
+        : currentDirection === 'es-io' ? (randomEntry.spanish[0] || randomEntry.ido)
+            : (randomEntry.esperanto[0] || randomEntry.ido);
     searchInput.value = randomWord;
 
     // Update URL with direction and word using pretty paths
@@ -1047,11 +1087,13 @@ function handleSwipe() {
         if (deltaX > 0) {
             // Swipe right - switch to Ido → Esperanto
             if (currentDirection !== 'io-eo') {
+                currentDirection = 'es-io'; // its "next" is io-eo
                 toggleDirection();
             }
         } else {
             // Swipe left - switch to Esperanto → Ido
             if (currentDirection !== 'eo-io') {
+                currentDirection = 'io-eo'; // its "next" is eo-io
                 toggleDirection();
             }
         }
@@ -1092,13 +1134,13 @@ function parseUrl() {
     const hash = window.location.hash.slice(1);
 
     // 1. Try pretty path: /io-eo/hundo
-    const pathMatch = pathname.match(/^\/(io-eo|eo-io)\/(.+)$/);
+    const pathMatch = pathname.match(new RegExp(`^/(${DIRECTION_RE})/(.+)$`));
     if (pathMatch) {
         return { direction: pathMatch[1], query: decodeURIComponent(pathMatch[2]) };
     }
 
     // 1b. Direction landing page without a word: /eo-io/
-    const dirMatch = pathname.match(/^\/(io-eo|eo-io)\/?$/);
+    const dirMatch = pathname.match(new RegExp(`^/(${DIRECTION_RE})/?$`));
     if (dirMatch) {
         return { direction: dirMatch[1], query: '' };
     }
@@ -1109,7 +1151,7 @@ function parseUrl() {
         if (colonIndex > 0) {
             const direction = hash.substring(0, colonIndex);
             const query = decodeURIComponent(hash.substring(colonIndex + 1));
-            if (direction === 'io-eo' || direction === 'eo-io') {
+            if (DIRECTIONS[direction]) {
                 return { direction, query };
             }
         }
@@ -1127,13 +1169,7 @@ function handleInitialUrl() {
     // Set direction if specified
     if (direction && direction !== currentDirection) {
         currentDirection = direction;
-        const toggleBtn = document.getElementById('directionToggle');
-        const toggleText = toggleBtn.querySelector('.toggle-text');
-        toggleBtn.setAttribute('data-direction', currentDirection);
-        toggleText.textContent = currentDirection === 'io-eo' ? 'Ido → Esperanto' : 'Esperanto → Ido';
-        searchInput.placeholder = currentDirection === 'io-eo'
-            ? 'Serchez en Ido...'
-            : 'Serchez en Esperanto...';
+        applyDirectionUi();
     }
 
     if (query) {
@@ -1161,13 +1197,7 @@ window.addEventListener('popstate', () => {
     // Update direction if specified and different
     if (directionChanged) {
         currentDirection = direction;
-        const toggleBtn = document.getElementById('directionToggle');
-        const toggleText = toggleBtn.querySelector('.toggle-text');
-        toggleBtn.setAttribute('data-direction', currentDirection);
-        toggleText.textContent = currentDirection === 'io-eo' ? 'Ido → Esperanto' : 'Esperanto → Ido';
-        searchInput.placeholder = currentDirection === 'io-eo'
-            ? 'Serchez en Ido...'
-            : 'Serchez en Esperanto...';
+        applyDirectionUi();
     }
 
     // Re-run when the query text changed — or when only the direction did
