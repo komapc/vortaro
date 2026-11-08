@@ -1,21 +1,21 @@
 {
   "metadata": {
-    "last_updated": "2026-11-04T15:03:11.935221",
-    "total_unique_ido_words": 37864,
+    "last_updated": "2026-11-08T14:25:24.765054",
+    "total_unique_ido_words": 37858,
     "source_stats": {
       "bert_embeddings": 4324,
       "closed_class_tables": 87,
       "closed_class_tables_qualified": 2,
-      "en_wiktionary_via": 3945,
-      "eo_wiktionary": 200,
+      "en_wiktionary_via": 3943,
+      "eo_wiktionary": 198,
       "eowiki_langlinks": 14376,
       "fr_wiktionary_via": 276,
       "function_word_override": 12,
       "function_words_seed": 3,
       "io_wikipedia": 330,
-      "io_wiktionary": 15028,
+      "io_wiktionary": 15029,
       "morphological_expansion": 10073,
-      "wikidata_labels": 11098,
+      "wikidata_labels": 11088,
       "wikipedia_langlinks": 14194
     },
     "version": "3.2",
@@ -5994,7 +5994,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "aerospaco": {
@@ -6404,7 +6404,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "AFK Ajax": {
@@ -10008,17 +10008,6 @@
       "io_wiktionary",
       "wikidata_labels",
       "wikipedia_langlinks"
-    ],
-    "morfologio": [
-      "o__n"
-    ]
-  },
-  "Aladdin": {
-    "esperanto_words": [
-      "Aladdin"
-    ],
-    "sources": [
-      "wikidata_labels"
     ],
     "morfologio": [
       "o__n"
@@ -22661,7 +22650,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "antifeminismo": {
@@ -28956,7 +28945,6 @@
     ],
     "sources": [
       "bert_embeddings",
-      "en_wiktionary_via",
       "io_wiktionary"
     ],
     "morfologio": [
@@ -30775,7 +30763,6 @@
   "Artikopodo": {
     "esperanto_words": [
       "Heksapodoj",
-      "Hexapoda",
       "Sespieduloj"
     ],
     "sources": [
@@ -31109,7 +31096,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__det"
+      "o__n"
     ]
   },
   "Artropodo": {
@@ -35386,7 +35373,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "atomobombo": {
@@ -37814,17 +37801,6 @@
     ],
     "morfologio": [
       "a__adj"
-    ]
-  },
-  "Avatar": {
-    "esperanto_words": [
-      "Avatar"
-    ],
-    "sources": [
-      "wikidata_labels"
-    ],
-    "morfologio": [
-      "ar__vblex"
     ]
   },
   "Avdullah Hoti": {
@@ -51093,7 +51069,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__det"
+      "o__n"
     ]
   },
   "bloguro": {
@@ -51104,7 +51080,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "__det"
+      "o__n"
     ]
   },
   "blok-kateno": {
@@ -70162,7 +70138,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "cikloza": {
@@ -104743,7 +104719,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "__ij"
+      "ar__vblex"
     ]
   },
   "emancipado": {
@@ -123718,7 +123694,6 @@
     ],
     "sources": [
       "eowiki_langlinks",
-      "wikidata_labels",
       "wikipedia_langlinks"
     ],
     "morfologio": [
@@ -126553,7 +126528,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "fermita": {
@@ -130713,7 +130688,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "flamoza": {
@@ -132978,7 +132953,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__det"
+      "o__n"
     ]
   },
   "folio": {
@@ -135388,7 +135363,9 @@
   },
   "fotono": {
     "esperanto_words": [
-      "fotono"
+      "fotono",
+      "lumero",
+      "lumkvantumo"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -140074,7 +140051,6 @@
     ],
     "sources": [
       "eowiki_langlinks",
-      "wikidata_labels",
       "wikipedia_langlinks"
     ],
     "morfologio": [
@@ -141888,7 +141864,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "fuzesar": {
@@ -146113,7 +146089,6 @@
       "Socia sekso"
     ],
     "sources": [
-      "eo_wiktionary",
       "eowiki_langlinks",
       "io_wiktionary",
       "wikidata_labels",
@@ -164534,19 +164509,6 @@
       "o__n"
     ]
   },
-  "Hexapoda": {
-    "esperanto_words": [
-      "Heksapodoj",
-      "Hexapoda",
-      "Sespieduloj"
-    ],
-    "sources": [
-      "wikidata_labels"
-    ],
-    "morfologio": [
-      "a__adj"
-    ]
-  },
   "Heydar Aliyev": {
     "esperanto_words": [
       "Hejdar Alijev"
@@ -173428,9 +173390,7 @@
     "sources": [
       "io_wiktionary"
     ],
-    "morfologio": [
-      "__pr"
-    ]
+    "morfologio": []
   },
   "imaginado": {
     "esperanto_words": [
@@ -179571,18 +179531,6 @@
       "o__n"
     ]
   },
-  "Insecta": {
-    "esperanto_words": [
-      "insekto",
-      "Insecta"
-    ],
-    "sources": [
-      "wikidata_labels"
-    ],
-    "morfologio": [
-      "a__adj"
-    ]
-  },
   "insekt-ocidilo": {
     "esperanto_words": [
       "insekticido"
@@ -179623,7 +179571,6 @@
   "insekto": {
     "esperanto_words": [
       "insekto",
-      "Insecta",
       "Insektoj"
     ],
     "sources": [
@@ -182738,7 +182685,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "__prn"
+      "a__adj"
     ]
   },
   "interogativo": {
@@ -184373,7 +184320,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "ionosfero": {
@@ -193754,8 +193701,7 @@
   },
   "Johnston-atolo": {
     "esperanto_words": [
-      "Jonstonatolo",
-      "Johnston Atoll"
+      "Jonstonatolo"
     ],
     "sources": [
       "wikidata_labels"
@@ -237387,7 +237333,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__det"
+      "o__n"
     ]
   },
   "kuglego": {
@@ -245809,7 +245755,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "__det"
+      "e__adv"
     ]
   },
   "Le Corbusier": {
@@ -271979,7 +271925,8 @@
       "kapvorto"
     ],
     "sources": [
-      "eo_wiktionary"
+      "eo_wiktionary",
+      "io_wiktionary"
     ],
     "morfologio": [
       "o__n"
@@ -279409,17 +279356,6 @@
     ],
     "morfologio": [
       "o__n"
-    ]
-  },
-  "Moana": {
-    "esperanto_words": [
-      "Moana"
-    ],
-    "sources": [
-      "wikidata_labels"
-    ],
-    "morfologio": [
-      "a__adj"
     ]
   },
   "Mobile": {
@@ -307304,17 +307240,6 @@
       "e__adv"
     ]
   },
-  "Oppenheimer": {
-    "esperanto_words": [
-      "Oppenheimer"
-    ],
-    "sources": [
-      "wikidata_labels"
-    ],
-    "morfologio": [
-      "o__n"
-    ]
-  },
   "Opportunity": {
     "esperanto_words": [
       "Opportunity"
@@ -309326,19 +309251,6 @@
       "o__n"
     ]
   },
-  "Orthoptera": {
-    "esperanto_words": [
-      "Ortoptero",
-      "Orthopteroj",
-      "Orthoptera"
-    ],
-    "sources": [
-      "wikidata_labels"
-    ],
-    "morfologio": [
-      "a__adj"
-    ]
-  },
   "ortilo": {
     "esperanto_words": [
       "ortilo"
@@ -309506,7 +309418,7 @@
     "esperanto_words": [
       "Ortoptero",
       "Orthopteroj",
-      "Orthoptera"
+      "Orthopteraj"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -314474,7 +314386,6 @@
     ],
     "sources": [
       "eowiki_langlinks",
-      "wikidata_labels",
       "wikipedia_langlinks"
     ],
     "morfologio": [
@@ -316536,6 +316447,18 @@
     ],
     "sources": [
       "io_wiktionary"
+    ],
+    "morfologio": [
+      "o__n"
+    ]
+  },
+  "Parotido": {
+    "esperanto_words": [
+      "parotido",
+      "parotida glando"
+    ],
+    "sources": [
+      "wikidata_labels"
     ],
     "morfologio": [
       "o__n"
@@ -337640,7 +337563,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "postulanta": {
@@ -339838,7 +339761,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "pregado": {
@@ -351255,7 +351178,7 @@
       "wikidata_labels"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "puebla": {
@@ -351517,8 +351440,7 @@
   },
   "Pulco": {
     "esperanto_words": [
-      "Pulo",
-      "Siphonaptera"
+      "Pulo"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -351821,7 +351743,7 @@
       "wikidata_labels"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "Pulvero-konspiro": {
@@ -353717,7 +353639,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__ij"
+      "o__n"
     ]
   },
   "quaro": {
@@ -358870,7 +358792,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "__det"
+      "ar__vblex"
     ]
   },
   "recensisto": {
@@ -359509,7 +359431,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "__det"
+      "ar__vblex"
     ]
   },
   "redaktata": {
@@ -367625,7 +367547,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__det"
+      "o__n"
     ]
   },
   "reumatologio": {
@@ -368384,7 +368306,7 @@
       "wikipedia_langlinks"
     ],
     "morfologio": [
-      "__det"
+      "o__n"
     ]
   },
   "Rexburg": {
@@ -376140,7 +376062,7 @@
       "io_wiktionary"
     ],
     "morfologio": [
-      "__det"
+      "o__n"
     ]
   },
   "ruda": {
@@ -382599,9 +382521,7 @@
     "sources": [
       "io_wiktionary"
     ],
-    "morfologio": [
-      "__adv"
-    ]
+    "morfologio": []
   },
   "satana": {
     "esperanto_words": [
@@ -384227,6 +384147,17 @@
       "eowiki_langlinks",
       "wikidata_labels",
       "wikipedia_langlinks"
+    ],
+    "morfologio": [
+      "o__n"
+    ]
+  },
+  "Sednao": {
+    "esperanto_words": [
+      "Sedno"
+    ],
+    "sources": [
+      "wikidata_labels"
     ],
     "morfologio": [
       "o__n"
@@ -395754,18 +395685,6 @@
     ],
     "morfologio": [
       "o__n"
-    ]
-  },
-  "Siphonaptera": {
-    "esperanto_words": [
-      "Pulo",
-      "Siphonaptera"
-    ],
-    "sources": [
-      "wikidata_labels"
-    ],
-    "morfologio": [
-      "a__adj"
     ]
   },
   "Siracusa": {
@@ -417166,6 +417085,7 @@
       "sure"
     ],
     "sources": [
+      "io_wiktionary",
       "morphological_expansion"
     ],
     "morfologio": [
@@ -421414,8 +421334,7 @@
   },
   "Tasmania": {
     "esperanto_words": [
-      "Tasmanio",
-      "Tasmania"
+      "Tasmanio"
     ],
     "sources": [
       "eowiki_langlinks",
@@ -439814,9 +439733,7 @@
     "sources": [
       "io_wiktionary"
     ],
-    "morfologio": [
-      "ar__vblex"
-    ]
+    "morfologio": []
   },
   "ura": {
     "esperanto_words": [
@@ -463182,7 +463099,6 @@
     ],
     "sources": [
       "eowiki_langlinks",
-      "wikidata_labels",
       "wikipedia_langlinks"
     ],
     "morfologio": [
