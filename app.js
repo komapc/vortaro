@@ -229,6 +229,11 @@ function search(query) {
         }
     }
 
+    // Ido → Español lists only words that have Spanish
+    if (currentDirection === 'io-es') {
+        results = results.filter(entry => entry.spanish.length > 0);
+    }
+
     // Apply source filters
     results = applyFilters(results);
 
@@ -327,15 +332,13 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
                 </div>
             `;
         } else if (currentDirection === 'io-es') {
-            // Ido → Español (Esperanto as the fallback when the page has no Spanish)
+            // Ido → Español (search keeps only entries with Spanish)
             return `
                 <div class="result-item">
                     <div class="source-word">${highlightMatch(entry.ido, searchTerm)}</div>
                     <div class="target-words" lang="es">
-                        → ${entry.spanish.map(esc).join(', ') || '<em>nula traduko hispana</em>'}
+                        → ${entry.spanish.map(esc).join(', ')}
                     </div>
-                    ${entry.spanish.length === 0 && entry.esperanto.length > 0 ?
-                    `<div class="eo-line">Esperanto: ${entry.esperanto.map(esc).join(', ')}</div>` : ''}
                     ${generatePosBadges(entry.morfologio)}
                     ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
                 </div>
