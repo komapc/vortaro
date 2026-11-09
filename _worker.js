@@ -31,6 +31,7 @@ const NOT_FOUND_HTML = `<!DOCTYPE html>
     <meta name="robots" content="noindex">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="stylesheet" href="/subpage.css">
+    <style>body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Ubuntu,sans-serif;max-width:640px;line-height:1.5}</style>
 </head>
 <body>
     <h1>Pagino ne trovita (404)</h1>

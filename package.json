@@ -1,6 +1,6 @@
 {
   "name": "vortaro",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "Ido-Esperanto Dictionary - Client-side dictionary lookup",
   "main": "app.js",
   "scripts": {
