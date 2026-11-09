@@ -287,11 +287,9 @@ describe('_worker.js SEO meta handling', () => {
     expect(dup).not.toContain('class="cross-link"');
   });
 
-  test('io-eo page shows the Spanish glosses; pages without them show none', async () => {
+  test('io-eo page keeps Spanish out (it has its own io-es direction)', async () => {
     const html = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/hundo'), makeEnv())).text();
-    expect(html).toContain('<div class="es-words" lang="es">Hispane: perro, can</div>');
-    const none = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/hunda'), makeEnv())).text();
-    expect(none).not.toContain('class="es-words"');
+    expect(html).not.toContain('perro');
   });
 
   test('es-io serves the app shell, noindex; bare /es-io redirects', async () => {
@@ -303,6 +301,15 @@ describe('_worker.js SEO meta handling', () => {
     const bare = await worker.fetch(new Request('https://vortaro.lipu.dev/es-io'), makeEnv());
     expect(bare.status).toBe(301);
     expect(bare.headers.get('location')).toBe('https://vortaro.lipu.dev/es-io/');
+  });
+
+  test('io-es serves the app shell, noindex; bare /io-es redirects', async () => {
+    const res = await worker.fetch(new Request('https://vortaro.lipu.dev/io-es/hundo'), makeEnv());
+    expect(res.status).toBe(200);
+    expect(await res.text()).toContain('<meta name="robots" content="noindex,follow">');
+    const bare = await worker.fetch(new Request('https://vortaro.lipu.dev/io-es'), makeEnv());
+    expect(bare.status).toBe(301);
+    expect(bare.headers.get('location')).toBe('https://vortaro.lipu.dev/io-es/');
   });
 
   test('capitalized lemma is found from a lowercase URL', async () => {

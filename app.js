@@ -6,15 +6,26 @@ let dictionary = {};
 let allEntries = [];
 let idoLemmaSet = new Set(); // lowercased Ido lemmas, for inflected-form lookup
 let metadata = null;
-let currentDirection = 'io-eo'; // 'io-eo', 'eo-io' or 'es-io'
-// Toggle order, button label and search placeholder per direction. es-io
-// searches the Spanish glosses that io.wiktionary gives for Ido words.
+let currentDirection = 'io-eo'; // 'io-eo', 'eo-io', 'io-es' or 'es-io'
+// A direction = the other language (eo/es, picked with the language switch)
+// x the side Ido is on (swapped with the ⇄ button). The Spanish words are
+// the glosses io.wiktionary gives for Ido words.
 const DIRECTIONS = {
-    'io-eo': { next: 'eo-io', label: 'Ido → Esperanto', placeholder: 'Serchez en Ido...' },
-    'eo-io': { next: 'es-io', label: 'Esperanto → Ido', placeholder: 'Serchez en Esperanto...' },
-    'es-io': { next: 'io-eo', label: 'Español → Ido', placeholder: 'Busca en español...' },
+    'io-eo': { lang: 'eo', fromIdo: true, label: 'Ido → Esperanto', placeholder: 'Serchez en Ido...' },
+    'eo-io': { lang: 'eo', fromIdo: false, label: 'Esperanto → Ido', placeholder: 'Serchez en Esperanto...' },
+    'io-es': { lang: 'es', fromIdo: true, label: 'Ido → Español', placeholder: 'Serchez en Ido...' },
+    'es-io': { lang: 'es', fromIdo: false, label: 'Español → Ido', placeholder: 'Busca en español...' },
 };
-const DIRECTION_RE = 'io-eo|eo-io|es-io';
+const DIRECTION_RE = 'io-eo|eo-io|io-es|es-io';
+const LANG_KEY = 'vortaro-lang';
+
+function directionFor(lang, fromIdo) {
+    return fromIdo ? `io-${lang}` : `${lang}-io`;
+}
+
+function isFromIdo(direction) {
+    return DIRECTIONS[direction].fromIdo;
+}
 
 // Touch/swipe handling
 let touchStartX = 0;
@@ -188,8 +199,8 @@ function search(query) {
 
     // Search based on current direction
     let results = allEntries.filter(entry => {
-        if (currentDirection === 'io-eo') {
-            // Ido → Esperanto: search only in Ido words
+        if (isFromIdo(currentDirection)) {
+            // Ido → Esperanto / Español: search only in Ido words
             return entry.ido.toLowerCase().includes(searchTerm);
         } else if (currentDirection === 'es-io') {
             // Español → Ido: search the Spanish glosses
@@ -200,11 +211,11 @@ function search(query) {
         }
     });
 
-    // Inflected-form lookup (io→eo only): if the query is an inflected surface
+    // Inflected-form lookup (from Ido only): if the query is an inflected surface
     // form, also surface its lemma entries (habitas→habitar) without bloating
     // the dictionary with every paradigm form.
     let lemmas = new Set();
-    if (currentDirection === 'io-eo') {
+    if (isFromIdo(currentDirection)) {
         lemmas = idoLemmaCandidates(searchTerm);
         if (lemmas.size) {
             const have = new Set(results.map(e => e.ido.toLowerCase()));
@@ -241,7 +252,7 @@ function sortByRelevance(results, searchTerm, direction, lemmas) {
         return 3;
     };
     const keyed = results.map((entry, i) => {
-        const words = direction === 'io-eo' ? [entry.ido]
+        const words = direction.startsWith('io-') ? [entry.ido]
             : direction === 'es-io' ? entry.spanish : entry.esperanto;
         let best = 4, len = Infinity;
         for (const word of words) {
@@ -268,8 +279,8 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
 
     const truncated = totalMatches > results.length;
     searchInfo.textContent = truncated
-        ? `${results.length} de ${totalMatches} rezultoi`
-        : `${results.length} rezulto${results.length !== 1 ? 'i' : ''}`;
+        ? `${results.length} de ${totalMatches} rezulti`
+        : `${results.length} ${results.length === 1 ? 'rezulto' : 'rezulti'}`;
 
     const html = results.map(entry => {
         // Generate source badges with links
@@ -307,13 +318,26 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
                     <div class="target-words">
                         → ${entry.esperanto.map(esc).join(', ') || '<em>nula traduko</em>'}
                     </div>
-                    ${spanishLine(entry)}
                     ${generatePosBadges(entry.morfologio)}
                     ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
                     ${entry.morfologio.length > 0 ?
                     `<div class="morfologio">Morfologio: ${esc(entry.morfologio.join(' + '))}</div>` :
                     ''
                 }
+                </div>
+            `;
+        } else if (currentDirection === 'io-es') {
+            // Ido → Español (Esperanto as the fallback when the page has no Spanish)
+            return `
+                <div class="result-item">
+                    <div class="source-word">${highlightMatch(entry.ido, searchTerm)}</div>
+                    <div class="target-words" lang="es">
+                        → ${entry.spanish.map(esc).join(', ') || '<em>nula traduko hispana</em>'}
+                    </div>
+                    ${entry.spanish.length === 0 && entry.esperanto.length > 0 ?
+                    `<div class="eo-line">Esperanto: ${entry.esperanto.map(esc).join(', ')}</div>` : ''}
+                    ${generatePosBadges(entry.morfologio)}
+                    ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
                 </div>
             `;
         } else if (currentDirection === 'es-io') {
@@ -326,7 +350,6 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
                     <div class="source-word">
                         → ${esc(entry.ido)}
                     </div>
-                    <div class="eo-line">Esperanto: ${entry.esperanto.map(esc).join(', ')}</div>
                     ${generatePosBadges(entry.morfologio)}
                     ${sourceBadges ? `<div class="sources">${sourceBadges}</div>` : ''}
                 </div>
@@ -355,19 +378,17 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
     resultsContainer.innerHTML = html;
 }
 
-// Spanish glosses under an Ido → Esperanto result (io.wiktionary "{{es}}" lines).
-function spanishLine(entry) {
-    if (!entry.spanish || entry.spanish.length === 0) {return '';}
-    return `<div class="es-words" lang="es">Hispane: ${entry.spanish.slice(0, 5).map(esc).join(', ')}</div>`;
-}
-
-// Apply a direction to the toggle button and the search placeholder.
+// Apply a direction to the toggle button, the language switch and the
+// search placeholder.
 function applyDirectionUi() {
     const d = DIRECTIONS[currentDirection];
     const toggleBtn = document.getElementById('directionToggle');
     toggleBtn.setAttribute('data-direction', currentDirection);
     toggleBtn.querySelector('.toggle-text').textContent = d.label;
     document.getElementById('searchInput').placeholder = d.placeholder;
+    document.querySelectorAll('#langSwitch [data-lang]').forEach(btn => {
+        btn.setAttribute('aria-checked', String(btn.dataset.lang === d.lang));
+    });
 }
 
 // Initialize filters
@@ -691,9 +712,10 @@ function showEmptyState() {
     `;
 }
 
-// Toggle translation direction
-function toggleDirection() {
-    currentDirection = DIRECTIONS[currentDirection].next;
+// Switch to a direction: UI, URL, and the current query re-run.
+function setDirection(direction) {
+    if (!DIRECTIONS[direction] || direction === currentDirection) {return;}
+    currentDirection = direction;
     applyDirectionUi();
     const searchInput = document.getElementById('searchInput');
 
@@ -711,6 +733,18 @@ function toggleDirection() {
     }
 }
 
+// ⇄: swap the side Ido is on, keeping the other language.
+function toggleDirection() {
+    const d = DIRECTIONS[currentDirection];
+    setDirection(directionFor(d.lang, !d.fromIdo));
+}
+
+// Language switch: keep the side Ido is on, change the other language.
+function setLanguage(lang) {
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) { /* storage blocked */ }
+    setDirection(directionFor(lang, isFromIdo(currentDirection)));
+}
+
 // Show random word
 function showRandomWord() {
     if (allEntries.length === 0) {
@@ -723,7 +757,7 @@ function showRandomWord() {
         availableEntries = applyFilters(allEntries);
     }
 
-    if (currentDirection === 'es-io') {
+    if (DIRECTIONS[currentDirection].lang === 'es') {
         availableEntries = availableEntries.filter(e => e.spanish.length > 0);
     }
 
@@ -739,7 +773,7 @@ function showRandomWord() {
 
     // Set search input to random word
     const searchInput = document.getElementById('searchInput');
-    const randomWord = currentDirection === 'io-eo' ? randomEntry.ido
+    const randomWord = isFromIdo(currentDirection) ? randomEntry.ido
         : currentDirection === 'es-io' ? (randomEntry.spanish[0] || randomEntry.ido)
             : (randomEntry.esperanto[0] || randomEntry.ido);
     searchInput.value = randomWord;
@@ -1019,6 +1053,11 @@ document.getElementById('directionToggle').addEventListener('keydown', (e) => {
     }
 });
 
+// Language switch (Esperanto | Español)
+document.querySelectorAll('#langSwitch [data-lang]').forEach(btn => {
+    btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+});
+
 // Random word button
 document.getElementById('randomBtn').addEventListener('click', showRandomWord);
 document.getElementById('randomBtn').addEventListener('keydown', (e) => {
@@ -1085,17 +1124,11 @@ function handleSwipe() {
     // Only trigger swipe if horizontal movement is greater than vertical
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
         if (deltaX > 0) {
-            // Swipe right - switch to Ido → Esperanto
-            if (currentDirection !== 'io-eo') {
-                currentDirection = 'es-io'; // its "next" is io-eo
-                toggleDirection();
-            }
+            // Swipe right - from Ido (same language)
+            setDirection(directionFor(DIRECTIONS[currentDirection].lang, true));
         } else {
-            // Swipe left - switch to Esperanto → Ido
-            if (currentDirection !== 'eo-io') {
-                currentDirection = 'io-eo'; // its "next" is eo-io
-                toggleDirection();
-            }
+            // Swipe left - to Ido (same language)
+            setDirection(directionFor(DIRECTIONS[currentDirection].lang, false));
         }
     }
 }
@@ -1166,9 +1199,15 @@ function handleInitialUrl() {
     const { direction, query } = parseUrl();
     const searchInput = document.getElementById('searchInput');
 
-    // Set direction if specified
-    if (direction && direction !== currentDirection) {
-        currentDirection = direction;
+    // Set direction if specified; otherwise the remembered language
+    let initial = direction;
+    if (!initial) {
+        let lang = null;
+        try { lang = localStorage.getItem(LANG_KEY); } catch (e) { /* storage blocked */ }
+        if (lang === 'es') {initial = 'io-es';}
+    }
+    if (initial && initial !== currentDirection) {
+        currentDirection = initial;
         applyDirectionUi();
     }
 

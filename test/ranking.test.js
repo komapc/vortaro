@@ -43,6 +43,12 @@ describe('sortByRelevance', () => {
         const out = sortByRelevance(hits, 'hundo', 'eo-io', new Set());
         expect(out[0].ido).toBe('hundo');
     });
+
+    test('io-es ranks by the Ido word, like io-eo', () => {
+        const hits = [entry('kateno'), entry('kato')];
+        const out = sortByRelevance(hits, 'kato', 'io-es', new Set());
+        expect(out[0].ido).toBe('kato');
+    });
 });
 
 describe('index.html shell', () => {

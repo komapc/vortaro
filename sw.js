@@ -15,7 +15,10 @@ const ASSETS = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    // cache: 'reload' skips the browser HTTP cache (app.js is served with
+    // max-age=14400): otherwise a new version could precache the old app.js.
+    caches.open(CACHE_NAME).then((cache) =>
+      cache.addAll(ASSETS.map((url) => new Request(url, { cache: 'reload' }))))
   );
   self.skipWaiting();
 });
@@ -55,7 +58,9 @@ self.addEventListener('fetch', (event) => {
   // Stale-While-Revalidate for static assets
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      const fetchPromise = fetch(event.request).then((networkResponse) => {
+      // no-cache: revalidate with the server (a cheap 304 via ETag) rather
+      // than refresh this cache from a possibly hours-old HTTP-cache copy.
+      const fetchPromise = fetch(event.request, { cache: 'no-cache' }).then((networkResponse) => {
         if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {

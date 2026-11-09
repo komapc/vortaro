@@ -81,6 +81,17 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js');
             });
+            // A new version's worker takes over (skipWaiting + claim): reload
+            // once so the page runs the new app.js, not the one it started with.
+            // Skipped on the very first install (no controller yet).
+            if (navigator.serviceWorker.controller) {
+                let reloaded = false;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (reloaded) {return;}
+                    reloaded = true;
+                    window.location.reload();
+                });
+            }
         }
     </script>
 
@@ -111,6 +122,10 @@
                     title="Montrez hazarda vorto">
                     🎲
                 </button>
+            </div>
+            <div class="lang-switch" id="langSwitch" role="radiogroup" aria-label="Altra linguo">
+                <button type="button" role="radio" data-lang="eo" aria-checked="true" lang="eo">Esperanto</button>
+                <button type="button" role="radio" data-lang="es" aria-checked="false" lang="es">Español</button>
             </div>
             <input type="text" id="searchInput" placeholder="Serchez en Ido..." autofocus autocomplete="off"
                 aria-label="Serchez en vortaro" />
