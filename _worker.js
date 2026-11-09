@@ -252,6 +252,22 @@ async function handleRequest(request, env) {
       return new Response(html, { status: 200, headers });
     }
 
+    // 1b. Español → Ido (/es-io/, /es-io/<palabra>): the app shell, searched
+    // client-side over the Spanish glosses. Not server-rendered yet, so
+    // noindex: the pages would be thin duplicates of the shell.
+    if (url.pathname === '/es-io') {
+      return Response.redirect(`${url.origin}/es-io/${url.search}`, 301);
+    }
+    if (url.pathname.startsWith('/es-io/')) {
+      const response = await env.ASSETS.fetch(new URL('/index.html', url.origin));
+      if (!response.ok) return response;
+      const html = (await response.text()).replace('</head>', '    <meta name="robots" content="noindex,follow">\n  </head>');
+      const headers = new Headers(response.headers);
+      headers.set('content-type', 'text/html;charset=UTF-8');
+      headers.delete('content-length');
+      return new Response(html, { status: 200, headers });
+    }
+
     // 1. Handle Pretty URLs for SPA
     // Paths like /io-eo/hundo or /eo-io/hundo should serve index.html
     const prettyUrlMatch = url.pathname.match(/^\/(io-eo|eo-io)\/(.+)$/);
@@ -298,6 +314,7 @@ async function handleRequest(request, env) {
         // Thin entry (t:1, decided in generate_seo.js): working page, noindex.
         let thin = false;
         let crossHtml = '';
+        let spanish = []; // io-eo: Spanish glosses from io.wiktionary
         let linkedGloss = null; // io-eo: translations that have their own eo-io page
         if (direction === 'io-eo' && rawWord) {
           const letter = shardKeyOf(rawWord);
@@ -309,6 +326,7 @@ async function handleRequest(request, env) {
           const entry = lemma && shard[lemma];
           if (entry && Array.isArray(entry.e)) {
             found = true; translations = entry.e; pos = posLabel(entry.m);
+            spanish = Array.isArray(entry.s) ? entry.s : [];
             canonicalLemma = lemma;
             thin = entry.t === 1;
             linkedGloss = new Set(entry.r || []);
@@ -464,6 +482,7 @@ async function handleRequest(request, env) {
               : translations.slice(0, 5).map((t) => (linkedGloss && linkedGloss.has(t)
                 ? `<a href="/eo-io/${encodeURIComponent(t)}">${escapeHtml(t)}</a>`
                 : escapeHtml(t))).join(', ')}</div>`
+            + (spanish.length ? `<div class="es-words" lang="es">Hispane: ${spanish.slice(0, 5).map(escapeHtml).join(', ')}</div>` : '')
             + (pos ? `<div class="morfologio">${escapeHtml(pos)}</div>` : '')
             + crossHtml
             + formsHtml

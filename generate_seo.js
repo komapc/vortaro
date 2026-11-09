@@ -63,7 +63,11 @@ function entryData(entry) {
   }
   // dict-keyed format: dictionary[lemma] = {esperanto_words, morfologio}
   const d = dictionary[entry.lemma];
-  if (d) return { e: d.esperanto_words || [], m: d.morfologio || [] };
+  if (d) {
+    const out = { e: d.esperanto_words || [], m: d.morfologio || [] };
+    if (d.spanish_words && d.spanish_words.length) out.s = d.spanish_words;
+    return out;
+  }
   return { e: [], m: [] };
 }
 const wordData = entries

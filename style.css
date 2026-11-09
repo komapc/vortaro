@@ -193,6 +193,13 @@ header .site-title {
     margin-bottom: 8px;
 }
 
+.es-words,
+.eo-line {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 6px;
+}
+
 .morfologio {
     font-size: 0.9rem;
     color: #888;
