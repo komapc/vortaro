@@ -1023,3 +1023,153 @@ header .site-title .h1-sub {
     margin-top: 12px;
     font-size: 0.95rem;
 }
+
+/* ===== UI polish (2026-11) =====================================
+   Direction control reads as a secondary toggle, not the main action;
+   compact Filtri control; themed links; tighter mobile header. */
+.direction-toggle {
+    background: #f3f1fb;
+    color: #4c3f9e;
+    border: 2px solid #d9d3f3;
+    box-shadow: none;
+    padding: 10px 16px;
+}
+.direction-toggle:hover,
+.direction-toggle:focus {
+    background: #e9e5fa;
+    border-color: #667eea;
+    transform: none;
+    box-shadow: none;
+}
+.direction-toggle:focus-visible,
+.random-btn:focus-visible,
+.filters-toggle:focus-visible {
+    outline: 3px solid rgba(102, 126, 234, 0.45);
+    outline-offset: 2px;
+}
+.random-btn {
+    border-color: #d9d3f3;
+    box-shadow: none;
+    padding: 10px 14px;
+}
+.random-btn:hover,
+.random-btn:focus {
+    background: #f3f1fb;
+    transform: rotate(20deg);
+    box-shadow: none;
+}
+
+.filters-container {
+    margin-top: 10px;
+}
+.filters-toggle,
+.filters-toggle:hover,
+.filters-toggle:focus {
+    width: auto;
+    display: inline-flex;
+    gap: 6px;
+    justify-content: flex-start;
+    background: none;
+    border: none;
+    padding: 4px 2px;
+    color: #6b6390;
+    font-size: 0.9rem;
+}
+.filters-toggle:hover .filters-text {
+    text-decoration: underline;
+}
+.filters-text {
+    order: 1;
+}
+.filters-count {
+    order: 2;
+}
+.filters-icon {
+    order: 3;
+    font-size: 0;
+}
+.filters-icon::before {
+    content: "▾";
+    font-size: 0.9rem;
+}
+.filters-panel[aria-hidden="false"] {
+    border-top: 2px solid #e9ecef;
+    border-radius: 8px;
+    margin-top: 6px;
+}
+
+/* Links inside results take the theme colour instead of browser blue. */
+.results a:not(.source-badge),
+.forms a,
+.word-family a {
+    color: #4c3f9e;
+    text-decoration: underline;
+    text-decoration-color: rgba(76, 63, 158, 0.35);
+    text-underline-offset: 2px;
+}
+.results a:not(.source-badge):visited,
+.word-family a:visited {
+    color: #6a4c93;
+}
+.results a:not(.source-badge):hover,
+.word-family a:hover {
+    text-decoration-color: currentColor;
+}
+
+/* Empty / no-result states: a hint, not a 300px blank card. */
+.results:has(> .empty-state),
+.results:has(> .no-results) {
+    min-height: 0;
+}
+.empty-state {
+    padding: 28px 20px;
+}
+.empty-state-icon {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+}
+.no-results {
+    padding: 24px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+    header {
+        margin-bottom: 16px;
+    }
+    header h1,
+    header .site-title {
+        font-size: 1.7rem;
+        margin-top: 0.3em;
+        margin-bottom: 6px;
+    }
+    header h1 .h1-sub,
+    header .site-title .h1-sub {
+        font-size: 0.95rem;
+    }
+    .info-button {
+        min-height: 36px;
+        padding: 6px 14px;
+        font-size: 0.9rem;
+    }
+    .direction-toggle,
+    .random-btn {
+        min-height: 44px;
+        padding: 8px 12px;
+    }
+    .filters-toggle {
+        padding: 6px 2px;
+    }
+    .results {
+        padding: 12px;
+    }
+    .search-container {
+        padding: 14px;
+        margin-bottom: 16px;
+    }
+}
+.filters-panel[aria-hidden="true"] {
+    border: none;
+}
