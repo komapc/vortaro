@@ -111,6 +111,7 @@ async function loadDictionary() {
                 ido: entry.lemma,
                 esperanto: (entry.translations || []).filter(t => t.lang === 'eo').map(t => t.term),
                 spanish: [],
+                spanishFolded: [],
                 morfologio: entry.morphology?.paradigm ? [entry.morphology.paradigm] : [],
                 sources: (entry.source_details || {}).all_sources || []
             }));
@@ -123,6 +124,7 @@ async function loadDictionary() {
                 ido: idoWord,
                 esperanto: entryData.esperanto_words || [],
                 spanish: entryData.spanish_words || [],
+                spanishFolded: (entryData.spanish_words || []).map(foldAccents),
                 morfologio: entryData.morfologio || [],
                 sources: entryData.sources || []
             }));
@@ -197,14 +199,16 @@ function search(query) {
         return;
     }
 
+    const foldedTerm = foldAccents(searchTerm);
+
     // Search based on current direction
     let results = allEntries.filter(entry => {
         if (isFromIdo(currentDirection)) {
             // Ido → Esperanto / Español: search only in Ido words
             return entry.ido.toLowerCase().includes(searchTerm);
         } else if (currentDirection === 'es-io') {
-            // Español → Ido: search the Spanish glosses
-            return entry.spanish.some(esWord => esWord.toLowerCase().includes(searchTerm));
+            // Español → Ido: search the Spanish glosses, accents ignored
+            return entry.spanishFolded.some(esWord => esWord.includes(foldedTerm));
         } else {
             // Esperanto → Ido: search only in Esperanto translations
             return entry.esperanto.some(eoWord => eoWord.toLowerCase().includes(searchTerm));
@@ -244,16 +248,29 @@ function search(query) {
     trackSearch(searchTerm, currentDirection, totalMatches);
 }
 
+// Spanish search ignores accents: lowercase, then drop combining marks
+// (corazon finds corazón, nino finds niño). Spanish letters are precomposed,
+// so the folded string keeps the original length (used for highlighting).
+function foldAccents(text) {
+    return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 // Order matches so the exact word is never cut off by the 50-result limit
 // (substring matching alone put "la" at position ~2000 of 4000 hits):
 // exact match, then lemma of an inflected query, then prefix, then any
 // substring; shorter words first within a tier, dictionary order otherwise.
+// Spanish (es-io) compares accent-folded, an exact accented match first.
 function sortByRelevance(results, searchTerm, direction, lemmas) {
+    const fold = direction === 'es-io'
+        ? (t) => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        : (t) => t.toLowerCase();
+    const term = fold(searchTerm);
     const rank = (word) => {
-        const w = word.toLowerCase();
-        if (w === searchTerm) {return 0;}
+        if (word.toLowerCase() === searchTerm) {return 0;}
+        const w = fold(word);
+        if (w === term) {return 0.5;}
         if (lemmas.has(w)) {return 1;}
-        if (w.startsWith(searchTerm)) {return 2;}
+        if (w.startsWith(term)) {return 2;}
         return 3;
     };
     const keyed = results.map((entry, i) => {
@@ -348,7 +365,7 @@ function displayResults(results, searchTerm, totalMatches = results.length) {
             return `
                 <div class="result-item">
                     <div class="target-words" lang="es">
-                        ${entry.spanish.map(word => highlightMatch(word, searchTerm)).join(', ')}
+                        ${entry.spanish.map(word => highlightFolded(word, searchTerm)).join(', ')}
                     </div>
                     <div class="source-word">
                         → ${esc(entry.ido)}
@@ -389,6 +406,8 @@ function applyDirectionUi() {
     toggleBtn.setAttribute('data-direction', currentDirection);
     toggleBtn.querySelector('.toggle-text').textContent = d.label;
     document.getElementById('searchInput').placeholder = d.placeholder;
+    const sub = document.querySelector('.h1-sub');
+    if (sub) {sub.textContent = d.lang === 'es' ? 'Ido–Español vortaro' : 'Ido–Esperanto vortaro';}
     document.querySelectorAll('#langSwitch [data-lang]').forEach(btn => {
         btn.setAttribute('aria-checked', String(btn.dataset.lang === d.lang));
     });
@@ -699,6 +718,21 @@ function highlightMatch(text, query) {
             ? `<mark style="background-color: #fff3cd; padding: 2px 1px; border-radius: 2px;">${esc(part)}</mark>`
             : esc(part)
     ).join('');
+}
+
+// highlightMatch, accent-insensitive (Spanish): find the matches in the
+// folded text and mark the same spans of the original.
+function highlightFolded(text, query) {
+    const folded = foldAccents(text);
+    const q = foldAccents(query);
+    if (!q || folded.length !== text.length) {return highlightMatch(text, query);}
+    let out = '', pos = 0, i;
+    while ((i = folded.indexOf(q, pos)) !== -1) {
+        out += esc(text.slice(pos, i))
+            + `<mark style="background-color: #fff3cd; padding: 2px 1px; border-radius: 2px;">${esc(text.slice(i, i + q.length))}</mark>`;
+        pos = i + q.length;
+    }
+    return out + esc(text.slice(pos));
 }
 
 // Show empty state

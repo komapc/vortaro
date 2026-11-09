@@ -44,6 +44,15 @@ describe('sortByRelevance', () => {
         expect(out[0].ido).toBe('hundo');
     });
 
+    test('es-io ignores accents; the exact accented word ranks first', () => {
+        const es = (ido, ...spanish) => ({ ido, spanish });
+        const hits = [es('diablo', 'diablo'), es('ano', 'ano'), es('yaro', 'año')];
+        expect(sortByRelevance(hits, 'año', 'es-io', new Set()).map(e => e.ido))
+            .toEqual(['yaro', 'ano', 'diablo']);
+        const hits2 = [es('diablo', 'diablo'), es('dio', 'día')];
+        expect(sortByRelevance(hits2, 'dia', 'es-io', new Set())[0].ido).toBe('dio');
+    });
+
     test('io-es ranks by the Ido word, like io-eo', () => {
         const hits = [entry('kateno'), entry('kato')];
         const out = sortByRelevance(hits, 'kato', 'io-es', new Set());
