@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last_updated": "2026-11-09T01:53:51.060924",
+    "last_updated": "2026-11-09T12:42:46.908657",
     "total_unique_ido_words": 37858,
     "source_stats": {
       "bert_embeddings": 4324,
@@ -21,7 +21,8 @@
     "version": "3.2",
     "junk_removed": 0,
     "case_pairs_merged": 4421,
-    "entries_with_spanish": 10854
+    "spanish_from_es_wiktionary": 303,
+    "entries_with_spanish": 10962
   },
   "a": {
     "esperanto_words": [
@@ -193,7 +194,9 @@
       "o__n"
     ],
     "spanish_words": [
-      "abadía"
+      "abadía",
+      "abadiado",
+      "abadiato"
     ]
   },
   "abadino": {
@@ -2329,6 +2332,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "abulia"
     ]
   },
   "abundanta": {
@@ -6491,7 +6497,8 @@
     ],
     "spanish_words": [
       "avión",
-      "aeronave"
+      "aeronave",
+      "aeroplano"
     ]
   },
   "aeroplano-motoro": {
@@ -6790,6 +6797,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "afelio"
     ]
   },
   "afera": {
@@ -7544,7 +7554,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "agave"
+      "agave",
+      "maguey"
     ]
   },
   "age": {
@@ -8966,6 +8977,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "agio"
     ]
   },
   "ajn": {
@@ -9906,6 +9920,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "acróstico"
     ]
   },
   "Akroterio": {
@@ -9919,6 +9936,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "acrotera"
     ]
   },
   "Aksai": {
@@ -14709,7 +14729,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "alquímia"
+      "alquímia",
+      "alquimia"
     ]
   },
   "alkeno": {
@@ -19556,6 +19577,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "anafase"
     ]
   },
   "Anagalo": {
@@ -20002,7 +20026,8 @@
     ],
     "spanish_words": [
       "anana",
-      "piña de América"
+      "piña de América",
+      "ananá"
     ]
   },
   "Ananindeua": {
@@ -24518,6 +24543,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "antimateria"
     ]
   },
   "antimilitarismo": {
@@ -24745,7 +24773,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "antigüedad"
+      "antigüedad",
+      "Antigüedad"
     ]
   },
   "Antirevizismo": {
@@ -27109,7 +27138,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "apocalipsis"
+      "apocalipsis",
+      "Apocalipsis"
     ]
   },
   "apokrifa": {
@@ -27875,6 +27905,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "aguafuerte"
     ]
   },
   "aquala": {
@@ -28486,7 +28519,12 @@
     "sources": [
       "eo_wiktionary"
     ],
-    "morfologio": []
+    "morfologio": [],
+    "spanish_words": [
+      "árabe",
+      "arábigo",
+      "arábico"
+    ]
   },
   "Arab-Israelana konflikto": {
     "esperanto_words": [
@@ -32152,6 +32190,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "árnica"
     ]
   },
   "Arno": {
@@ -37620,6 +37661,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "Atlántico"
     ]
   },
   "Atlanto": {
@@ -41077,7 +41121,8 @@
       "ar__vblex"
     ],
     "spanish_words": [
-      "advertir"
+      "advertir",
+      "precaver"
     ]
   },
   "avertilo": {
@@ -41346,7 +41391,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "abuela"
+      "abuela",
+      "abuelo"
     ]
   },
   "Avion-richaro": {
@@ -41626,6 +41672,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "árbol"
     ]
   },
   "axala": {
@@ -41789,7 +41838,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "axolote"
+      "axolote",
+      "ajolote"
     ]
   },
   "Axonometrio": {
@@ -42102,6 +42152,10 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "azimut",
+      "acimut"
     ]
   },
   "Aziz Sancar": {
@@ -42382,7 +42436,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "hablador"
+      "hablador",
+      "locuaz"
     ]
   },
   "babilemo": {
@@ -46084,6 +46139,10 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "baritina",
+      "barita"
     ]
   },
   "baritono": {
@@ -46723,7 +46782,8 @@
     "spanish_words": [
       "fuente",
       "barreño",
-      "estanque"
+      "estanque",
+      "pila"
     ]
   },
   "Baseno di Doneck": {
@@ -47385,7 +47445,11 @@
     "spanish_words": [
       "golpear",
       "batir",
-      "pegar"
+      "pegar",
+      "tundir",
+      "vapulear",
+      "agramar",
+      "apalizar"
     ]
   },
   "batata": {
@@ -47491,7 +47555,9 @@
     ],
     "spanish_words": [
       "bote",
-      "barca"
+      "barca",
+      "barco",
+      "nave"
     ]
   },
   "baterio": {
@@ -50131,6 +50197,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "berilo"
     ]
   },
   "berjero": {
@@ -52881,7 +52950,8 @@
       "ar__vblex"
     ],
     "spanish_words": [
-      "encuadernar"
+      "encuadernar",
+      "ligar"
     ]
   },
   "bindisto": {
@@ -54284,7 +54354,8 @@
     "spanish_words": [
       "estrafalario",
       "raro",
-      "extravagante"
+      "extravagante",
+      "bizarro"
     ]
   },
   "bizare": {
@@ -56407,7 +56478,8 @@
     ],
     "spanish_words": [
       "perno",
-      "clavija"
+      "clavija",
+      "virote"
     ]
   },
   "Bolzano": {
@@ -56436,7 +56508,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "suegra"
+      "suegra",
+      "suegro"
     ]
   },
   "bomba": {
@@ -59019,7 +59092,9 @@
     ],
     "spanish_words": [
       "gritar",
-      "chillar"
+      "chillar",
+      "rugir",
+      "bramar"
     ]
   },
   "Bramka": {
@@ -60273,7 +60348,8 @@
     ],
     "spanish_words": [
       "brillar",
-      "lucir"
+      "lucir",
+      "relucir"
     ]
   },
   "Brilianto": {
@@ -63814,6 +63890,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "boj"
     ]
   },
   "busolo": {
@@ -68572,6 +68651,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "cerámica"
     ]
   },
   "ceramikala": {
@@ -69753,7 +69835,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "chambelán"
+      "chambelán",
+      "camarlengo"
     ]
   },
   "chambra": {
@@ -69897,7 +69980,9 @@
       "o__n"
     ],
     "spanish_words": [
-      "gamuza"
+      "gamuza",
+      "rebeco",
+      "sarrio"
     ]
   },
   "Champaign": {
@@ -74405,7 +74490,9 @@
       "o__n"
     ],
     "spanish_words": [
-      "arco iris"
+      "arco iris",
+      "arcoíris",
+      "iris"
     ]
   },
   "Ciel-paradizo": {
@@ -74677,6 +74764,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "método científico"
     ]
   },
   "Ciencala revuo": {
@@ -74961,6 +75051,10 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "gitano",
+      "rom"
     ]
   },
   "cigne": {
@@ -75317,7 +75411,9 @@
       "o__n"
     ],
     "spanish_words": [
-      "achicoria"
+      "achicoria",
+      "chicoria",
+      "achicoria común"
     ]
   },
   "Cikuto": {
@@ -76907,7 +77003,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "comilla"
+      "comilla",
+      "comillas"
     ]
   },
   "citokino": {
@@ -77012,7 +77109,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "cidro"
+      "cidro",
+      "limón"
     ]
   },
   "city": {
@@ -81537,7 +81635,9 @@
     "spanish_words": [
       "reparar",
       "zurzir",
-      "remendar"
+      "remendar",
+      "zurcir",
+      "surcir"
     ]
   },
   "darwin": {
@@ -84650,6 +84750,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "onceavo"
     ]
   },
   "Deka": {
@@ -85466,7 +85569,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "delfín"
+      "delfín",
+      "arroaz"
     ]
   },
   "delfinulo": {
@@ -94768,7 +94872,8 @@
     "spanish_words": [
       "delgado",
       "ligero",
-      "fino"
+      "fino",
+      "flaco"
     ]
   },
   "Dina Boluarte": {
@@ -104706,6 +104811,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "ducado"
     ]
   },
   "dukino": {
@@ -105053,7 +105161,8 @@
     ],
     "spanish_words": [
       "mientras",
-      "durante"
+      "durante",
+      "en"
     ]
   },
   "dum ke": {
@@ -105274,7 +105383,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "duna"
+      "duna",
+      "médano"
     ]
   },
   "dunoza": {
@@ -105577,6 +105687,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "duramadre"
     ]
   },
   "Duran Duran": {
@@ -108729,7 +108842,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "igualdad"
+      "igualdad",
+      "paridad"
     ]
   },
   "Egalitarismo": {
@@ -109057,6 +109171,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "eglefino"
     ]
   },
   "ego": {
@@ -109746,6 +109863,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "eclampsia"
     ]
   },
   "eklektika": {
@@ -110876,6 +110996,9 @@
     ],
     "morfologio": [
       "a__adj"
+    ],
+    "spanish_words": [
+      "eléctrico"
     ]
   },
   "Elektra charjo": {
@@ -111238,6 +111361,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "electromagnetismo"
     ]
   },
   "Elektrometro": {
@@ -114565,6 +114691,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "enartrosis"
     ]
   },
   "enboteligar": {
@@ -117844,7 +117973,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "épica"
+      "épica",
+      "épico"
     ]
   },
   "Epiko": {
@@ -118488,6 +118618,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "pluviselva"
     ]
   },
   "Equatorala Guinea": {
@@ -119141,7 +119274,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "de modo alineado"
+      "de modo alineado",
+      "enhiesto"
     ]
   },
   "Erekto": {
@@ -121555,6 +121689,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "esparto"
     ]
   },
   "espelado": {
@@ -123687,6 +123824,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "etmoides"
     ]
   },
   "etna": {
@@ -127841,7 +127981,8 @@
     ],
     "spanish_words": [
       "excusa",
-      "disculpa"
+      "disculpa",
+      "perdón"
     ]
   },
   "Exlibriso": {
@@ -129801,7 +129942,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "extensión"
+      "extensión",
+      "espacio"
     ]
   },
   "exter": {
@@ -131705,6 +131847,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "factorial"
     ]
   },
   "Faktorigo": {
@@ -132455,7 +132600,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "leonado"
+      "leonado",
+      "aleonado"
     ]
   },
   "Falva strigo": {
@@ -133008,7 +133154,9 @@
     "spanish_words": [
       "lodo",
       "cieno",
-      "fango"
+      "fango",
+      "barro",
+      "limo"
     ]
   },
   "fangoza": {
@@ -133388,7 +133536,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "afeite, composición para hermosear la tez"
+      "afeite, composición para hermosear la tez",
+      "maquillaje"
     ]
   },
   "fare": {
@@ -138457,7 +138606,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "hija"
+      "hija",
+      "hijo"
     ]
   },
   "filiko": {
@@ -143078,6 +143228,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "fuagrás"
     ]
   },
   "foko": {
@@ -144376,7 +144529,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "horca"
+      "horca",
+      "horquillo"
     ]
   },
   "forlasar": {
@@ -145081,7 +145235,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "fuerza"
+      "fuerza",
+      "fortaleza"
     ]
   },
   "fortifikado": {
@@ -151251,7 +151406,8 @@
     ],
     "spanish_words": [
       "(1 & 2) fumar",
-      "humear"
+      "humear",
+      "fumar"
     ]
   },
   "Fumario": {
@@ -152522,7 +152678,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "fútbol"
+      "fútbol",
+      "balompié"
     ]
   },
   "futbalo-championkonkurso": {
@@ -153773,6 +153930,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "polla"
     ]
   },
   "galio": {
@@ -153970,6 +154130,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "zueco"
     ]
   },
   "galvanala": {
@@ -160892,7 +161055,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "giróscopo"
+      "giróscopo",
+      "giroscopio"
     ]
   },
   "gis-fero": {
@@ -161396,7 +161560,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "hielo"
+      "hielo",
+      "glaciar"
     ]
   },
   "glacio-monto": {
@@ -163494,7 +163659,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "gonada"
+      "gonada",
+      "gónada"
     ]
   },
   "gondolisto": {
@@ -165032,7 +165198,9 @@
       "o__n"
     ],
     "spanish_words": [
-      "granero"
+      "granero",
+      "troj",
+      "troje"
     ]
   },
   "granato": {
@@ -165745,7 +165913,8 @@
       "ar__vblex"
     ],
     "spanish_words": [
-      "rascar"
+      "rascar",
+      "rascarse"
     ]
   },
   "Grateful Dead": {
@@ -165995,7 +166164,8 @@
     "spanish_words": [
       "casquijo",
       "guijo",
-      "grava"
+      "grava",
+      "gravilla"
     ]
   },
   "gravitado": {
@@ -177533,6 +177703,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "hiena"
     ]
   },
   "hiera": {
@@ -177998,6 +178171,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "himeneo"
     ]
   },
   "Himenoptero": {
@@ -178573,6 +178749,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "hipódromo"
     ]
   },
   "hipofizala": {
@@ -180869,6 +181048,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "mujer"
     ]
   },
   "Hominocido": {
@@ -181590,6 +181772,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "horda"
     ]
   },
   "Hori": {
@@ -183334,6 +183519,9 @@
     ],
     "morfologio": [
       "a__adj"
+    ],
+    "spanish_words": [
+      "húngaro"
     ]
   },
   "hungariani": {
@@ -187033,7 +187221,8 @@
       "ar__vblex"
     ],
     "spanish_words": [
-      "impedir"
+      "impedir",
+      "precaver"
     ]
   },
   "impedata": {
@@ -189486,7 +189675,8 @@
       "ar__vblex"
     ],
     "spanish_words": [
-      "indicar"
+      "indicar",
+      "designar"
     ]
   },
   "indikata": {
@@ -189854,7 +190044,8 @@
     ],
     "spanish_words": [
       "indolente",
-      "perezoso"
+      "perezoso",
+      "gandul"
     ]
   },
   "indolenteso": {
@@ -191174,7 +191365,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "influenza"
+      "influenza",
+      "gripe"
     ]
   },
   "influesar": {
@@ -211835,6 +212027,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "cábala"
     ]
   },
   "kabana": {
@@ -212408,6 +212603,10 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "caftán",
+      "kaftán"
     ]
   },
   "Kagano": {
@@ -212557,6 +212756,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "El Cairo"
     ]
   },
   "kaito": {
@@ -213255,7 +213457,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "califa"
+      "califa",
+      "halifa"
     ]
   },
   "kalifornia": {
@@ -213845,6 +214048,9 @@
     ],
     "morfologio": [
       "a__adj"
+    ],
+    "spanish_words": [
+      "Calcuta"
     ]
   },
   "Kallimahos": {
@@ -214213,7 +214419,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "calvo"
+      "calvo",
+      "pelado"
     ]
   },
   "Kalvario": {
@@ -214588,7 +214795,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "camaléon"
+      "camaléon",
+      "camaleón"
     ]
   },
   "kamelia": {
@@ -214864,7 +215072,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "camión"
+      "camión",
+      "autocamión"
     ]
   },
   "kamizeto": {
@@ -215281,7 +215490,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "el Canadá"
+      "el Canadá",
+      "Canadá"
     ]
   },
   "Kanadana linco": {
@@ -215943,6 +216153,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "canícula"
     ]
   },
   "kanino": {
@@ -216672,7 +216885,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "canción"
+      "canción",
+      "Cantar de los Cantares"
     ]
   },
   "kantoj": {
@@ -216776,6 +216990,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "caolín"
     ]
   },
   "Kaono": {
@@ -217918,6 +218135,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "carabina"
     ]
   },
   "karabo": {
@@ -218323,7 +218543,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "carabela"
+      "carabela",
+      "caravela"
     ]
   },
   "karba": {
@@ -218778,7 +218999,9 @@
       "o__n"
     ],
     "spanish_words": [
-      "jilguero"
+      "jilguero",
+      "sietecolores",
+      "lúgano"
     ]
   },
   "Kardinala nombro": {
@@ -218903,7 +219126,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "cardencha"
+      "cardencha",
+      "cardo"
     ]
   },
   "Karduno": {
@@ -220691,6 +220915,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "Cartago"
     ]
   },
   "Kartali": {
@@ -221225,7 +221452,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "cachalote"
+      "cachalote",
+      "catodonte"
     ]
   },
   "kashmiro": {
@@ -223238,7 +223466,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "col"
+      "col",
+      "repollo"
     ]
   },
   "Kaunas": {
@@ -223421,6 +223650,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "cuadra"
     ]
   },
   "kavaliera": {
@@ -225318,6 +225550,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "quepis"
     ]
   },
   "Kerala": {
@@ -229859,7 +230094,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "azote"
+      "azote",
+      "knut"
     ]
   },
   "Knyazo": {
@@ -230217,7 +230453,9 @@
     ],
     "spanish_words": [
       "cuy",
-      "conejo de Indias"
+      "conejo de Indias",
+      "cobayo",
+      "cuyo"
     ]
   },
   "Kobe": {
@@ -230413,6 +230651,10 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "cóccix",
+      "coxis"
     ]
   },
   "kocinelo": {
@@ -231025,7 +231267,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "cocotero"
+      "cocotero",
+      "coco"
     ]
   },
   "kokoslakto": {
@@ -231056,7 +231299,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "nuez de coco"
+      "nuez de coco",
+      "coco"
     ]
   },
   "Kokoso-insuli": {
@@ -232804,7 +233048,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "coloreado"
+      "coloreado",
+      "colorado"
     ]
   },
   "koloso": {
@@ -237117,7 +237362,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "conde"
+      "conde",
+      "cómite"
     ]
   },
   "komtulo": {
@@ -240949,7 +241195,8 @@
     "spanish_words": [
       "rivalizar",
       "hacer competencia",
-      "concurrir"
+      "concurrir",
+      "competir"
     ]
   },
   "konkurencata": {
@@ -244675,7 +244922,8 @@
     "spanish_words": [
       "contador",
       "mostrador",
-      "escritorio"
+      "escritorio",
+      "despacho"
     ]
   },
   "kontrabandado": {
@@ -246784,6 +247032,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "cocción"
     ]
   },
   "koquata": {
@@ -251027,7 +251278,8 @@
       "ar__vblex"
     ],
     "spanish_words": [
-      "incinerar"
+      "incinerar",
+      "cremar"
     ]
   },
   "kremaceyo": {
@@ -251476,7 +251728,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "berro"
+      "berro",
+      "mastuerzo"
     ]
   },
   "krespeto": {
@@ -251867,6 +252120,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "criquetista"
     ]
   },
   "kriketo": {
@@ -256655,7 +256911,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "aparador"
+      "aparador",
+      "conejar"
     ]
   },
   "kuniklo": {
@@ -257617,7 +257874,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "valeroso"
+      "valeroso",
+      "valiente"
     ]
   },
   "kurajoze": {
@@ -263629,7 +263887,8 @@
     ],
     "spanish_words": [
       "alabar",
-      "elogiar"
+      "elogiar",
+      "loar"
     ]
   },
   "laudata": {
@@ -264135,7 +264394,8 @@
     ],
     "spanish_words": [
       "espliego",
-      "alhucema"
+      "alhucema",
+      "lavanda"
     ]
   },
   "lavilo": {
@@ -267966,7 +268226,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "Libano"
+      "Libano",
+      "Líbano"
     ]
   },
   "Libelo": {
@@ -268937,6 +269198,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "ligamento"
     ]
   },
   "Ligando": {
@@ -270526,6 +270790,11 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "idioma",
+      "lengua",
+      "lenguaje"
     ]
   },
   "linguo Afrikaansa": {
@@ -271202,6 +271471,9 @@
     ],
     "morfologio": [
       "a__adj"
+    ],
+    "spanish_words": [
+      "Lisboa"
     ]
   },
   "lisbon": {
@@ -273140,7 +273412,8 @@
     ],
     "spanish_words": [
       "alquilar",
-      "tomar en arriendo"
+      "tomar en arriendo",
+      "arrendar"
     ]
   },
   "lokacata": {
@@ -274443,7 +274716,8 @@
     "spanish_words": [
       "el",
       "ella",
-      "ello"
+      "ello",
+      "elle"
     ]
   },
   "Lu Xun": {
@@ -275607,7 +275881,8 @@
     ],
     "spanish_words": [
       "alquilar",
-      "dar en alquiler"
+      "dar en alquiler",
+      "lugar"
     ]
   },
   "lugata": {
@@ -275791,7 +276066,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "Lucas"
+      "Lucas",
+      "San Lucas"
     ]
   },
   "Lukas Papadimos": {
@@ -276093,7 +276369,8 @@
     ],
     "spanish_words": [
       "lomos",
-      "ijares"
+      "ijares",
+      "lumbar"
     ]
   },
   "Lumbricina": {
@@ -278981,6 +279258,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "macla"
     ]
   },
   "Makowiska": {
@@ -280859,6 +281139,10 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "mandrágora",
+      "mandrágula"
     ]
   },
   "mandrelo": {
@@ -284983,7 +285267,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "Marcos"
+      "Marcos",
+      "San Marcos"
     ]
   },
   "Marlene Dietrich": {
@@ -286385,6 +286670,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "espectrómetro de masas"
     ]
   },
   "masa": {
@@ -287612,7 +287900,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "materia"
+      "materia",
+      "material"
     ]
   },
   "Materio obskura": {
@@ -287638,7 +287927,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "Mateo"
+      "Mateo",
+      "San Mateo"
     ]
   },
   "Mateusz Morawiecki": {
@@ -287958,7 +288248,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "madre"
+      "madre",
+      "mamá"
     ]
   },
   "Matro Naturo": {
@@ -289382,7 +289673,9 @@
       "o__n"
     ],
     "spanish_words": [
-      "mecha"
+      "mecha",
+      "pábilo",
+      "pabilo"
     ]
   },
   "Mecklenburg-Westala Pomerania": {
@@ -290729,6 +291022,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "melaza"
     ]
   },
   "Melba-persiko": {
@@ -291870,7 +292166,8 @@
       "ar__vblex"
     ],
     "spanish_words": [
-      "tener la menstruación, menstruar"
+      "tener la menstruación, menstruar",
+      "menstruar"
     ]
   },
   "menstruo": {
@@ -292107,7 +292404,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "minué"
+      "minué",
+      "minueto"
     ]
   },
   "menuo": {
@@ -294207,6 +294505,10 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "medievo",
+      "medioevo"
     ]
   },
   "mez-eva": {
@@ -301348,7 +301650,8 @@
     ],
     "spanish_words": [
       "mofeta",
-      "zorrino"
+      "zorrino",
+      "zorrillo"
     ]
   },
   "Mogadishu": {
@@ -302137,7 +302440,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "monástico"
+      "monástico",
+      "frailuno"
     ]
   },
   "monakana": {
@@ -304494,7 +304798,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "morrena"
+      "morrena",
+      "morena"
     ]
   },
   "morfemo": {
@@ -305447,7 +305752,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "muerte"
+      "muerte",
+      "defunción"
     ]
   },
   "morton": {
@@ -309792,7 +310098,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "nafta"
+      "nafta",
+      "petróleo"
     ]
   },
   "Nagano": {
@@ -309905,7 +310212,9 @@
       "a__adj"
     ],
     "spanish_words": [
-      "ingenuo"
+      "ingenuo",
+      "naif",
+      "naíf"
     ]
   },
   "naive": {
@@ -312253,6 +312562,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "quevedos"
     ]
   },
   "naz-truo": {
@@ -312264,6 +312576,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "narina"
     ]
   },
   "nazala": {
@@ -312900,6 +313215,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "necesario"
     ]
   },
   "nechanjebla": {
@@ -314025,7 +314343,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "incomprensible"
+      "incomprensible",
+      "ininteligible"
     ]
   },
   "nekonciliebleso": {
@@ -315043,7 +315362,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "nieta"
+      "nieta",
+      "nieto"
     ]
   },
   "nepotismo": {
@@ -322250,6 +322570,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "novial"
     ]
   },
   "novica": {
@@ -324077,7 +324400,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "obsceno"
+      "obsceno",
+      "sicalíptico"
     ]
   },
   "obceneso": {
@@ -325598,6 +325922,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "asesino"
     ]
   },
   "ocidar": {
@@ -327510,7 +327837,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "octágono"
+      "octágono",
+      "octógono"
     ]
   },
   "okulala": {
@@ -328228,6 +328556,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "juegos olímpicos"
     ]
   },
   "Olinda": {
@@ -330633,6 +330964,9 @@
     ],
     "morfologio": [
       "a__adj"
+    ],
+    "spanish_words": [
+      "optimista"
     ]
   },
   "optimistala": {
@@ -330806,7 +331140,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "naranja"
+      "naranja",
+      "naranjo"
     ]
   },
   "oranje": {
@@ -333387,6 +333722,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "osario"
     ]
   },
   "osto": {
@@ -334056,6 +334394,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "óvalo"
     ]
   },
   "ovariala": {
@@ -335891,6 +336232,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "paladino"
     ]
   },
   "paladio": {
@@ -336361,6 +336705,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "palimpsesto"
     ]
   },
   "palindromo": {
@@ -336568,7 +336915,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "palmera"
+      "palmera",
+      "palma"
     ]
   },
   "palmo": {
@@ -340459,7 +340807,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "parsec"
+      "parsec",
+      "pársec"
     ]
   },
   "parta": {
@@ -342966,6 +343315,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "patrimonio"
     ]
   },
   "patrino": {
@@ -350551,6 +350903,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "San Pedro"
     ]
   },
   "Petteri Orpo": {
@@ -356038,6 +356393,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "plebeyo"
     ]
   },
   "Plebicito": {
@@ -357126,7 +357484,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "portapluma"
+      "portapluma",
+      "pruna"
     ]
   },
   "plumizar": {
@@ -357171,7 +357530,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "pluma"
+      "pluma",
+      "pruna"
     ]
   },
   "plumpa": {
@@ -357290,7 +357650,8 @@
     ],
     "spanish_words": [
       "sumergir",
-      "zambullir"
+      "zambullir",
+      "bucear"
     ]
   },
   "plunjilo": {
@@ -357329,6 +357690,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "buzo"
     ]
   },
   "plunjita": {
@@ -357717,6 +358081,15 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "garúa",
+      "calabobos",
+      "chirimiri",
+      "sirimiri",
+      "llovizna",
+      "camanchaca",
+      "chilchi"
     ]
   },
   "pluviometro": {
@@ -358465,6 +358838,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "pogromo"
     ]
   },
   "point": {
@@ -361736,7 +362112,10 @@
     ],
     "spanish_words": [
       "cerdo",
-      "puerco"
+      "puerco",
+      "chancho",
+      "cochino",
+      "gorrino"
     ]
   },
   "porkokarno": {
@@ -362449,6 +362828,9 @@
     ],
     "morfologio": [
       "a__adj"
+    ],
+    "spanish_words": [
+      "portuario"
     ]
   },
   "Portugal": {
@@ -366800,6 +367182,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "manómetro"
     ]
   },
   "Presotipo": {
@@ -376179,7 +376564,8 @@
     ],
     "spanish_words": [
       "cerca de",
-      "junto a"
+      "junto a",
+      "próximo"
     ]
   },
   "Proxim Oriento": {
@@ -377841,6 +378227,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "pudor"
     ]
   },
   "pudro": {
@@ -378542,7 +378931,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "piedra pómez"
+      "piedra pómez",
+      "pómez"
     ]
   },
   "pumiko": {
@@ -380585,7 +380975,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "quark"
+      "quark",
+      "cuark"
     ]
   },
   "quaro": {
@@ -384982,7 +385373,8 @@
     "spanish_words": [
       "pícaro",
       "bribón",
-      "tuno"
+      "tuno",
+      "tunante"
     ]
   },
   "raso": {
@@ -385206,7 +385598,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "mapache"
+      "mapache",
+      "oso lavador"
     ]
   },
   "rauka": {
@@ -385588,7 +385981,8 @@
     ],
     "spanish_words": [
       "afeitar",
-      "rasurar"
+      "rasurar",
+      "rapar"
     ]
   },
   "Razgrad": {
@@ -387344,7 +387738,8 @@
       "ar__vblex"
     ],
     "spanish_words": [
-      "referirse"
+      "referirse",
+      "derivar"
     ]
   },
   "referata": {
@@ -394877,7 +395272,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "restaurante"
+      "restaurante",
+      "restorán"
     ]
   },
   "restrikta": {
@@ -395602,7 +395998,9 @@
       "ar__vblex"
     ],
     "spanish_words": [
-      "retirar"
+      "retirar",
+      "cejar",
+      "recular"
     ]
   },
   "retroirinta": {
@@ -405519,6 +405917,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "silla de ruedas"
     ]
   },
   "ruma": {
@@ -406638,7 +407039,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "Rut"
+      "Rut",
+      "Rute"
     ]
   },
   "Rutuli": {
@@ -409759,6 +410161,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "samovar"
     ]
   },
   "Samoyeda linguaro": {
@@ -409793,6 +410198,9 @@
     ],
     "morfologio": [
       "a__adj"
+    ],
+    "spanish_words": [
+      "contemporáneo"
     ]
   },
   "samtempe": {
@@ -411540,6 +411948,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "sargazo"
     ]
   },
   "Sariegos": {
@@ -411843,6 +412254,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "satanismo"
     ]
   },
   "satano": {
@@ -414941,7 +415355,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "silla"
+      "silla",
+      "silla de montar"
     ]
   },
   "Seltjarnarnes": {
@@ -423780,6 +424195,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "silo"
     ]
   },
   "silogismo": {
@@ -424299,7 +424717,8 @@
     ],
     "spanish_words": [
       "semejante",
-      "similar"
+      "similar",
+      "símil"
     ]
   },
   "simile": {
@@ -425794,6 +426213,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "sinovia"
     ]
   },
   "sinsa": {
@@ -425908,7 +426330,8 @@
       "a__adj"
     ],
     "spanish_words": [
-      "sintactico"
+      "sintactico",
+      "sintáctico"
     ]
   },
   "Sintaxala sukro": {
@@ -428889,7 +429312,9 @@
     "spanish_words": [
       "raspar",
       "levantar raspando",
-      "raer ligeramente"
+      "raer ligeramente",
+      "rascar",
+      "rascarse"
     ]
   },
   "skrapilo": {
@@ -431928,7 +432353,8 @@
     ],
     "spanish_words": [
       "solo",
-      "solitario"
+      "solitario",
+      "único"
     ]
   },
   "Sola fide": {
@@ -437039,7 +437465,8 @@
     ],
     "spanish_words": [
       "esposo",
-      "esposa"
+      "esposa",
+      "cónyuge"
     ]
   },
   "spozoza": {
@@ -443629,7 +444056,10 @@
       "bobo",
       "tonto",
       "necio",
-      "fatuo"
+      "fatuo",
+      "zonzo",
+      "sonso",
+      "zote"
     ]
   },
   "stumpala": {
@@ -445888,6 +446318,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "Corea del Sur"
     ]
   },
   "Sud-Osetia": {
@@ -446359,7 +446792,8 @@
     ],
     "spanish_words": [
       "sur",
-      "mediodía"
+      "mediodía",
+      "sud"
     ]
   },
   "sudo-westo": {
@@ -446385,6 +446819,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "sudoku"
     ]
   },
   "sudorifanta": {
@@ -449030,7 +449467,8 @@
     ],
     "spanish_words": [
       "soportar",
-      "mantener"
+      "mantener",
+      "aguantar"
     ]
   },
   "suportata": {
@@ -449775,7 +450213,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "mújol"
+      "mújol",
+      "liza"
     ]
   },
   "surnomacho": {
@@ -450413,7 +450852,8 @@
       "ar__vblex"
     ],
     "spanish_words": [
-      "suspender, destituir de un empleo"
+      "suspender, destituir de un empleo",
+      "suspender"
     ]
   },
   "Suspensiono": {
@@ -453241,6 +453681,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "tanga"
     ]
   },
   "Tangerang": {
@@ -454432,6 +454875,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "taxímetro"
     ]
   },
   "taxio": {
@@ -454451,7 +454897,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "taxi"
+      "taxi",
+      "autotaxi"
     ]
   },
   "taxuso": {
@@ -457591,6 +458038,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "seísmo"
     ]
   },
   "Ter-varmesal energio": {
@@ -458501,6 +458951,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "terrorismo"
     ]
   },
   "Teroro": {
@@ -458578,6 +459031,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "patata"
     ]
   },
   "Terpomo-krespo": {
@@ -460400,6 +460856,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "tifus"
     ]
   },
   "Tifoido": {
@@ -461061,7 +461520,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "tímparo"
+      "tímparo",
+      "tímpano"
     ]
   },
   "timuso": {
@@ -461352,6 +461812,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "típula"
     ]
   },
   "Tir-instrumento": {
@@ -461541,6 +462004,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "tiroides"
     ]
   },
   "tirokesto": {
@@ -461882,6 +462348,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "Tito"
     ]
   },
   "Titus Livius": {
@@ -462532,6 +463001,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "similor"
     ]
   },
   "tombala": {
@@ -463884,7 +464356,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "tostada"
+      "tostada",
+      "brindis"
     ]
   },
   "Tot-alfabetajo": {
@@ -467716,6 +468189,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "trilobite"
     ]
   },
   "trilogio": {
@@ -468332,7 +468808,8 @@
     "spanish_words": [
       "artesa",
       "gamella",
-      "dornajo"
+      "dornajo",
+      "bebedero"
     ]
   },
   "Troick": {
@@ -469903,7 +470380,9 @@
       "o__n"
     ],
     "spanish_words": [
-      "tucán"
+      "tucán",
+      "piapoco",
+      "picofeo"
     ]
   },
   "Tula": {
@@ -470337,6 +470816,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "turbante"
     ]
   },
   "Turbin-kompresilo": {
@@ -470744,7 +471226,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "Turkmenistán"
+      "Turkmenistán",
+      "Turkmenia"
     ]
   },
   "Turkowice": {
@@ -474959,7 +475442,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "osa"
+      "osa",
+      "oso"
     ]
   },
   "urso": {
@@ -475406,6 +475890,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "tiempo universal coordinado"
     ]
   },
   "utensilaro": {
@@ -475437,7 +475924,10 @@
     "spanish_words": [
       "utensilio",
       "herramientas",
-      "útiles"
+      "útiles",
+      "instrumento",
+      "herramienta",
+      "útil"
     ]
   },
   "utensiluyo": {
@@ -478704,7 +479194,8 @@
       "ar__vblex"
     ],
     "spanish_words": [
-      "calentar"
+      "calentar",
+      "calorar"
     ]
   },
   "varmigata": {
@@ -479516,7 +480007,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "vaso"
+      "vaso",
+      "jarrón"
     ]
   },
   "ve": {
@@ -481380,7 +481872,10 @@
     "spanish_words": [
       "vientre",
       "barriga",
-      "abdomen"
+      "abdomen",
+      "guata",
+      "bandullo",
+      "panza"
     ]
   },
   "ventroparolanto": {
@@ -482120,7 +482615,9 @@
     ],
     "spanish_words": [
       "gusano",
-      "gusanillo"
+      "gusanillo",
+      "verme",
+      "helminto"
     ]
   },
   "Vermont": {
@@ -482199,6 +482696,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "verdad"
     ]
   },
   "Verona": {
@@ -486580,6 +487080,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "violinista"
     ]
   },
   "violino": {
@@ -487609,7 +488112,9 @@
       "o__n"
     ],
     "spanish_words": [
-      "vitral, vidriera policromada"
+      "vitral, vidriera policromada",
+      "vitral",
+      "vitró"
     ]
   },
   "vitro": {
@@ -489850,6 +490355,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "retruécano"
     ]
   },
   "Vort-valizo": {
@@ -491574,6 +492082,9 @@
     ],
     "morfologio": [
       "a__adj"
+    ],
+    "spanish_words": [
+      "Varsovia"
     ]
   },
   "Warszawa-pakto": {
@@ -492643,6 +493154,9 @@
     ],
     "morfologio": [
       "o__n"
+    ],
+    "spanish_words": [
+      "Viena"
     ]
   },
   "wienana": {
@@ -494356,7 +494870,10 @@
       "o__n"
     ],
     "spanish_words": [
-      "wolframio"
+      "wolframio",
+      "wólfram",
+      "tungsteno",
+      "volframio"
     ]
   },
   "Wolfsburg": {
@@ -498450,7 +498967,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "zigoto"
+      "zigoto",
+      "cigoto"
     ]
   },
   "zigzagar": {
@@ -498970,7 +499488,8 @@
       "o__n"
     ],
     "spanish_words": [
-      "zoología"
+      "zoología",
+      "zoolojía"
     ]
   },
   "zoonozo": {
