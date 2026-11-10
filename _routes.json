@@ -1,11 +1,23 @@
 {
   "version": 1,
-  "include": ["/*"],
+  "include": [
+    "/*"
+  ],
   "exclude": [
-    "/sitemap.xml", "/sitemap-*.xml", "/robots.txt",
-    "/app.js", "/consent.js", "/sw.js", "/style.css", "/subpage.css",
-    "/dictionary.json", "/manifest.json",
-    "/favicon.png", "/favicon.svg", "/icon-192.png", "/icon-512.png", "/og-image.png",
-    "/io", "/io/", "/eo", "/eo/", "/ru", "/ru/", "/de", "/de/", "/fr", "/fr/", "/es", "/es/"
+    "/sitemap.xml",
+    "/sitemap-*.xml",
+    "/robots.txt",
+    "/app.js",
+    "/consent.js",
+    "/sw.js",
+    "/style.css",
+    "/subpage.css",
+    "/dictionary.json",
+    "/manifest.json",
+    "/favicon.png",
+    "/favicon.svg",
+    "/icon-192.png",
+    "/icon-512.png",
+    "/og-image.png"
   ]
 }

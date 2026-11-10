@@ -480,6 +480,14 @@ describe('_worker.js SEO meta handling', () => {
 });
 
 describe('legacy pages.dev host', () => {
+  test('language landing pages redirect to the canonical domain', async () => {
+    for (const l of ['io', 'eo', 'ru', 'de', 'fr', 'es']) {
+      const res = await worker.fetch(new Request(`https://ido-vortaro.pages.dev/${l}/`), makeEnv());
+      expect(res.status).toBe(301);
+      expect(res.headers.get('location')).toBe(`https://vortaro.lipu.dev/${l}/`);
+    }
+  });
+
   test('301-redirects to vortaro.lipu.dev keeping path and query', async () => {
     const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/io-eo/hundo?x=1'), makeEnv());
     expect(res.status).toBe(301);
@@ -584,10 +592,12 @@ describe('_worker.js with the real index.html shell', () => {
 describe('_routes.json', () => {
   const routes = JSON.parse(fs.readFileSync(path.join(__dirname, '../_routes.json'), 'utf8'));
 
-  test('language landing pages are static files, not routed through the worker', () => {
+  // Landing pages go through the worker so the legacy pages.dev host can
+  // redirect them; excluded paths are served on any host with a 200.
+  test('language landing pages exist and are routed through the worker', () => {
     for (const l of ['io', 'eo', 'ru', 'de', 'fr', 'es']) {
-      expect(routes.exclude).toContain(`/${l}/`);
-      expect(routes.exclude).toContain(`/${l}`);
+      expect(routes.exclude).not.toContain(`/${l}/`);
+      expect(routes.exclude).not.toContain(`/${l}`);
       expect(fs.existsSync(path.join(__dirname, '..', l, 'index.html'))).toBe(true);
     }
   });
