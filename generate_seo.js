@@ -35,7 +35,7 @@ console.log(`✅ app.js VERSION set to ${VERSION}`);
 const roundedCount = `${(Math.floor(entries.length / 1000) * 1000).toLocaleString('en-US')}`;
 const indexPath = path.join(__dirname, 'index.html');
 let indexHtml = fs.readFileSync(indexPath, 'utf8');
-indexHtml = indexHtml.replace(/[\d,.]+\+ (Entries|entries)/g, `${roundedCount}+ $1`);
+indexHtml = indexHtml.replace(/[\d,.]+\+ (Entries|entries|words)/g, `${roundedCount}+ $1`);
 // Exact count into the footer's wordCount span. This must be pre-rendered:
 // the footer is the largest text block in the mobile viewport, and growing it
 // at dictionary-load time ("..." -> "37,997") registered a new, larger LCP
@@ -354,6 +354,54 @@ for (const [name, content] of Object.entries(homeBlocks)) {
 fs.writeFileSync(indexPath, homeHtml);
 console.log(`✅ Homepage content: ${coreIo.length}/${CORE_IDO.length} core Ido + ${coreEo.length}/${CORE_EO.length} core Esperanto words linked.`);
 
+// --- Language landing pages (/io/, /eo/, /ru/, /de/, /fr/, /es/) ------------
+// One page per language, hand-written in <lang>/index.html; the homepage is
+// the English version and x-default. The hreflang cluster, the language links
+// and the (locale-formatted, rounded) word counts are filled in here from this
+// single list, so every page of the cluster lists the same alternates.
+// These pages are plain static files: _routes.json excludes them from the
+// Functions worker.
+const LANDINGS = [
+  { lang: 'en', path: '/', label: 'English' },
+  { lang: 'io', path: '/io/', label: 'Ido', numLocale: 'fr' },
+  { lang: 'eo', path: '/eo/', label: 'Esperanto', numLocale: 'fr' },
+  { lang: 'ru', path: '/ru/', label: 'Русский', numLocale: 'ru' },
+  { lang: 'de', path: '/de/', label: 'Deutsch', numLocale: 'de' },
+  { lang: 'fr', path: '/fr/', label: 'Français', numLocale: 'fr' },
+  { lang: 'es', path: '/es/', label: 'Español', numLocale: 'es' },
+];
+const hreflangBlock = '\n'
+  + LANDINGS.map((l) => `    <link rel="alternate" hreflang="${l.lang}" href="${DOMAIN}${l.path}">`).join('\n')
+  + `\n    <link rel="alternate" hreflang="x-default" href="${DOMAIN}/">\n    `;
+const langNav = (current) => LANDINGS
+  .map((l) => (l.lang === current
+    ? `<strong lang="${l.lang}">${l.label}</strong>`
+    : `<a href="${l.path}" lang="${l.lang}" hreflang="${l.lang}">${l.label}</a>`))
+  .join(' · ');
+const floorThousands = (n) => Math.floor(n / 1000) * 1000;
+const fillMarkers = (html, blocks, file) => {
+  for (const [name, content] of Object.entries(blocks)) {
+    const re = new RegExp(`(<!-- seo:${name} -->)[\\s\\S]*?(<!-- /seo:${name} -->)`, 'g');
+    if (!re.test(html)) throw new Error(`${file} is missing the <!-- seo:${name} --> marker`);
+    html = html.replace(re, (_, open, close) => `${open}${content}${close}`);
+  }
+  return html;
+};
+fs.writeFileSync(indexPath, fillMarkers(fs.readFileSync(indexPath, 'utf8'), {
+  hreflang: hreflangBlock,
+  'lang-nav': langNav('en'),
+}, 'index.html'));
+for (const l of LANDINGS.filter((x) => x.path !== '/')) {
+  const file = path.join(__dirname, l.lang, 'index.html');
+  fs.writeFileSync(file, fillMarkers(fs.readFileSync(file, 'utf8'), {
+    hreflang: hreflangBlock,
+    'lang-nav': langNav(l.lang),
+    'io-round': floorThousands(wordData.length).toLocaleString(l.numLocale),
+    'eo-round': floorThousands(eoCount).toLocaleString(l.numLocale),
+  }, `${l.lang}/index.html`));
+}
+console.log(`✅ Language landing pages: ${LANDINGS.length - 1} pages + homepage share one hreflang cluster.`);
+
 // --- Sitemaps: one index + per-direction/per-letter files -------------------
 // lastmod = the dictionary's build date (data version), the same value for
 // every URL it covers: it moves only when the dictionary is regenerated, so
@@ -383,6 +431,7 @@ const fileLetter = (l) => (l === '_' ? 'misc' : l);
 writeSitemap('sitemap-pages.xml', [
   { loc: '/', priority: '1.0' },
   { loc: '/eo-io/', priority: '0.8' },
+  ...LANDINGS.filter((l) => l.path !== '/').map((l) => ({ loc: l.path, priority: '0.8' })),
   { loc: '/about-io', priority: '0.7' },
   { loc: '/about-en', priority: '0.7' },
   { loc: '/about-eo', priority: '0.7' },
@@ -415,7 +464,7 @@ fs.writeFileSync(
   + sitemapFiles.map((f) => `  <sitemap><loc>${DOMAIN}/${f}</loc><lastmod>${buildDate}</lastmod></sitemap>`).join('\n')
   + `\n</sitemapindex>\n`
 );
-console.log(`✅ Sitemap index: ${sitemapFiles.length} files (${ioEoUrls} io-eo + ${eoIoUrls} eo-io word URLs, ${browseUrls.length + 5} pages), lastmod ${buildDate}.`);
+console.log(`✅ Sitemap index: ${sitemapFiles.length} files (${ioEoUrls} io-eo + ${eoIoUrls} eo-io word URLs, ${browseUrls.length + LANDINGS.length - 1 + 5} pages), lastmod ${buildDate}.`);
 
 // --- Per-letter SEO shards for server-side rendering of word pages ---------
 // The _worker.js injects each /io-eo/<word> page's actual translations into the

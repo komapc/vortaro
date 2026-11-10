@@ -20,6 +20,17 @@ const stripDefaultSeoTags = (html) => html
   .replace(/[ \t]*<meta (?:name|property)="(?:og|twitter):(?:title|description|url)"[^>]*>\n?/g, '')
   .replace(/[ \t]*<link rel="canonical"[^>]*>\n?/, '')
   .replace(/[ \t]*<!-- home-intro:[\s\S]*?<!-- \/home-intro -->\n?/, '')
+  .replace(HREFLANG_RE, '')
+
+// The homepage's hreflang cluster (en/x-default + the /io/ … /es/ landing
+// pages) describes the homepage only; pages built from the same shell must not
+// claim those alternates.
+const HREFLANG_RE = /[ \t]*<link rel="alternate" hreflang="[^"]*"[^>]*>\n?/g
+const stripHreflang = (html) => html.replace(HREFLANG_RE, '')
+
+// index.html is English (the homepage); pages built from the shell declare
+// their own language: io-eo word pages are Ido, eo-io pages Esperanto.
+const setHtmlLang = (html, lang) => html.replace(/<html\b[^>]*>/i, `<html lang="${lang}">`)
 
 // Small standalone page for unknown top-level paths (real 404, not the SPA shell).
 const NOT_FOUND_HTML = `<!DOCTYPE html>
@@ -97,8 +108,15 @@ const PARADIGM_POS = {
   __cnjcoo: 'konjunciono', __cnjsub: 'konjunciono', __ij: 'interjeciono',
   num: 'nombro', np__np: 'propra nomo', __prep_art: 'prepoziciono',
 };
-const posLabel = (morf) => {
-  for (const m of (morf || [])) if (PARADIGM_POS[m]) return PARADIGM_POS[m];
+// The same part-of-speech labels in Esperanto, for eo-io pages.
+const PARADIGM_POS_EO = {
+  o__n: 'substantivo', a__adj: 'adjektivo', e__adv: 'adverbo', ar__vblex: 'verbo',
+  ir__vblex: 'verbo', __prn: 'pronomo', __pr: 'prepozicio', __det: 'artikolo',
+  __cnjcoo: 'konjunkcio', __cnjsub: 'konjunkcio', __ij: 'interjekcio',
+  num: 'numeralo', np__np: 'propra nomo', __prep_art: 'prepozicio',
+};
+const posLabel = (morf, labels = PARADIGM_POS) => {
+  for (const m of (morf || [])) if (labels[m]) return labels[m];
   return '';
 };
 
@@ -233,8 +251,8 @@ async function handleRequest(request, env) {
     if (url.pathname === '/eo-io/') {
       const response = await env.ASSETS.fetch(new URL('/index.html', url.origin));
       if (!response.ok) return response;
-      const title = 'Esperanto-Ido Vortaro — Esperanta-Idala vortolibro';
-      const description = 'Free Esperanto-Ido dictionary with 37,000+ entries. Senpaga Esperanta-Idala vortaro: trovez la Ido-vorton por ula Esperanta vorto.';
+      const title = 'Esperanto-Ido Vortaro — senpaga reta vortaro de Esperanto al Ido';
+      const description = 'Senpaga reta Esperanto-Ido vortaro: tajpu Esperantan vorton kaj trovu ĝian tradukon en Ido, kun vortspeco kaj rilataj vortoj.';
       const canonicalUrl = `${url.origin}/eo-io/`;
       const metaTags = `
     <title>${title}</title>
@@ -246,7 +264,7 @@ async function handleRequest(request, env) {
     <meta property="twitter:title" content="${title}">
     <meta property="twitter:description" content="${description}">
         `;
-      const html = stripDefaultSeoTags(await response.text()).replace('</head>', `${metaTags}\n  </head>`);
+      const html = setHtmlLang(stripDefaultSeoTags(await response.text()), 'eo').replace('</head>', `${metaTags}\n  </head>`);
       const headers = new Headers(response.headers);
       headers.set('content-type', 'text/html;charset=UTF-8');
       headers.delete('content-length');
@@ -263,7 +281,7 @@ async function handleRequest(request, env) {
     if (esDir) {
       const response = await env.ASSETS.fetch(new URL('/index.html', url.origin));
       if (!response.ok) return response;
-      const html = (await response.text()).replace('</head>', '    <meta name="robots" content="noindex,follow">\n  </head>');
+      const html = stripHreflang(await response.text()).replace('</head>', '    <meta name="robots" content="noindex,follow">\n  </head>');
       const headers = new Headers(response.headers);
       headers.set('content-type', 'text/html;charset=UTF-8');
       headers.delete('content-length');
@@ -358,19 +376,19 @@ async function handleRequest(request, env) {
             rawWord.charAt(0).toUpperCase() + rawWord.slice(1)].find((c) => shard[c]);
           const entry = key && shard[key];
           if (entry && Array.isArray(entry.i) && entry.i.length) {
-            found = true; translations = entry.i; pos = posLabel(entry.m);
+            found = true; translations = entry.i; pos = posLabel(entry.m, PARADIGM_POS_EO);
             canonicalLemma = key;
             thin = entry.t === 1;
             if (entry.x) {
-              crossHtml = `<p class="cross-link">Anke en Ido: <a href="/io-eo/${encodeURIComponent(entry.x)}">${escapeHtml(entry.x)}</a> (Ido → Esperanto)</p>`;
+              crossHtml = `<p class="cross-link">Ankaŭ en Ido: <a href="/io-eo/${encodeURIComponent(entry.x)}">${escapeHtml(entry.x)}</a> (Ido → Esperanto)</p>`;
             }
             const keys = sortedShardKeys(shardKey, shard);
             const idx = keys.indexOf(key);
             const neighbors = keys.slice(Math.max(0, idx - 4), idx + 5).filter((k) => k !== key);
             const browsePageNo = Math.floor(idx / BROWSE_PAGE_SIZE) + 1;
-            relatedHtml = `<nav class="related-words"><h3>Altra vorti</h3>`
+            relatedHtml = `<nav class="related-words"><h3>Aliaj vortoj</h3>`
               + neighbors.map((k) => `<a href="/eo-io/${encodeURIComponent(k)}">${escapeHtml(k)}</a>`).join(' · ')
-              + ` · <a href="/browse/eo-${letter}-${browsePageNo}">Plu multa vorti per "${letter === '_' ? '#' : letter.toUpperCase()}"</a>`
+              + ` · <a href="/browse/eo-${letter}-${browsePageNo}">Pliaj vortoj per "${letter === '_' ? '#' : letter.toUpperCase()}"</a>`
               + `</nav>`;
           } else {
             // Esperanto word whose only Ido counterpart is the identical string
@@ -387,15 +405,26 @@ async function handleRequest(request, env) {
         }
         const transStr = translations.slice(0, 5).map(escapeHtml).join(', ');
 
-        // Richer title/description with the translation when known. Quotes
+        // Richer title/description with the translation when known, in the
+        // page's language: io-eo pages are Ido, eo-io pages Esperanto. Quotes
         // are typographic: a literal " would end the content="..." attribute
         // (descriptions were being cut off at `Trovez ` / `Look up `).
-        const title = transStr
-          ? `${decodedWord} → ${transStr} — ${direction === 'eo-io' ? 'Esperanto-Ido' : 'Ido-Esperanto'} Vortaro`
-          : `${decodedWord ? `„${decodedWord}“ ne trovita — ` : ''}Ido-Esperanto Vortaro`;
-        const description = transStr
-          ? `${decodedWord} (${langFrom}) → ${transStr} (${langTo})${pos ? ', ' + pos : ''}. Trovez „${decodedWord}“ en la senpaga Ido-Esperanto vortaro kun morfologio-analizo.`
-          : `${decodedWord ? `„${decodedWord}“ ne trovesas en la vortaro. ` : ''}Serchez altra vorto en la senpaga Ido-Esperanto vortaro (${langFrom} → ${langTo}).`;
+        const eo = direction === 'eo-io';
+        const dictName = eo ? 'Esperanto-Ido Vortaro' : 'Ido-Esperanto Vortaro';
+        let title;
+        let description;
+        if (transStr) {
+          title = `${decodedWord} — traduko en ${langTo}: ${transStr} | ${dictName}`;
+          description = eo
+            ? `«${decodedWord}» (Esperanto) → ${transStr} (Ido)${pos ? ', ' + pos : ''}. Trovu la Idan tradukon en la senpaga Esperanto-Ido vortaro.`
+            : `${decodedWord} (${langFrom}) → ${transStr} (${langTo})${pos ? ', ' + pos : ''}. Trovez „${decodedWord}“ en la senpaga Ido-Esperanto vortaro kun morfologio-analizo.`;
+        } else if (eo) {
+          title = `${decodedWord ? `„${decodedWord}“ ne troviĝis — ` : ''}${dictName}`;
+          description = `${decodedWord ? `„${decodedWord}“ ne troviĝas en la vortaro. ` : ''}Serĉu alian vorton en la senpaga Esperanto-Ido vortaro (Esperanto → Ido).`;
+        } else {
+          title = `${decodedWord ? `„${decodedWord}“ ne trovita — ` : ''}${dictName}`;
+          description = `${decodedWord ? `„${decodedWord}“ ne trovesas en la vortaro. ` : ''}Serchez altra vorto en la senpaga Ido-Esperanto vortaro (${langFrom} → ${langTo}).`;
+        }
 
         const canonicalUrl = canonicalLemma
           ? `${url.origin}/${direction}/${encodeURIComponent(canonicalLemma)}`
@@ -447,7 +476,7 @@ async function handleRequest(request, env) {
     ${ld.map((d) => `<script type="application/ld+json">${JSON.stringify(d)}</script>`).join('\n    ')}
         `;
 
-        html = stripDefaultSeoTags(html);
+        html = setHtmlLang(stripDefaultSeoTags(html), eo ? 'eo' : 'io');
         // A function: a replacement string would treat $` and $& from the URL as patterns.
         html = html.replace('</head>', () => `${metaTags}\n  </head>`);
 
