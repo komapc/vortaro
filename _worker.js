@@ -388,7 +388,7 @@ async function handleRequest(request, env) {
             const browsePageNo = Math.floor(idx / BROWSE_PAGE_SIZE) + 1;
             relatedHtml = `<nav class="related-words"><h3>Aliaj vortoj</h3>`
               + neighbors.map((k) => `<a href="/eo-io/${encodeURIComponent(k)}">${escapeHtml(k)}</a>`).join(' · ')
-              + ` · <a href="/browse/eo-${letter}-${browsePageNo}">Pliaj vortoj per "${letter === '_' ? '#' : letter.toUpperCase()}"</a>`
+              + ` · <a href="/browse/eo-${letter}-${browsePageNo}">Pliaj vortoj komenciĝantaj per "${letter === '_' ? '#' : letter.toUpperCase()}"</a>`
               + `</nav>`;
           } else {
             // Esperanto word whose only Ido counterpart is the identical string
