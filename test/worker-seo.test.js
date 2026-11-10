@@ -132,7 +132,7 @@ describe('_worker.js fetch handler — ASSETS.fetch call sites', () => {
     expect(res.status).toBe(200);
 
     const html = await res.text();
-    expect(html).toContain('hundo → hundo — Ido-Esperanto Vortaro');
+    expect(html).toContain('<title>hundo — traduko en Esperanto: hundo | Ido-Esperanto Vortaro</title>');
     expect(html).toContain('<div id="results" class="results"><div class="result-item">');
     expect(html).not.toContain(GENERIC_TITLE);
 
@@ -235,11 +235,11 @@ describe('_worker.js SEO meta handling', () => {
   });
 
   test('blank or malformed word is a 404, not an empty title or a crash', async () => {
-    for (const p of ['/io-eo/%20', '/io-eo/%E0', '/eo-io/%20']) {
+    for (const [p, title] of [['/io-eo/%20', 'Ido-Esperanto Vortaro'], ['/io-eo/%E0', 'Ido-Esperanto Vortaro'], ['/eo-io/%20', 'Esperanto-Ido Vortaro']]) {
       const res = await worker.fetch(new Request('https://vortaro.lipu.dev' + p), makeEnv());
       expect(res.status).toBe(404);
       const html = await res.text();
-      expect(html).toContain('<title>Ido-Esperanto Vortaro</title>');
+      expect(html).toContain(`<title>${title}</title>`);
       expect(html).toContain('<meta name="robots" content="noindex">');
     }
   });
@@ -257,7 +257,7 @@ describe('_worker.js SEO meta handling', () => {
     expect(html).not.toContain('home-intro');
     expect(html.match(/name="twitter:card"/g)).toHaveLength(1);
     expect(html.match(/twitter:title/g)).toHaveLength(1);
-    expect(html).toContain('<meta name="twitter:title" content="hundo → hundo — Ido-Esperanto Vortaro">');
+    expect(html).toContain('<meta name="twitter:title" content="hundo — traduko en Esperanto: hundo | Ido-Esperanto Vortaro">');
   });
 
   test('thin entries (t:1) are working 200 pages marked noindex,follow without canonical', async () => {
@@ -278,7 +278,7 @@ describe('_worker.js SEO meta handling', () => {
     expect(io).toContain('<p class="cross-link">Anke en Esperanto: <a href="/eo-io/zom">zom</a>');
     expect(io).toContain('→ <a href="/eo-io/domo">domo</a>, homo</div>');
     const eo = await (await worker.fetch(new Request('https://vortaro.lipu.dev/eo-io/zom'), makeEnv())).text();
-    expect(eo).toContain('<p class="cross-link">Anke en Ido: <a href="/io-eo/zom">zom</a>');
+    expect(eo).toContain('<p class="cross-link">Ankaŭ en Ido: <a href="/io-eo/zom">zom</a>');
     const plain = await (await worker.fetch(new Request('https://vortaro.lipu.dev/io-eo/hundo'), makeEnv())).text();
     expect(plain).not.toContain('class="cross-link"');
     // same-string page already linked as a gloss: no second, redundant link
@@ -333,7 +333,9 @@ describe('_worker.js SEO meta handling', () => {
     const html = await res.text();
     expect(html).not.toContain('name="robots"');
     expect(html).toContain('<link rel="canonical" href="https://vortaro.lipu.dev/eo-io/domo">');
-    expect(html).toContain('domo → hundo, hundeto — Esperanto-Ido Vortaro');
+    expect(html).toContain('<title>domo — traduko en Ido: hundo, hundeto | Esperanto-Ido Vortaro</title>');
+    expect(html).toContain('<meta name="description" content="«domo» (Esperanto) → hundo, hundeto (Ido), substantivo. Trovu la Idan tradukon en la senpaga Esperanto-Ido vortaro.">');
+    expect(html).toContain('<h3>Aliaj vortoj</h3>');
     expect(html).toContain('<h1 class="source-word">domo</h1>');
     expect(html).toContain('<a href="/io-eo/hundo">hundo</a>');
     expect(html).toContain('<a href="/eo-io/doma">doma</a>'); // eo neighbor
@@ -447,7 +449,8 @@ describe('_worker.js SEO meta handling', () => {
     const res = await worker.fetch(new Request('https://vortaro.lipu.dev/eo-io/'), makeEnv());
     expect(res.status).toBe(200);
     const html = await res.text();
-    expect(html).toContain('<title>Esperanto-Ido Vortaro — Esperanta-Idala vortolibro</title>');
+    expect(html).toContain('<title>Esperanto-Ido Vortaro — senpaga reta vortaro de Esperanto al Ido</title>');
+    expect(html).toMatch(/<html lang="eo">/);
     expect(html).toContain('<link rel="canonical" href="https://vortaro.lipu.dev/eo-io/">');
     expect(html).not.toContain(GENERIC_TITLE);
     expect(html).not.toContain('<link rel="canonical" href="https://vortaro.lipu.dev/">');
@@ -527,5 +530,72 @@ describe('$ patterns in the URL', () => {
     const html = await res.text();
     // $` would paste the start of the page back into the head.
     expect((html.match(/<head>/g) || []).length).toBe(1);
+  });
+});
+
+// The fixture shell above is synthetic (bare <html>, attribute-free <h1>); run
+// the real index.html through the worker too, so the lang/hreflang/intro
+// rewrites are checked against the markup that actually ships.
+describe('_worker.js with the real index.html shell', () => {
+  const REAL_INDEX = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
+  const realEnv = () => {
+    const base = makeEnv();
+    const fetch = jest.fn(async (input) => {
+      const reqUrl = new URL(input instanceof Request ? input.url : input);
+      if (reqUrl.pathname === '/index.html' || reqUrl.pathname === '/') {
+        return new Response(REAL_INDEX, { status: 200, headers: { 'content-type': 'text/html' } });
+      }
+      return base.ASSETS.fetch(input);
+    });
+    return { ASSETS: { fetch } };
+  };
+
+  test('homepage is English and carries the language-landing hreflang cluster', () => {
+    expect(REAL_INDEX).toMatch(/<html lang="en">/);
+    for (const [lang, href] of [['en', '/'], ['io', '/io/'], ['eo', '/eo/'], ['ru', '/ru/'],
+      ['de', '/de/'], ['fr', '/fr/'], ['es', '/es/'], ['x-default', '/']]) {
+      expect(REAL_INDEX).toContain(`<link rel="alternate" hreflang="${lang}" href="https://vortaro.lipu.dev${href}">`);
+    }
+  });
+
+  test.each([
+    ['/io-eo/hundo', 'io'],
+    ['/eo-io/domo', 'eo'],
+    ['/eo-io/', 'eo'],
+  ])('%s: lang="%s", no homepage hreflang/intro, one description and h1', async (p, lang) => {
+    const res = await worker.fetch(new Request('https://vortaro.lipu.dev' + p), realEnv());
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).toMatch(new RegExp(`<html lang="${lang}">`));
+    expect(html).not.toContain('<link rel="alternate"');
+    expect(html).not.toContain('id="home-intro"');
+    expect(html.match(/<meta name="description"/g)).toHaveLength(1);
+    expect(html.match(/<title>/g)).toHaveLength(1);
+    expect(html.match(/<h1[\s>]/g)).toHaveLength(1);
+  });
+
+  test('es-io shell (noindex) drops the homepage hreflang cluster', async () => {
+    const html = await (await worker.fetch(new Request('https://vortaro.lipu.dev/es-io/perro'), realEnv())).text();
+    expect(html).toContain('<meta name="robots" content="noindex,follow">');
+    expect(html).not.toContain('<link rel="alternate"');
+  });
+});
+
+describe('_routes.json', () => {
+  const routes = JSON.parse(fs.readFileSync(path.join(__dirname, '../_routes.json'), 'utf8'));
+
+  test('language landing pages are static files, not routed through the worker', () => {
+    for (const l of ['io', 'eo', 'ru', 'de', 'fr', 'es']) {
+      expect(routes.exclude).toContain(`/${l}/`);
+      expect(routes.exclude).toContain(`/${l}`);
+      expect(fs.existsSync(path.join(__dirname, '..', l, 'index.html'))).toBe(true);
+    }
+  });
+
+  test('no exclude rule swallows the worker-rendered direction pages', () => {
+    const matches = (rule, p) => new RegExp(`^${rule.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*')}$`).test(p);
+    for (const p of ['/', '/io-eo/hundo', '/eo-io/', '/eo-io/domo', '/es-io/perro', '/io-es/', '/about-en', '/browse/a-1']) {
+      expect(routes.exclude.filter((r) => matches(r, p))).toEqual([]);
+    }
   });
 });
