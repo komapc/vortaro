@@ -966,7 +966,7 @@ function showAboutModal(lang = 'io') {
         <h3>${t.licenseTitle}</h3>
         <p>${t.licenseDesc}</p>
         <ul>
-            <li><strong>Wikivortaro/Wikipedia:</strong> <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA 3.0</a></li>
+            <li><strong>Wikivortaro/Wikipedia:</strong> <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a></li>
             <li><strong>Softwaro:</strong> MIT / Libera kodo</li>
         </ul>
         <p><small>${t.attribution}</small></p>
