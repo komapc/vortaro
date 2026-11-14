@@ -104,4 +104,4 @@ or the host loses verification.
 
 ## License
 
-Dictionary data from Wiktionary and Wikipedia (CC BY-SA 3.0). See individual sources for details.
+Dictionary data: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), derived from Wiktionary and Wikipedia contributors (CC BY-SA 4.0) and Wikidata (CC0) by the [extractor pipeline](https://github.com/komapc/ido-esperanto-extractor). Code: MIT. See [`LICENSE`](LICENSE).
