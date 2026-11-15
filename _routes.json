@@ -8,7 +8,6 @@
     "/sitemap-*.xml",
     "/robots.txt",
     "/app.js",
-    "/consent.js",
     "/sw.js",
     "/style.css",
     "/subpage.css",
