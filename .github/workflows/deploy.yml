@@ -20,8 +20,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: a4f85dfdebcf5fa0a516297f9c6dc029 # not a secret
+      # Only "true"/"false" at job level: the token itself is exposed to the Deploy step
+      # alone, so npm ci / npm test lifecycle scripts cannot read it.
+      HAS_CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -33,5 +34,8 @@ jobs:
       - name: Generate SEO pages and sitemaps
         run: npm run postbuild
       - name: Deploy
-        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        if: ${{ env.HAS_CF_TOKEN == 'true' }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: a4f85dfdebcf5fa0a516297f9c6dc029 # not a secret
         run: npx wrangler pages deploy . --project-name ido-vortaro --branch main --commit-dirty=true
