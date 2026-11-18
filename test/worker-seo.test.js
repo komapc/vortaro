@@ -493,6 +493,17 @@ describe('legacy pages.dev host', () => {
     expect(res.status).toBe(301);
     expect(res.headers.get('location')).toBe('https://vortaro.lipu.dev/io-eo/hundo?x=1');
   });
+
+  test('serves the Search Console verification file with a 200 instead of redirecting', async () => {
+    const res = await worker.fetch(new Request('https://ido-vortaro.pages.dev/googled1d667f41fecd0d0.html'), makeEnv());
+    expect(res.status).toBe(200);
+    expect(await res.text()).toBe('google-site-verification: googled1d667f41fecd0d0.html');
+  });
+
+  test('the verification file is only special on the legacy host', async () => {
+    const res = await worker.fetch(new Request('https://vortaro.lipu.dev/googled1d667f41fecd0d0.html'), makeEnv());
+    expect(await res.text()).not.toContain('google-site-verification');
+  });
 });
 
 describe('failed shard reads', () => {
