@@ -587,6 +587,38 @@ describe('_worker.js with the real index.html shell', () => {
     expect(html).toContain('<meta name="robots" content="noindex,follow">');
     expect(html).not.toContain('<link rel="alternate"');
   });
+
+  test('homepage has og:site_name, og:image:alt and og:locale en_US', () => {
+    expect(REAL_INDEX).toContain('<meta property="og:site_name" content="Ido-Esperanto Vortaro">');
+    expect(REAL_INDEX).toMatch(/<meta property="og:image:alt" content="[^"]+">/);
+    expect(REAL_INDEX).toContain('<meta property="og:locale" content="en_US">');
+  });
+
+  // og:locale follows the page language: eo_EO on Esperanto pages, none on Ido
+  // pages (there is no valid OG locale for Ido) — never the homepage's en_US.
+  test.each([
+    ['/io-eo/hundo', null],
+    ['/io-eo/zzznotaword', null],
+    ['/eo-io/domo', 'eo_EO'],
+    ['/eo-io/', 'eo_EO'],
+  ])('%s: og:locale %s, keeps one og:site_name and og:image:alt', async (p, locale) => {
+    const html = await (await worker.fetch(new Request('https://vortaro.lipu.dev' + p), realEnv())).text();
+    const locales = html.match(/<meta property="og:locale" content="([^"]*)">/g) || [];
+    expect(locales).toEqual(locale ? [`<meta property="og:locale" content="${locale}">`] : []);
+    expect(html.match(/property="og:site_name"/g)).toHaveLength(1);
+    expect(html.match(/property="og:image:alt"/g)).toHaveLength(1);
+  });
+
+  test.each([
+    ['io', null], ['eo', 'eo_EO'], ['ru', 'ru_RU'], ['de', 'de_DE'], ['fr', 'fr_FR'], ['es', 'es_ES'],
+  ])('/%s/ landing page: og:locale %s, og:site_name, og:image:alt', (lang, locale) => {
+    const html = fs.readFileSync(path.join(__dirname, `../${lang}/index.html`), 'utf8');
+    expect(html).toMatch(new RegExp(`<html lang="${lang}">`));
+    const locales = html.match(/<meta property="og:locale" content="([^"]*)">/g) || [];
+    expect(locales).toEqual(locale ? [`<meta property="og:locale" content="${locale}">`] : []);
+    expect(html).toContain('<meta property="og:site_name" content="Ido-Esperanto Vortaro">');
+    expect(html).toMatch(/<meta property="og:image:alt" content="[^"]+">/);
+  });
 });
 
 describe('_routes.json', () => {

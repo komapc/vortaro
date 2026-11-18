@@ -11,13 +11,16 @@ const escapeHtml = (s) => String(s)
 // Remove the static SEO tags that the per-word injection replaces. Leaving the
 // originals in place means two <meta name="description"> / og:* sets per page,
 // and OG parsers take the FIRST occurrence — so shared word links showed the
-// generic homepage card. og:type/og:image/twitter:card are kept (not re-injected).
+// generic homepage card. og:type/og:image/og:image:alt/og:site_name/twitter:card
+// are kept (not re-injected). og:locale is the homepage's (en_US): stripped, and
+// re-injected as eo_EO on Esperanto pages only — Ido has no valid OG locale.
 // The homepage's static intro (#home-intro) is removed too: repeated on every
 // word page it would be ~400 words of identical boilerplate.
 const stripDefaultSeoTags = (html) => html
   .replace(/<title>.*?<\/title>\s*/s, '')
   .replace(/[ \t]*<meta name="description"[^>]*>\n?/, '')
   .replace(/[ \t]*<meta (?:name|property)="(?:og|twitter):(?:title|description|url)"[^>]*>\n?/g, '')
+  .replace(/[ \t]*<meta property="og:locale"[^>]*>\n?/g, '')
   .replace(/[ \t]*<link rel="canonical"[^>]*>\n?/, '')
   .replace(/[ \t]*<!-- home-intro:[\s\S]*?<!-- \/home-intro -->\n?/, '')
   .replace(HREFLANG_RE, '')
@@ -261,6 +264,7 @@ async function handleRequest(request, env) {
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">
     <meta property="og:url" content="${canonicalUrl}">
+    <meta property="og:locale" content="eo_EO">
     <meta property="twitter:title" content="${title}">
     <meta property="twitter:description" content="${description}">
         `;
@@ -470,7 +474,7 @@ async function handleRequest(request, env) {
     ${robotsTag}
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">
-    <meta property="og:url" content="${canonicalUrl}">
+    <meta property="og:url" content="${canonicalUrl}">${eo ? '\n    <meta property="og:locale" content="eo_EO">' : ''}
     <meta name="twitter:title" content="${title}">
     <meta name="twitter:description" content="${description}">
     ${ld.map((d) => `<script type="application/ld+json">${JSON.stringify(d)}</script>`).join('\n    ')}
