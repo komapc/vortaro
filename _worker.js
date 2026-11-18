@@ -207,6 +207,15 @@ async function handleRequest(request, env) {
 
     // Old *.pages.dev address: permanent redirect to the canonical domain.
     if (url.hostname === 'ido-vortaro.pages.dev') {
+      // Google Search Console ownership file for the old host's URL-prefix
+      // property (keeps its data and the Change of Address visible). Served
+      // inline: the asset server would 308 the .html path. Removing it drops
+      // the verification.
+      if (url.pathname === '/googled1d667f41fecd0d0.html') {
+        return new Response('google-site-verification: googled1d667f41fecd0d0.html', {
+          headers: { 'content-type': 'text/html; charset=UTF-8' },
+        });
+      }
       return Response.redirect('https://vortaro.lipu.dev' + url.pathname + url.search, 301);
     }
 
