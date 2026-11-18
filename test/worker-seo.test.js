@@ -619,6 +619,25 @@ describe('_worker.js with the real index.html shell', () => {
     expect(html).toContain('<meta property="og:site_name" content="Ido-Esperanto Vortaro">');
     expect(html).toMatch(/<meta property="og:image:alt" content="[^"]+">/);
   });
+
+  // og:title/og:description/og:url mirror the page's own <title>, description and canonical.
+  test.each([
+    ['en', 'en_US'], ['eo', 'eo_EO'], ['io', null],
+  ])('/about-%s: full OG set, og:locale %s', (lang, locale) => {
+    const html = fs.readFileSync(path.join(__dirname, `../about-${lang}.html`), 'utf8');
+    expect(html).toMatch(new RegExp(`<html lang="${lang}">`));
+    const one = (re) => { const m = html.match(new RegExp(re, 'g')) || []; expect(m).toHaveLength(1); return html.match(re)[1]; };
+    expect(one('<meta property="og:title" content="([^"]*)">')).toBe(one('<title>([^<]*)</title>'));
+    expect(one('<meta property="og:description" content="([^"]*)">')).toBe(one('<meta name="description" content="([^"]*)">'));
+    expect(one('<meta property="og:url" content="([^"]*)">')).toBe(one('<link rel="canonical" href="([^"]*)">'));
+    expect(html).toContain('<meta property="og:type" content="website">');
+    expect(html).toContain('<meta property="og:image" content="https://vortaro.lipu.dev/og-image.png">');
+    expect(html).toContain('<meta property="og:site_name" content="Ido-Esperanto Vortaro">');
+    expect(html).toMatch(/<meta property="og:image:alt" content="[^"]+">/);
+    expect(html).toContain('<meta name="twitter:card" content="summary_large_image">');
+    const locales = html.match(/<meta property="og:locale" content="([^"]*)">/g) || [];
+    expect(locales).toEqual(locale ? [`<meta property="og:locale" content="${locale}">`] : []);
+  });
 });
 
 describe('_routes.json', () => {

@@ -178,6 +178,19 @@ const escapeHtml = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 const letterLabel = (l) => (l === '_' ? '#' : l.toUpperCase());
+// Open Graph / Twitter card for the browse pages; arguments are attribute-safe
+// (escaped). Image, alt and site name are the ones index.html uses. The pages
+// are <html lang="io">: no og:locale, there is no valid OG locale for Ido.
+const ogTags = (url, title, description) => [
+  '<meta property="og:type" content="website">',
+  `<meta property="og:url" content="${url}">`,
+  `<meta property="og:title" content="${title}">`,
+  `<meta property="og:description" content="${description}">`,
+  `<meta property="og:image" content="${DOMAIN}/og-image.png">`,
+  '<meta property="og:image:alt" content="Vortaro — Ido ⇄ Esperanto Dictionary">',
+  '<meta property="og:site_name" content="Ido-Esperanto Vortaro">',
+  '<meta name="twitter:card" content="summary_large_image">',
+].map((t) => `    ${t}`).join('\n');
 const letters = Object.keys(shards).sort();
 // dir 'io-eo' (default, slug = letter) or 'eo-io' (slug = eo-<letter>).
 const browsePage = ({ letter, pageNo, pageCount, items, prev, next, dir = 'io-eo' }) => {
@@ -187,6 +200,9 @@ const nav = (eo ? eoLetters : letters)
   .map((l) => `<a href="/browse/${eo ? 'eo-' : ''}${l}-1">${letterLabel(l)}</a>`)
   .join(' ');
 const headWords = eo ? 'Esperanto-vorti' : 'Ido-vorti';
+const title = `${headWords} per "${letterLabel(letter)}" (${pageNo}/${pageCount}) — ${eo ? 'Esperanto-Ido' : 'Ido-Esperanto'} Vortaro`;
+const description = `Listo di ${headWords} komencanta per '${letterLabel(letter)}' kun ${eo ? 'Ido' : 'Esperanto'}-traduki — pagino ${pageNo} de ${pageCount}. ${escapeHtml(items.slice(0, 5).map((i) => i.lemma).join(', '))}…`;
+const canonical = `${DOMAIN}/browse/${slug}-${pageNo}`;
 const itemRows = items.map(({ lemma, data }) => {
   const targets = eo ? data.i : data.e;
   const targetLinks = eo
@@ -199,9 +215,10 @@ return `<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${headWords} per "${letterLabel(letter)}" (${pageNo}/${pageCount}) — ${eo ? 'Esperanto-Ido' : 'Ido-Esperanto'} Vortaro</title>
-    <meta name="description" content="Listo di ${headWords} komencanta per '${letterLabel(letter)}' kun ${eo ? 'Ido' : 'Esperanto'}-traduki — pagino ${pageNo} de ${pageCount}. ${escapeHtml(items.slice(0, 5).map((i) => i.lemma).join(', '))}…">
-    <link rel="canonical" href="${DOMAIN}/browse/${slug}-${pageNo}">
+    <title>${title}</title>
+    <meta name="description" content="${description}">
+    <link rel="canonical" href="${canonical}">
+${ogTags(canonical, escapeHtml(title), description)}
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <style>
@@ -266,14 +283,17 @@ eoLetters.forEach((letter) => {
     browseUrls.push(`/browse/eo-${letter}-${p}`);
   }
 });
+const browseIndexTitle = 'Indexo di Ido-vorti — Ido-Esperanto Vortaro';
+const browseIndexDescription = `Alfabetala indexo di ${wordData.length.toLocaleString('en-US')} Ido-vorti kun Esperanto-traduki en la senpaga Ido-Esperanto vortaro.`;
 const browseIndex = `<!DOCTYPE html>
 <html lang="io">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indexo di Ido-vorti — Ido-Esperanto Vortaro</title>
-    <meta name="description" content="Alfabetala indexo di ${wordData.length.toLocaleString('en-US')} Ido-vorti kun Esperanto-traduki en la senpaga Ido-Esperanto vortaro.">
+    <title>${browseIndexTitle}</title>
+    <meta name="description" content="${browseIndexDescription}">
     <link rel="canonical" href="${DOMAIN}/browse/">
+${ogTags(`${DOMAIN}/browse/`, browseIndexTitle, browseIndexDescription)}
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <style>
