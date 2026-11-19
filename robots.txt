@@ -1,4 +1,26 @@
+# Search engines: no limits.
 User-agent: *
+Allow: /
+
+# AI, SEO and other non-search crawlers: please slow down.
+# Word pages run on a Cloudflare Pages Function with a daily request quota.
+# Fast crawling of /io-eo/ and /eo-io/ also gets HTTP 429 per IP.
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: CCBot
+User-agent: meta-externalagent
+User-agent: meta-webindexer
+User-agent: FacebookBot
+User-agent: Bytespider
+User-agent: Amazonbot
+User-agent: SemrushBot
+User-agent: AhrefsBot
+User-agent: MJ12bot
+User-agent: DotBot
+User-agent: PetalBot
+User-agent: Reflectionbot
+Crawl-delay: 5
 Allow: /
 
 Sitemap: https://vortaro.lipu.dev/sitemap.xml
